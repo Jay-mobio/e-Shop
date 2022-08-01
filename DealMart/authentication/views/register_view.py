@@ -7,9 +7,8 @@ from django.contrib.auth.models import User
 
 class RegisterView(CreateView):
     title = ("Register Page")
-    template_name = "/authentication/register_page.html"
-    form_class = UserRegister
-
+    template_name = "authentication/register_page.html"
+    form_class = UserRegister()
     def get (self,request):
         form = UserRegister
         if request.method == 'POST':
@@ -17,6 +16,8 @@ class RegisterView(CreateView):
             if form.is_valid():
                 form.save()
                 username = form.cleaned_data.get('username')
-                return redirect('authentication:login')
+                messages.success(request, 'Account was created for' +username)  
+                return redirect ('authentication:login')
         context = {'form':form}
-        return render(request,'authentication/register_page.html')
+        return render(request,"authentication/register_page.html",context)  
+        
