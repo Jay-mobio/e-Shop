@@ -1,9 +1,8 @@
-from tkinter import NO
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 # Register your models here.
-from .models import *
+from .models import User
 
 class UserAdminConfig(UserAdmin):
     search_fields = ('email','first_name','last_name') 
@@ -13,6 +12,7 @@ class UserAdminConfig(UserAdmin):
     fieldsets = (
         (None,{'fields':('email','username','first_name','last_name',)}),
         ('Permissions',{'fields':('is_staff','is_active')}),
+        ('Personal',{'fields':('phone','address','profile_pic')})
     )
     add_fieldsets = (
         (None,{

@@ -9,6 +9,9 @@ from .manager import UserManager
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
+    phone = models.CharField(max_length=200,null = True)
+    profile_pic = models.ImageField(null=True, blank = True)
+    address = models.TextField()
 
     objects = UserManager()
 
