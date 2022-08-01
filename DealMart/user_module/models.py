@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 
 # Create your models here.
@@ -9,8 +10,8 @@ from .manager import UserManager
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=200,null = True)
-    profile_pic = models.ImageField(null=True, blank = True)
+    phone = models.CharField(max_length=10,null = True)
+    profile_pic = models.ImageField(null=True, blank = True,default="profile1.jpg")
     address = models.TextField()
 
     objects = UserManager()
