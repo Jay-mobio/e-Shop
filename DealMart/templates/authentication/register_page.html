@@ -35,16 +35,18 @@
               {% csrf_token %}
                 <div class="row">
                   <div class="col-md-6">
-                    <div class="input-group-append">
-                      <span class="input-group-text"><i class="fas fa-user"></i></span>
-                    </div>
-                    {{form.first_name}}  
+                    <div class="form-group first">
+                      <label for="fname">First Name</label><br>
+                      {% comment %} <input type="text" class="form-control" placeholder="e.g. John" id="fname"> {% endcomment %}
+                      {{form.first_name}}
+                    </div> 
                      
-                </div>
-                <div class="col-md-6">
+                  </div>
+                  <div class="col-md-6">
                   <div class="form-group first">
                     <label for="lname">Last Name</label><br>
-                    <input type="text" class="form-control" placeholder="e.g. Smith" id="lname">
+                    {% comment %} <input type="text" class="form-control" placeholder="e.g. Smith" id="lname"> {% endcomment %}
+                    {{form.last_name}}
                   </div>
                      
                 </div>
@@ -53,7 +55,8 @@
                   <div class="col-md-12">
                     <div class="form-group first">
                       <label for="email">Email Address</label><br>
-                      <input type="email" class="form-control" placeholder="e.g. john@your-domain.com" id="email">
+                      {% comment %} <input type="email" class="form-control" placeholder="e.g. john@your-domain.com" id="email"> {% endcomment %}
+                      {{form.email}}
                     </div> 
                       
                   </div>
@@ -62,7 +65,8 @@
                   <div class="col-md-12">
                     <div class="form-group first">
                       <label for="lname">Phone Number</label><br>
-                      <input type="text" class="form-control" placeholder="+00 0000 000 0000" id="lname">
+                      {% comment %} <input type="text" class="form-control" placeholder="+00 0000 000 0000" id="lname"> {% endcomment %}
+                      {{form.phone}}
                     </div> 
                        
                   </div>
@@ -72,7 +76,8 @@
                 
                     <div class="form-group last mb-3">
                       <label for="password">Password</label><br>
-                      <input type="password" class="form-control" placeholder="Your Password" id="password">
+                      {% comment %} <input type="password" class="form-control" placeholder="Your Password" id="password"> {% endcomment %}
+                      {{form.password1}}
                     </div>
                     
                   </div>
@@ -80,7 +85,8 @@
                 
                     <div class="form-group last mb-3">
                       <label for="re-password">Re-type Password</label><br>
-                      <input type="password" class="form-control" placeholder="Your Password" id="re-password">
+                      {% comment %} <input type="password" class="form-control" placeholder="Your Password" id="re-password"> {% endcomment %}
+                      {{form.password2}}
                     </div>
                   </div>
                 </div>
