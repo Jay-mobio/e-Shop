@@ -4,8 +4,6 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 from django.views import View
-from user_module.models import User
-from authentication.forms import CustomPwdChgForm
 from django.contrib.auth import login
 
 
@@ -23,10 +21,9 @@ class ChangePasswordView(View):
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('authentication:home')
+            return redirect('authentication:login')
         else:
                 messages.error(request, 'Please correct the error below.')
-        form = CustomPwdChgForm(request.user)
         return render(request, 'authentication/change_password.html', {
             'form': form
                 })
