@@ -1,9 +1,7 @@
 from django.db import models
-
-# Create your models here.
 from django.contrib.auth.models import AbstractUser
 from .manager import UserManager
-# Create your models here.
+
 
 class User(AbstractUser):
     username = None
@@ -12,7 +10,7 @@ class User(AbstractUser):
     profile_pic = models.ImageField(null=True, blank = True,default="/static/images/profile1.png")
     address = models.TextField()
 
-    is_email_varified = models.BooleanField(Default=False)
+    is_email_varified = models.BooleanField(default=False)
 
 
     objects = UserManager()
