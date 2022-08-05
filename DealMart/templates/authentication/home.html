@@ -5,6 +5,7 @@
     {% csrf_token %}
     <p>Index page</p>
     <a href="{% url 'authentication:change_password' %}" class="">Change password</a>
+    <a href="{% url 'authentication:logout' %}" class="">Logout</a>
 </html>
 
 

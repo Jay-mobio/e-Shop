@@ -1,4 +1,3 @@
-from operator import imod
 from django.shortcuts import render,redirect
 from django.views.generic.edit import CreateView
 from django.contrib import messages
@@ -8,14 +7,16 @@ from authentication.models import UserOTP
 from django.core.mail import send_mail
 import random
 from django.conf import settings
+from django.contrib.auth.models import Group
 
 
 
 
-class RegisterView(CreateView):
+class CustomerRegisterView(CreateView):
     title = ("Register Page")
     template_name = 'authentication/register_page.html'
     form_class = UserRegister
+    group = Group.objects.all()
     
     def post(self,request):
             get_otp = request.POST.get('otp')
@@ -25,10 +26,10 @@ class RegisterView(CreateView):
                 if int(get_otp) == UserOTP.objects.filter(user = usr).last().otp:
                     usr.is_active = True
                     usr.save()
-                    messages.success(request, f'Account is Created For '+ usr.email)
+                    messages.success(request, 'Account is Created For '+ usr.email)
                     return redirect('authentication:login')
                 else:
-                    messages.warning(request, f'You Entered a Wrong OTP')
+                    messages.warning(request,'You Entered a Wrong OTP')
                     return render(request, 'authentication/register_page.html', {'otp': True, 'usr': usr})
 
             form = UserRegister
@@ -38,6 +39,8 @@ class RegisterView(CreateView):
                 email = form.cleaned_data.get('email')
                 usr = User.objects.get(email=email)
                 usr.email = email
+                group = Group.objects.get(name='Customer')
+                usr.groups.add(group)
                 usr.is_active = False
                 usr.save()
                 usr_otp = random.randrange(100000,999999,6)
