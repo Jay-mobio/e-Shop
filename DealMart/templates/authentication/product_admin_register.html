@@ -41,7 +41,7 @@
                 {% endfor %}
             {% endif %} 
                 <br>
-            <p class="mb-4" style="color:black">DealMart is the best online shoping hub.</p>
+            <p class="mb-4" style="color:black"><strong>Become a member of DealMart.</strong></p>
             {% if otp %}
                 <form method="POST">
                   {% csrf_token %}
@@ -79,6 +79,14 @@
               <h3>Register</h3>
               <form action="#" method="post">
                 {% csrf_token %}
+                {% for message in messages %}
+    
+                <div class="alert alert-success">
+                    <a class="close" href="#" data-dismiss="alert">×</a>
+                      {{ message }}
+                </div>
+
+              {% endfor %}
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group first">

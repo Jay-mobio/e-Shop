@@ -17,7 +17,7 @@ class ProductAdminView(CreateView):
     title = ("Register Page")
     template_name = 'authentication/product_admin_register.html'
     form_class = UserRegister
-    group = Group.objects.all()
+
     
     def get(self, request):
         form = self.form_class
@@ -37,30 +37,32 @@ class ProductAdminView(CreateView):
                     messages.warning(request, f'You Entered a Wrong OTP')
                     return render(request, 'authentication/product_admin_register.html', {'otp': True, 'usr': usr})
 
-            form = UserRegister
             form = UserRegister(request.POST)
             if form.is_valid():
-                form.save()
-                email = form.cleaned_data.get('email')
-                usr = User.objects.get(email=email)
-                group = Group.objects.get(name='Product Owner')
-                usr.groups.add(group)
-                usr.email = email
-                usr.is_active = False
-                usr.save()
-                usr_otp = random.randrange(100000,999999,6)
-                UserOTP.objects.create(user = usr, otp = usr_otp)
+                try:                    
+                    form.save()
+                    email = form.cleaned_data.get('email')
+                    usr = User.objects.get(email=email)
+                    group = Group.objects.get(name='Product Owner')
+                    usr.groups.add(group)
+                    usr.is_active = False
+                    usr.save()
+                    usr_otp = random.randrange(100000,999999,6)
+                    UserOTP.objects.create(user = usr, otp = usr_otp)
 
-                mess = f"Hello {usr.first_name},\nYour OTP is {usr_otp}\nThanks!"
-                send_mail(
-                    "Welcome DealMart member - Verify Your Email",
-                    mess,
-                    settings.EMAIL_HOST_USER,
-                    [usr.email],
-                    fail_silently = False
-                    ) 
+                    mess = f"Hello {usr.first_name},\nYour OTP is {usr_otp}\nThanks!"
+                    send_mail(
+                        "Welcome DealMart member - Verify Your Email",
+                        mess,
+                        settings.EMAIL_HOST_USER,
+                        [usr.email],
+                        fail_silently = False
+                        ) 
 
-                return render(request, 'authentication/product_admin_register.html', {'otp': True, 'usr': usr})
+                    return render(request, 'authentication/product_admin_register.html', {'otp': True, 'usr': usr})
+                except:
+                    messages.success(request,"The username is already exist!")
+                    return redirect("/") 
 
             context = {'form':form}
             return render(request,'authentication/product_admin_register.html',context)

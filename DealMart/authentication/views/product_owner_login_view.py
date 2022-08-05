@@ -1,3 +1,4 @@
+import re
 from django.views import View
 from django.shortcuts import render
 from django.contrib.auth import login 
@@ -21,18 +22,18 @@ class ProductOwnerLoginView(View):
         password = request.POST['password']
 
         user = authenticate(email = email, password = password)
-        if user is not None:
+        if user:
+            login(request, user)
             if user.groups.filter(name='Product Owner').exists():
-                if user:
-                    login(request, user)
-                    return redirect('authentication:home')
-            else:
-                messages.error(request,'seems like you are in wrong login page')
-                return redirect('authentication:product_owner_login')
+                return redirect('authentication:home')
+            return redirect('authentication:customer_page') 
         else:
-            messages.error(request,'username or password not correct')
-            return redirect('authentication:product_owner_login')
-        return render(request, self.template_name, context={'email': email})
+            messages.error(request,'email or password not correct')
+            return redirect('authentication:login')           
+
+
+
+
 
 
 

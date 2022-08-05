@@ -16,7 +16,6 @@ class CustomerRegisterView(CreateView):
     title = ("Register Page")
     template_name = 'authentication/register_page.html'
     form_class = UserRegister
-    group = Group.objects.all()
     
     def post(self,request):
             get_otp = request.POST.get('otp')
@@ -32,7 +31,7 @@ class CustomerRegisterView(CreateView):
                     messages.warning(request,'You Entered a Wrong OTP')
                     return render(request, 'authentication/register_page.html', {'otp': True, 'usr': usr})
 
-            form = UserRegister
+
             form = UserRegister(request.POST)
             if form.is_valid():
                 form.save()
