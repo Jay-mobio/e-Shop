@@ -91,16 +91,16 @@
                     <div class="col-md-6">
                       <div class="form-group first">
                         <label for="fname">First Name</label><br>
-                        {% comment %} <input type="text" class="form-control" placeholder="e.g. John" id="fname"> {% endcomment %}
-                        {{form.first_name}}
+                        <input type="text" class="form-control" placeholder="e.g. John" id= "fname" name="first_name"  value="{{first_name}}">
+                        {% comment %} {{form.first_name}} {% endcomment %}
                       </div> 
                       
                     </div>
                     <div class="col-md-6">
                     <div class="form-group first">
                       <label for="lname">Last Name</label><br>
-                      {% comment %} <input type="text" class="form-control" placeholder="e.g. Smith" id="lname"> {% endcomment %}
-                      {{form.last_name}}
+                      <input type="text" class="form-control" placeholder="e.g. Smith" id="lname" name="last_name"  value="{{last_name}}">
+                      {% comment %} {{form.last_name}} {% endcomment %}
                     </div>
                       
                   </div>
@@ -109,8 +109,8 @@
                     <div class="col-md-12">
                       <div class="form-group first">
                         <label for="email">Email Address</label><br>
-                        {% comment %} <input type="email" class="form-control" placeholder="e.g. john@your-domain.com" id="email"> {% endcomment %}
-                        {{form.email}}
+                        <input type="email" class="form-control" placeholder="e.g. john@your-domain.com" id="email" name="email"  value="{{email}}">
+                        {% comment %} {{form.email}} {% endcomment %}
                       </div> 
                         
                     </div>
@@ -119,8 +119,8 @@
                     <div class="col-md-12">
                       <div class="form-group first">
                         <label for="lname">Phone Number</label><br>
-                        {% comment %} <input type="text" class="form-control" placeholder="+00 0000 000 0000" id="lname"> {% endcomment %}
-                        {{form.phone}}
+                        <input type="text" class="form-control" placeholder="+00 0000 000 0000" id="phone" name="phone"  value="{{phone}}">
+                        {% comment %} {{form.phone}} {% endcomment %}
                       </div> 
                         
                     </div>
@@ -130,8 +130,8 @@
                   
                       <div class="form-group last mb-3">
                         <label for="password">Password</label><br>
-                        {% comment %} <input type="password" class="form-control" placeholder="Your Password" id="password"> {% endcomment %}
-                        {{form.password1}}
+                        <input type="password" class="form-control" placeholder="Your Password" id="password" name="password1"  value="{{password1}}">
+                        {% comment %} {{form.password1}} {% endcomment %}
                       </div>
                       
                     </div>
@@ -139,8 +139,8 @@
                   
                       <div class="form-group last mb-3">
                         <label for="re-password">Re-type Password</label><br>
-                        {% comment %} <input type="password" class="form-control" placeholder="Your Password" id="re-password"> {% endcomment %}
-                        {{form.password2}}
+                        <input type="password" class="form-control" placeholder="Your Password" id="re-password" name="password2"  value="{{password2}}">
+                        {% comment %} {{form.password2}} {% endcomment %}
                       </div>
                     </div>
                   </div>

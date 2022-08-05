@@ -18,26 +18,30 @@ class CustomerRegisterView(CreateView):
     form_class = UserRegister
     
     def post(self,request):
-            get_otp = request.POST.get('otp')
-            if get_otp:
-                get_usr = request.POST.get('usr')
-                usr = User.objects.get(email=get_usr)
-                if int(get_otp) == UserOTP.objects.filter(user = usr).last().otp:
-                    usr.is_active = True
-                    usr.save()
-                    messages.success(request, 'Account is Created For '+ usr.email)
-                    return redirect('authentication:login')
-                else:
-                    messages.warning(request,'You Entered a Wrong OTP')
-                    return render(request, 'authentication/register_page.html', {'otp': True, 'usr': usr})
+        get_otp = request.POST.get('otp')
+        if get_otp:
+            get_usr = request.POST.get('usr')
+            usr = User.objects.get(email=get_usr)
+            if int(get_otp) == UserOTP.objects.filter(user = usr).last().otp:
+                usr.is_active = True
+                usr.save()
+                messages.error(request, 'Account is Created For '+ usr.email)
+                return redirect('authentication:login')
+            else:
+                messages.warning(request,'You Entered a Wrong OTP')
+                return render(request, 'authentication/register_page.html', {'otp': True, 'usr': usr})
 
 
-            form = UserRegister(request.POST)
-            if form.is_valid():
+        form = UserRegister(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            
+            if User.objects.filter(email=email).exists():
+                messages.success(request,"User already exists")
+                return redirect("authentication:register")
+            else:
                 form.save()
-                email = form.cleaned_data.get('email')
                 usr = User.objects.get(email=email)
-                usr.email = email
                 group = Group.objects.get(name='Customer')
                 usr.groups.add(group)
                 usr.is_active = False
@@ -56,5 +60,5 @@ class CustomerRegisterView(CreateView):
 
                 return render(request, 'authentication/register_page.html', {'otp': True, 'usr': usr})
 
-            context = {'form':form}
-            return render(request,'authentication/register_page.html',context)
+        context = {'form':form}
+        return render(request,'authentication/register_page.html',context)

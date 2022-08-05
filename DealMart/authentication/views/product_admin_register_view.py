@@ -61,7 +61,7 @@ class ProductAdminView(CreateView):
                     return render(request, 'authentication/product_admin_register.html', {'otp': True, 'usr': usr})
                 except:
                     messages.success(request,"The username is already exist!")
-                    return redirect("/") 
+                    return redirect("authentication:product_admin_register") 
 
             context = {'form':form}
             return render(request,'authentication/product_admin_register.html',context)
