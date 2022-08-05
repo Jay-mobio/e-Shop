@@ -1,4 +1,3 @@
-from operator import imod
 from django.shortcuts import render,redirect
 from django.views.generic.edit import CreateView
 from django.contrib import messages

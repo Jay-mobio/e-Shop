@@ -12,29 +12,6 @@ from django.contrib.auth import login as auth_login
 from user_module.models import User
 
 
-# class PasswordResetConfirmView(PasswordContextMixin, FormView):
-#     form_class = SetPasswordForm
-#     post_reset_login = False
-#     post_reset_login_backend = None
-#     reset_url_token = "set-password"
-#     success_url = "/reset_password_complete/"
-#     template_name = "authentication/password_reset_form.html"
-#     title = ("Enter new password")
-#     token_generator = default_token_generator
-#     def get_context_data(self,**kwargs):
-#         context = super(PasswordResetConfirmView,self).get_context_data(**kwargs)
-#         if self.validlink:
-#             context["validlink"] = True
-#         else:
-#             context.update(
-#                 {
-#                     "form": None,
-#                     "title": ("Password reset unsuccessful"),
-#                     "validlink": False,
-#                 }
-#             )
-#         return context
-
 class PasswordResetConfirmView(PasswordContextMixin, FormView):
     form_class = SetPasswordForm
     post_reset_login = False

@@ -1,4 +1,3 @@
-import re
 from django.views import View
 from django.shortcuts import render
 from django.contrib.auth import login 
@@ -9,8 +8,8 @@ from django.contrib.auth.models import Group
 
 
 
-class ProductOwnerLoginView(View):
-    template_name = "authentication/product_owner_login_page.html"
+class LoginView(View):
+    template_name = "authentication/login_page.html"
     group = Group.objects.all()
 
     def get(self, request):
