@@ -1,0 +1,67 @@
+{% extends "authentication/header.html" %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <title>Otp</title>
+  </head>
+  <body>
+  {% block content %}
+
+  <div class="d-lg-flex half" > 
+    <div class="bg order-1 order-md-2" style="background-image: url('{% static "images/bg_1.jpg" %}');"></div>
+    <div class="contents order-2 order-md-1" style="background:#ffd700;">
+
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-7 py-5">
+            {% if messages %}
+                {% for mess in messages %}
+                <div class="alert alert-{{mess.tags}}" role="alert">
+                  {{mess}}
+                </div>
+                {% endfor %}
+            {% endif %} 
+                <br>
+            <p class="mb-4" style="color:black"><strong>Become a member of DealMart.</strong></p>
+                <form method="POST" action="{% url 'authentication:verify_otp' %}">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom display">
+                            <h3 class="float-left">Verify Your Email</h3>
+                        </legend>
+                        <input type="hidden" name="usr" value="{{usr.email}}">
+                        <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">OTP</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Enter Your OTP" aria-label="OTP" aria-describedby="basic-addon1" name = 'otp'>
+                        </div>
+                    </fieldset>
+                        {% comment %} <div class="form-grounp">
+                        <button class="btn btn-dark" type="submit">Verify</button>
+                        <small class="float-right text-muted"><i>
+                            <form action="{% url 'authentication:resendOTP' %}" method="POST" class="send_otp">
+                            {% csrf_token %}
+                            <input type="text" value="{{usr.email}}" hidden>
+                            <button type="submit" class="text-dark target="{% url 'authentication:resendOTP' %}" ><i id="resendOTPmess">Resend</i> OTP</button>
+                            </form>
+                            </form>
+                        </small>
+                        </div> {% endcomment %}
+                    <div class="form-grounp">
+                        <button class="btn mainbtn" type="submit">Verify</button>
+                        <small class="float-right text-muted"><i><a href="#" class="text-dark" 
+                            onclick="ReSendOTP('{{usr.email}}', 'resendOTPmess')"><i id="resendOTPmess">Resend</i> OTP</a></small>
+
+                    </div>
+                </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+</body>
+{% endblock %}
+</html>
