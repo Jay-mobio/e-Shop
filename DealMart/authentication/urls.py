@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import (
-    login, customer_register_view, product_admin_register_view,resendotp_view,home_view,
-    change_password_view,password_reset_views,password_change_done,
-    password_complete_views,password_confirm_views,logout_view,customer_view
+    change_password, home,
+     login, logout, password_reset, 
+     register,resendotp,customer
 )
 
 
@@ -10,17 +10,17 @@ app_name = "authentication"
 
 urlpatterns = [
     path('login/',login.LoginView.as_view(),name = "login"),
-    path('register/',customer_register_view.CustomerRegisterView.as_view(),name = "register"),
-    path('resendOTP/',resendotp_view.ResendOTP.as_view(),name='resendOTP'),
-    path('home/',home_view.HomeView.as_view(),name='home'),
-    path('cuatomer_page/',customer_view.CustomerView.as_view(),name='customer_page'),
-    path('change_password/',change_password_view.ChangePasswordView.as_view(),name="change_password"),
-    path('product_owner_register/',product_admin_register_view.ProductAdminView.as_view(),name='product_admin_register'),
-    path('reset_password/',password_reset_views.ResetPasswordViews.as_view(),name="reset_password"),
-    path('password_reset/sent/',password_change_done.PasswordChangeDoneView.as_view(),name='reset_password_done'),
+    path('register/',register.CustomerRegisterView.as_view(),name = "register"),
+    path('resendOTP/',resendotp.ResendOTP.as_view(),name='resendOTP'),
+    path('home/',home.HomeView.as_view(),name='home'),
+    path('cuatomer_page/',customer.CustomerView.as_view(),name='customer_page'),
+    path('change_password/',change_password.ChangePasswordView.as_view(),name="change_password"),
+    path('product_owner_register/',register.ProductAdminRegisterView.as_view(),name='product_admin_register'),
+    path('reset_password/',password_reset.ResetPasswordViews.as_view(),name="reset_password"),
+    path('password_reset/sent/',password_reset.PasswordChangeDoneView.as_view(),name='reset_password_done'),
 
-    path('reset/<uidb64>/<token>/',password_confirm_views.PasswordResetConfirmView.as_view(),name="password_reset_confirm"),
+    path('reset/<uidb64>/<token>/',password_reset.PasswordResetConfirmView.as_view(),name="password_reset_confirm"),
 
-    path('reset_password_complete/',password_complete_views.PasswordResetCompleteView.as_view(),name="password_reset_complete"),
-    path('logout/',logout_view.LogoutView.as_view(),name="logout")
+    path('reset_password_complete/',password_reset.PasswordResetCompleteView.as_view(),name="password_reset_complete"),
+    path('logout/',logout.LogoutView.as_view(),name="logout")
 ]

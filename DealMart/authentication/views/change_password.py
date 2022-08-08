@@ -2,11 +2,11 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
-from django.views import View
+from django.views.generic import FormView
 
 
 
-class ChangePasswordView(View):
+class ChangePasswordView(FormView):
 
     template_name = "authentication/change_password.html"
 

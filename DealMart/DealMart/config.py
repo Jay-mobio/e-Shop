@@ -1,6 +1,5 @@
 from . import env
 
-
 def get_var(var_name, default="throw_error"):
     value_from_env = getattr(env, var_name, default)
     if value_from_env == "throw_error":
