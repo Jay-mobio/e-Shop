@@ -12,6 +12,7 @@ urlpatterns = [
     path('login/',login.LoginView.as_view(),name = "login"),
     path('register/',register.CustomerRegisterView.as_view(),name = "register"),
     path('otp_verify/',otp.OTP.as_view(),name="verify_otp"),
+    path('resend_otp/',otp.ResendOTP.as_view(),name = "resend_otp"),
     # path('resendOTP/',otp.ResendOTP.as_view(),name='resendOTP'),
     path('home/',home.HomeView.as_view(),name='home'),
     path('cuatomer_page/',customer.CustomerView.as_view(),name='customer_page'),

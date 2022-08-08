@@ -3,11 +3,7 @@ from django.views.generic.edit import CreateView
 from django.contrib import messages
 from user_module.forms import UserRegister
 from user_module.models import User
-from authentication.models import UserOTP
-from django.core.mail import send_mail
 from authentication.views.otp import OTP
-import random
-from django.conf import settings
 from django.contrib.auth.models import Group
 
 class UserCreation(CreateView):
@@ -38,7 +34,6 @@ class ProductAdminRegisterView(UserCreation):
     form_class = UserRegister
     redirect_url = "authentication:product_admin_register"
     user_group = Group.objects.get(name='Product Owner')
-
 
 
 class CustomerRegisterView(UserCreation):

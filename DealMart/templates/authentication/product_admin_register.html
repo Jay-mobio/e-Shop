@@ -2,8 +2,10 @@
 {% load static %}
 <!doctype html>
 <html>
+  <head>
+    {% block title %}Sign Up{% endblock title %}
+  </head>
   {% block content %}
-  {% block title %}Sign Up{% endblock title %}
     <body>   
       <div class="d-lg-flex half" > 
         <div class="bg order-1 order-md-2" style="background-image: url('{% static "images/bg_1.jpg" %}');"></div>
@@ -21,76 +23,42 @@
                 {% endif %} 
                 <br>
                 <p class="mb-4" style="color:black"><strong>Become a member of DealMart.</strong></p>
-                {% if otp %}
-                <form method="POST">
-                  {% csrf_token %}
-                  <fieldset class="form-group">
-                      <legend class="border-bottom display">
-                          <h3 class="float-left">Verify Your Email</h3>
-                        </legend>
-                        <input type="hidden" name="usr" value="{{usr.email}}">
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">OTP</span>
-                          </div>
-                          <input type="text" class="form-control" placeholder="Enter Your OTP" aria-label="OTP" aria-describedby="basic-addon1" name = 'otp'>
-                        </div>
-                      </fieldset>
-                      {% comment %} <div class="form-grounp">
-                        <button class="btn btn-dark" type="submit">Verify</button>
-                        <small class="float-right text-muted"><i>
-                          <form action="{% url 'authentication:resendOTP' %}" method="POST" class="send_otp">
-                            {% csrf_token %}
-                            <input type="text" value="{{usr.email}}" hidden>
-                            <button type="submit" class="text-dark target="{% url 'authentication:resendOTP' %}" ><i id="resendOTPmess">Resend</i> OTP</button>
-                          </form>
-                        </form>
-                      </small>
-                    </div> {% endcomment %}
-                    <div class="form-grounp">
-                      <button class="btn mainbtn" type="submit">Verify</button>
-                      <small class="float-right text-muted"><i><a href="#" class="text-dark" 
-                        onclick="ReSendOTP('{{usr.email}}', 'resendOTPmess')"><i id="resendOTPmess">Resend</i> OTP</a></small>
-                        
-                      </div>
-                    </form>
-            {% else %}
-            <h3>Register</h3>
-            <form action="#" method="post">
-              {% csrf_token %}
-              {% for message in messages %}
-              
-              <div class="alert alert-success">
-                <a class="close" href="#" data-dismiss="alert">×</a>
-                      {{ message }}
-                </div>
+              <h3>Register</h3>
+              <form action="#" method="post">
+                {% csrf_token %}
+                {% for message in messages %}
+                
+                <div class="alert alert-success">
+                  <a class="close" href="#" data-dismiss="alert">×</a>
+                        {{ message }}
+                  </div>
 
-                {% endfor %}
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group first">
-                      <label for="fname">First Name</label><br>
-                      <input type="text" class="form-control" placeholder="e.g. John" id= "fname" name="first_name"  value="{{first_name}}">
-                      {% comment %} {{form.first_name}} {% endcomment %}
-                    </div> 
-                    
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group first">
-                      <label for="lname">Last Name</label><br>
-                      <input type="text" class="form-control" placeholder="e.g. Smith" id="lname" name="last_name"  value="{{last_name}}">
-                      {% comment %} {{form.last_name}} {% endcomment %}
+                  {% endfor %}
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group first">
+                        <label for="fname">First Name</label><br>
+                        <input type="text" class="form-control" placeholder="e.g. John" id= "fname" name="first_name"  value="{{first_name}}">
+                        {% comment %} {{form.first_name}} {% endcomment %}
+                      </div> 
+                      
                     </div>
-                    
+                    <div class="col-md-6">
+                      <div class="form-group first">
+                        <label for="lname">Last Name</label><br>
+                        <input type="text" class="form-control" placeholder="e.g. Smith" id="lname" name="last_name"  value="{{last_name}}">
+                        {% comment %} {{form.last_name}} {% endcomment %}
+                      </div>
+                      
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group first">
-                      <label for="email">Email Address</label><br>
-                      <input type="email" class="form-control" placeholder="e.g. john@your-domain.com" id="email" name="email"  value="{{email}}">
-                      {% comment %} {{form.email}} {% endcomment %}
-                    </div> 
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group first">
+                        <label for="email">Email Address</label><br>
+                        <input type="email" class="form-control" placeholder="e.g. john@your-domain.com" id="email" name="email"  value="{{email}}">
+                        {% comment %} {{form.email}} {% endcomment %}
+                      </div> 
                     
                   </div>
                 </div>
@@ -131,7 +99,6 @@
                 </div>
               </div>
             </form>
-            {% endif %}
           </div>
         </div>
     </div>

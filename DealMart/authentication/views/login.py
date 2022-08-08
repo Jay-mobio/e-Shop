@@ -10,11 +10,6 @@ from django.contrib.auth.models import Group
 
 class LoginView(View):
     template_name = "authentication/login_page.html"
-    group = Group.objects.all()
-
-    def get(self, request):
-        return render(request,self.template_name)
-
 
     def post(self, request):
         email = request.POST['email']

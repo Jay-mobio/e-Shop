@@ -1,4 +1,4 @@
-{% extends "authentication/header.html" %}
+{% extends "authentication/auth_header.html" %}
 {% load static %}
 <!doctype html>
 <html lang="en">
@@ -28,12 +28,12 @@
                         <legend class="border-bottom display">
                             <h3 class="float-left">Verify Your Email</h3>
                         </legend>
-                        <input type="hidden" name="usr" value="{{usr.email}}">
+                        <input type="text" name="usr" value="{{usr.email}}" hidden>
                         <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">OTP</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Enter Your OTP" aria-label="OTP" aria-describedby="basic-addon1" name = 'otp'>
+                        <input type="text" class="form-control" placeholder="Enter Your OTP" aria-label="OTP" aria-describedby="basic-addon1" name = 'otp' required>
                         </div>
                     </fieldset>
                         {% comment %} <div class="form-grounp">
@@ -49,11 +49,16 @@
                         </div> {% endcomment %}
                     <div class="form-grounp">
                         <button class="btn mainbtn" type="submit">Verify</button>
-                        <small class="float-right text-muted"><i><a href="#" class="text-dark" 
-                            onclick="ReSendOTP('{{usr.email}}', 'resendOTPmess')"><i id="resendOTPmess">Resend</i> OTP</a></small>
-
+                      </form>
                     </div>
-                </form>
+                    <div>
+                      <form  method ="POST" action="{% url 'authentication:resend_otp' %}">   
+                        {% csrf_token %}
+                        <input type="text" value="{{usr.email}}" name="user_email" hidden>
+                        <button class="btn btn-dark" type="submit" name="Submit">Resend                        
+                        </button>                     
+                      </form>
+                    </div>
               </div>
           </div>
       </div>
