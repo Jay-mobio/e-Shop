@@ -13,7 +13,6 @@ class OTP(CreateView):
 	def post(self,request):
 		get_otp = request.POST.get('otp')
 		get_usr = request.POST.get('usr')
-		print(get_usr,'---------------------------------')
 		usr = User.objects.get(email=get_usr)
 		if int(get_otp) == UserOTP.objects.filter(user = usr).last().otp:
 			usr.is_active = True

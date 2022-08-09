@@ -19,6 +19,25 @@
                 <br>
             <p class="mb-4" style="color:black">DealMart is the best online shoping hub.</p>
               <h3>Register</h3>
+                {% if form.errors %}
+                {% for field in form %}
+                  {% for error in field.errors %}
+                    <div id="message">
+                      <div class="alert alert-warning alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                          {{ error|escape }}
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                      {{ error|escape }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+              </div>
               <form action="#" method="post">
                 {% csrf_token %}
                 {% for message in messages %}
@@ -95,4 +114,9 @@
 </div>
 {% endblock %}
 </body>
+{% comment %} <script>
+  setTimeout(function() {
+    $('#message').fadeOut('slow');
+  }, 15000);
+</script> {% endcomment %}
 </html>
