@@ -4,7 +4,8 @@ from django.contrib.auth import login
 from django.contrib.auth import authenticate
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from django.contrib.auth.models import Group
+from user_module.models import User
+from authentication.views.otp import OTP
 
 
 
@@ -17,8 +18,13 @@ class LoginView(View):
     def post(self, request):
         email = request.POST['email']
         password = request.POST['password']
-
+        user = User.objects.get(email=email)
+        if not user.is_active:
+            otp = OTP.generateotp(self,request,user)
+            return render(request,"authentication/otp.html",{'usr':user})
         user = authenticate(email = email, password = password)
+    
+
         if user:
             login(request, user)
             if user.groups.filter(name='Product Owner').exists():

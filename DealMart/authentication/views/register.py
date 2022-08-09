@@ -23,6 +23,7 @@ class UserCreation(CreateView):
             user = form.save()
             user.groups.add(self.user_group)
             user.is_active = False
+            user.save()
             otp = OTP.generateotp(self,request,user)
             return render(request, 'authentication/otp.html', {'usr':user})
         context = {'form':form}
