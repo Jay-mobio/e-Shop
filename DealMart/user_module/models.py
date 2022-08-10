@@ -7,10 +7,10 @@ from .manager import UserManager
 
 class User(AbstractUser):
     username = None
-    email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=10,null = True)
+    email = models.EmailField(unique=True, blank = True)
+    phone = models.CharField(max_length=10, blank = True)
     profile_pic = models.ImageField(null=True, blank = True,default="profile1.jpg")
-    address = models.TextField()
+    address = models.TextField() 
 
     is_email_varified = models.BooleanField(Default=False)
 
