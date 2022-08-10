@@ -8,6 +8,8 @@ from django.contrib import messages
 from django.shortcuts import redirect,render
 import random
 from django.conf import settings
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 class OTP(CreateView):
 	def post(self,request):
@@ -39,11 +41,13 @@ class OTP(CreateView):
 
 		
 
-class ResendOTP(View):
-	template_name = "authentication/otp.html"
-	def post(self, request):
+# class ResendOTP(View):
+# 	template_name = "authentication/otp.html"
+@csrf_exempt
+def resend_otp(request):
+	if request.method == 'POST':
 		usr_otp = random.randrange(100000,999999,6)
-		user = request.POST.get('user_email')
+		user = request.POST.get('usr')
 		user = User.objects.get(email = user)
 		usr = UserOTP.objects.create(user = user, otp = usr_otp)
 		mess = f"Hello {user.first_name},\nYour OTP is {usr_otp}\nThanks!"
@@ -54,7 +58,7 @@ class ResendOTP(View):
 			[user.email],
 			fail_silently = False
 			)
-		return render (request,"authentication/otp.html",{'usr':usr})	
+	return JsonResponse({'message':True}, status = 200)
 		
 
 	# def post(self, request):

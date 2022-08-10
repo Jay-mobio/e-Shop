@@ -19,20 +19,23 @@ class LoginView(View):
         email = request.POST['email']
         password = request.POST['password']
         user = User.objects.get(email=email)
-        if not user.is_active:
-            otp = OTP.generateotp(self,request,user)
-            return render(request,"authentication/otp.html",{'usr':user})
-        user = authenticate(email = email, password = password)
-    
-
-        if user:
-            login(request, user)
-            if user.groups.filter(name='Product Owner').exists():
-                return redirect('authentication:home')
-            return redirect('authentication:customer_page') 
-        else:
-            messages.error(request,'email or password not correct')
-            return redirect('authentication:login')           
+        if User.objects.filter(email=email).exists():
+            if not user.is_active:
+                otp = OTP.generateotp(self,request,user)
+                return render(request,"authentication/otp.html",{'usr':user})
+            
+            user = authenticate(email = email, password = password)
+            if user:
+                login(request, user)
+                if user.groups.filter(name='Product Owner').exists():
+                    return redirect('authentication:home')
+                return redirect('authentication:customer_page') 
+            else:
+                messages.error(request,'email or password not correct')
+                return redirect('authentication:login')  
+        else :
+            messages.error(request,"User dose not exist")
+            return redirect('authentication:login')          
 
 
 

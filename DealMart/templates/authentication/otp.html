@@ -39,28 +39,14 @@
                         <input type="text" class="form-control" placeholder="Enter Your OTP" aria-label="OTP" aria-describedby="basic-addon1" name = 'otp' required>
                         </div>
                     </fieldset>
-                        {% comment %} <div class="form-grounp">
+                        <div class="form-grounp">
                         <button class="btn btn-dark" type="submit">Verify</button>
                         <small class="float-right text-muted"><i>
-                            <form action="{% url 'authentication:resendOTP' %}" method="POST" class="send_otp">
                             {% csrf_token %}
-                            <input type="text" value="{{usr.email}}" hidden>
-                            <button type="submit" class="text-dark target="{% url 'authentication:resendOTP' %}" ><i id="resendOTPmess">Resend</i> OTP</button>
-                            </form>
+                            <small class="float-right text-muted"><i><a href="#" class="text-dark" onclick="ReSendOTP('{{usr.email}}', 'resendOTPmess')"><i id="resendOTPmess">Resend</i> OTP</a></small>
                             </form>
                         </small>
-                        </div> {% endcomment %}
-                    <div class="form-grounp">
-                        <button class="btn mainbtn" type="submit">Verify</button>
-                      </form>
-                    </div>
-                    <div>
-                      <form  method ="POST" action="{% url 'authentication:resend_otp' %}">   
-                        {% csrf_token %}
-                        <input type="text" value="{{usr.email}}" name="user_email" hidden>
-                        <button class="btn btn-dark" type="submit" name="Submit">Resend                        
-                        </button>                     
-                      </form>
+                        </div>
                     </div>
               </div>
           </div>

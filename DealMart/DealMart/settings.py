@@ -40,7 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user_module',
-    'authentication'
+    'authentication',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+
+
 ]
 
 MIDDLEWARE = [
@@ -51,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'DealMart.urls'
@@ -67,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -141,3 +151,27 @@ EMAIL_PORT = Config.EMAIL_PORT
 EMAIL_USE_TLS = Config.EMAIL_USE_TLS
 EMAIL_HOST_USER = Config.EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = Config.EMAIL_HOST_PASSWORD
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# 295609710660-b74tqon75lc0v8eujoprc3f64nhddufb.apps.googleusercontent.com
+
+# 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
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}

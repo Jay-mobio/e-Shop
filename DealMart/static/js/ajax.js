@@ -38,13 +38,13 @@ function ReSendOTP(email, mess_id) {
 	
 	mess = document.getElementById(mess_id);
 	mess.innerText = "Sending...";
-	url = "/register/resendOTP/"
+	// url = "authetication:resend_otp"
 	$.ajax({
-		type: 'GET',
-		url: url,
+		type: 'POST',
+		url: '/resend_otp/',
 		data: {usr:email},
-		success: function(data){
-			mess.innerText = data;
+		success: function(req){
+			mess.innerText = "Resend";
 
 		}
 	})

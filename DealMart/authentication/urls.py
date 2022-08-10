@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,include
 from .views import (
     change_password, home,
      login, logout, otp, password_reset, 
@@ -12,7 +12,7 @@ urlpatterns = [
     path('login/',login.LoginView.as_view(),name = "login"),
     path('register/',register.CustomerRegisterView.as_view(),name = "register"),
     path('otp_verify/',otp.OTP.as_view(),name="verify_otp"),
-    path('resend_otp/',otp.ResendOTP.as_view(),name = "resend_otp"),
+    path('resend_otp/',otp.resend_otp,name = "resend_otp"),
     # path('resendOTP/',otp.ResendOTP.as_view(),name='resendOTP'),
     path('home/',home.HomeView.as_view(),name='home'),
     path('customer_page/',customer.CustomerView.as_view(),name='customer_page'),
@@ -24,5 +24,6 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/',password_reset.PasswordResetConfirmView.as_view(),name="password_reset_confirm"),
 
     path('reset_password_complete/',password_reset.PasswordResetCompleteView.as_view(),name="password_reset_complete"),
-    path('logout/',logout.LogoutView.as_view(),name="logout")
+    path('logout/',logout.LogoutView.as_view(),name="logout"),
+    path('accounts/', include('allauth.urls'))
 ]
