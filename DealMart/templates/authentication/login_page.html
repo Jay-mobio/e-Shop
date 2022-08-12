@@ -1,5 +1,11 @@
 {% extends "authentication/auth_header.html" %}
 {% load static %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% load crispy_forms_filters %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -56,7 +62,7 @@
     </div>
 
     
-  </div>   
+  </div> 
 {% endblock %}
   </body>
 </html>

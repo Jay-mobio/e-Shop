@@ -25,5 +25,4 @@ urlpatterns = [
 
     path('reset_password_complete/',password_reset.PasswordResetCompleteView.as_view(),name="password_reset_complete"),
     path('logout/',logout.LogoutView.as_view(),name="logout"),
-    path('accounts/', include('allauth.urls'))
 ]

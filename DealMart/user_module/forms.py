@@ -38,8 +38,8 @@ class UserRegister(UserCreationForm):
         password1 = self.cleaned_data['password1']
         self.min_length = 1
         # special_characters = "[~\!@#\$%\^&\*\(\)_\+{}\":;'\[\]]"
-        if password1 == "":
-            raise ValidationError("Password is required")
+        if len(password1) < 8:
+            raise ValidationError("Password too short")
         if not any(char.isdigit() for char in password1):
             raise ValidationError(('Password must contain at least %(min_length)d digit.') % {'min_length': self.min_length})
         if not any(char.isalpha() for char in password1):
