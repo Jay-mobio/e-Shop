@@ -9,15 +9,6 @@ class UserRegister(UserCreationForm):
         model = User
         fields = ('first_name','last_name','email','phone','password1','password2')
 
-    def signup(self, request, user):
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-        user.email = self.cleaned_data['email']
-        group = Group.objects.get(name='Customer')
-        user.groups.add(group)
-        user.save()
-        return user
-
     def clean_first_name(self):
         first_name = self.cleaned_data['first_name']
         if first_name == "":
