@@ -4,8 +4,6 @@
 {% load account socialaccount %}
 
 {% load crispy_forms_filters %}
-
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -47,11 +45,19 @@
               <div class="d-flex mb-5 align-left">
                 <span class="align-left"><a href="{% url 'authentication:reset_password' %}" class="forgot-pass" style="color:black">Forgot Password</a></span> 
               </div>
-
-              <input type="submit" value="Log In" class="btn btn-block btn-dark">
+              <input type="submit" value="Log In" class="btn btn-block btn-dark"><br>
+              <p style="color: black;">{% blocktrans with site.name as site_name %}Please sign in with{% endblocktrans %}</p>
+          
+              <div class="socialaccount_ballot">
+          
+                <div class="socialaccount_providers">
+                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                </div>          
+              </div>          
+              <div>{% include "socialaccount/snippets/login_extra.html" %}</div>
               <div class="mt-4">
                 <div class="d-flex justify-content-center links">
-                  Don't have an account? <a href="{% url 'authentication:register' %}" class="ml-2">Sign Up</a>
+                  Don't have an account? <a href="{% url 'authentication:register' %}" class="ml-2" style="color: black;">Sign Up</a>
                 </div>            
               </div>
 
@@ -59,9 +65,7 @@
           </div>
         </div>
       </div>
-    </div>
-
-    
+    </div>    
   </div> 
 {% endblock %}
   </body>

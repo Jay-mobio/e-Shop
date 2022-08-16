@@ -130,5 +130,5 @@ class PasswordResetCompleteView(PasswordContextMixin, TemplateView):
     
 
 class PasswordChangeDoneView(PasswordContextMixin, TemplateView):
-    template_name = "authentication/login.html"
+    template_name = "authentication/login_page.html"
     title = ("Password change successful")

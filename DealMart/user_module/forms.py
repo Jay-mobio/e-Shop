@@ -1,11 +1,23 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from .models import User
+from django.contrib.auth.models import Group
+
+from allauth.account.forms import SignupForm
 
 class UserRegister(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name','last_name','email','phone','password1','password2')
+
+    def signup(self, request, user):
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data['email']
+        group = Group.objects.get(name='Customer')
+        user.groups.add(group)
+        user.save()
+        return user
 
     def clean_first_name(self):
         first_name = self.cleaned_data['first_name']
@@ -57,9 +69,5 @@ class UserRegister(UserCreationForm):
         if password1 and password2 and password1 != password2:
             raise ValidationError("Passwords don't match")
         return password2
-    # def clean(self):
-    #     cleaned_data =  super().clean()
-    #     first_name = cleaned_data.get('first_name')
-    #     last_name = cleaned_data.get('last_name')
-    #     if first_name == "":
-    #         raise ValidationError("First name is required!")
+
+

@@ -39,11 +39,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'user_module',
     'authentication',
 
+    # djang all-auth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+    'crispy_forms',
+
 
 ]
+
+SITE_ID = 1
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
@@ -52,7 +64,8 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',    
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'DealMart.urls'
@@ -69,10 +82,20 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
+                
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'DealMart.wsgi.application'
 
@@ -144,3 +167,38 @@ EMAIL_PORT = Config.EMAIL_PORT
 EMAIL_USE_TLS = Config.EMAIL_USE_TLS
 EMAIL_HOST_USER = Config.EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = Config.EMAIL_HOST_PASSWORD
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+        }
+    }
+}
+
+LOGIN_REDIRECT_URL = 'authentication:customer_page'
+
+ACCOUNT_LOGOUT_REDIRECT_URL = 'authentication:login'
+
+ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_USERNAME_REQUIRED = False
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+ACCOUNT_SESSION_REMEMBER = True
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+ACCOUNT_FORMS = { 'signup': 'user_module.forms.CustomSignupForm', }
+
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+
+# 619445567254-bs08ck9kmaivktq2sll1nu553rocqgjh.apps.googleusercontent.com
+# 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
