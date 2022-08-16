@@ -10,8 +10,8 @@ class ChangePasswordView(FormView):
 
     template_name = "authentication/change_password.html"
 
-    # def get(self, request):
-    #     return render(request,self.template_name)
+    def get(self, request):
+        return render(request,self.template_name)
 
     def post(self,request):
         form = PasswordChangeForm(request.user, request.POST)

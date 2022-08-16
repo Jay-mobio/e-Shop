@@ -1,4 +1,3 @@
-from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
@@ -15,6 +14,7 @@ from django.contrib.auth import login as auth_login
 from django.views.generic import TemplateView
 from django.shortcuts import resolve_url
 from django.conf import settings
+from user_module.forms import ForgotPassword
 
 
 
@@ -23,10 +23,8 @@ from django.conf import settings
 class ResetPasswordViews(PasswordResetView):
     email_template_name = "authentication/password_reset_email.html"
     extra_email_context = None
-    form_class = PasswordResetForm
-    from_email = None
+    form_class = ForgotPassword
     html_email_template_name = None
-    # subject_template_name = "crm1/password_reset_subject.txt"
     success_url = '/password_reset/sent/'
     template_name = "authentication/password_reset.html"
     title = ("Password reset")
