@@ -56,7 +56,7 @@ h2 {
   background-position: center; }
 
 .half a {
-  color: #888;
+  color: black;
   text-decoration: underline; }
 
 .half .btn {
@@ -142,3 +142,8 @@ h2 {
 .control--checkbox input:disabled:checked ~ .control__indicator {
   background-color: #7e0cf5;
   opacity: .2; }
+
+  li::before {
+    color: black;
+    display: inline-block;
+  }
