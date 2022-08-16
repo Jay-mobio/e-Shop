@@ -18,14 +18,12 @@ from django.urls import path,include
 
 from django.conf import settings
 from django.conf.urls.static import static
-# from authentication.views.sociallogin import account_signup_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("",include("authentication.urls")),
     path('accounts/', include('allauth.urls')),
-    # path("accounts/signup/", view=account_signup_view),
 
 ]
 
