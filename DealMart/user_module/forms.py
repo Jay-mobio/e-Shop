@@ -1,6 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from .models import User
+from django.contrib.auth.models import Group
+from django.contrib.auth.forms import PasswordResetForm
 
 class UserRegister(UserCreationForm):
     class Meta:
@@ -57,9 +59,12 @@ class UserRegister(UserCreationForm):
         if password1 and password2 and password1 != password2:
             raise ValidationError("Passwords don't match")
         return password2
-    # def clean(self):
-    #     cleaned_data =  super().clean()
-    #     first_name = cleaned_data.get('first_name')
-    #     last_name = cleaned_data.get('last_name')
-    #     if first_name == "":
-    #         raise ValidationError("First name is required!")
+
+
+class ForgotPassword(PasswordResetForm):
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if not User.objects.filter(email__iexact=email, is_active=True).exists():
+            raise ValidationError("There is no user registered with the specified email address!")
+
+        return email
