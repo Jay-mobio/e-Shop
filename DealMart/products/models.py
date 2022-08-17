@@ -15,20 +15,21 @@ class Category(models.Model):
 
 class Products(models.Model):
     name = models.CharField(max_length=255)
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
-    price = models.IntegerField
-    image = models.ImageField(null=True, blank=True, default="deault.jpg")
-    discription = models.TextField
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+    price = models.IntegerField(null = True)
+    image = models.ImageField(null=True, blank=True, default="static/images/default.jpg")
+    discription = models.TextField(null = True)
     created_at = models.DateTimeField(auto_now_add = True, null = True)
     updated_at = models.DateTimeField(auto_now_add = True, null = True)
     created_by = models.ForeignKey (User,on_delete=models.CASCADE, related_name="created_product")
-    updated_by = models.ForeignKey (User,on_delete=models.CASCADE,related_name="updated_product")
+    updated_by = models.ForeignKey (User,on_delete=models.CASCADE,related_name="updated_product" ,null=True)
+
 
     def __str__(self):
-        return self.label
+        return self.name
 
 class Inventory(models.Model):
-    product_id = models.OneToOneField(Products,on_delete=models.CASCADE,primary_key=True)
+    product = models.OneToOneField(Products,on_delete=models.CASCADE,primary_key=True)
     product_quantity = models.IntegerField(default=0)
     is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add = True,null = True)
