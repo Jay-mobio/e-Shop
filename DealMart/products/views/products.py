@@ -13,6 +13,8 @@ class AddProduct(FormView):
         form = self.form_class
         return render(request,self.template_name,{'form':form})
 
+
+
     def post(self,request):
         form  = AddProductForm(request.POST,request.FILES)
 

@@ -8,18 +8,20 @@
     <title>Dashboard</title>
 </head>
 <body>
+    <a href="{% url 'authentication:home' %}" class=""><h1>Home</h1></a>
     <form action="" method="get">
         {% csrf_token %}
         {% for product in products  %}
-        <ul id="row{{product.id}}">
-            <img id="img{{product.id}}" src="{{ product.image.url }}" style="height: 200px; width: 200px;"  class="card-img-top" alt="...">
-            <span><li id="name{{product.id}}">{{product.name}}</li> </span>
-            <span><li id="price{{product.id}}">{{product.price}} Rs</li></span>
-            <li><a href="{% url 'products:update_product' product.pk %}" class="btn btn-sm btn-info" onclick="update{{product.id}}">Update</a></li>
-            <li><a href="{% url 'products:delete_product' product.pk %}" class="btn btn-sm btn-info">Delete</a></li>
-        </ul>
-            {% endfor %}
-            <a href="{% url 'authentication:home' %}" class="">Home</a>
+        <table id="row{{product.id}}">
+            <tr>
+                <td><img id="img{{product.id}}" src="{{ product.image.url }}" style="height: 200px; width: 200px;"  class="card-img-top" alt="..."></td>
+                <span><td id="name{{product.id}}">{{product.name}}</td> </span>
+                <span><td id="price{{product.id}}">{{product.price}} Rs</td></span>
+                <td><a href="{% url 'products:update_product' product.pk %}" onclick="update{{product.id}}">Update</a></td>
+                <td><a href="{% url 'products:delete_product' product.pk %}">Delete</a></td>
+            </tr>
+        </tabel>
+        {% endfor %}
     </form>
 </body>
 </html>
