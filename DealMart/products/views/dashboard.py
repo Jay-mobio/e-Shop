@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from django.views.generic import View 
+from django.views.generic import TemplateView
 from products.models import Products
 
 
 
-class Dashboard(View):
+class Dashboard(TemplateView):
     template_name = "products/product_list.html"
 
     def get(self,request):
