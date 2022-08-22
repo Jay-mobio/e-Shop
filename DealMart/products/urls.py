@@ -8,6 +8,7 @@ app_name = 'products'
 urlpatterns = [
     path('dashboard/',dashboard.Dashboard.as_view(),name="dashboard"),
     path('add_product/',products.AddProduct.as_view(),name="add_product"),
+    path('update_product_form/<int:pk>/',update_product.UpdateForm.as_view(),name="update_product_form"),
     path('update_product/<int:pk>/',update_product.UpdateProduct.as_view(),name="update_product"),
     path('delete_product/<int:pk>',delete_product.DeleteProduct.as_view(),name="delete_product"),
 

@@ -1,12 +1,12 @@
 from products.forms import AddProductForm
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView,TemplateView
 from django.shortcuts import render,redirect
 from products.models import Products
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 @method_decorator(login_required, name='dispatch')
-class UpdateProduct(UpdateView):
+class UpdateForm(TemplateView):
     template_name = "products/update_product.html"
 
     def get(self,request,pk):
@@ -14,8 +14,9 @@ class UpdateProduct(UpdateView):
         form = AddProductForm(instance=product)
         return render(request,self.template_name,{'form':form, 'product':product})
 
-    
-    def post(self,request,pk):
+@method_decorator(login_required, name='dispatch')
+class UpdateProduct(UpdateView):
+    def get(self,request,pk):
         product = Products.objects.get(id=pk)
         form = AddProductForm(request.POST,request.FILES,instance=product)
         if form.is_valid():
