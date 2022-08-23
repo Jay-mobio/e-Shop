@@ -1,12 +1,14 @@
 from products.forms import AddProductForm
-from django.views.generic import UpdateView,TemplateView
+from django.views.generic import UpdateView,View
 from django.shortcuts import render,redirect
 from products.models import Products
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 @method_decorator(login_required, name='dispatch')
-class UpdateForm(TemplateView):
+class UpdateForm(UpdateView):
     template_name = "products/update_product.html"
 
     def get(self,request,pk):
@@ -14,9 +16,7 @@ class UpdateForm(TemplateView):
         form = AddProductForm(instance=product)
         return render(request,self.template_name,{'form':form, 'product':product})
 
-@method_decorator(login_required, name='dispatch')
-class UpdateProduct(UpdateView):
-    def get(self,request,pk):
+    def post(self,request,pk):
         product = Products.objects.get(id=pk)
         form = AddProductForm(request.POST,request.FILES,instance=product)
         if form.is_valid():
@@ -27,5 +27,12 @@ class UpdateProduct(UpdateView):
             product.discription  = form.cleaned_data.get('discription') 
             product.updated_by = request.user
             product.save()
-            return redirect('authentication:home')
+            return redirect('products:dashboard')
         return render(request,self.template_name,{'form':form})
+
+class RemoveProductImage(View):
+    def post(self,request,pk):
+        product = Products.objects.get(id=pk)
+        product.image = "static/images/default.jpg"
+        product.save()
+        return redirect("products:dashboard")

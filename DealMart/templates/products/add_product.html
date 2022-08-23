@@ -1,11 +1,30 @@
 {% extends 'products/product_header.html' %}
 {% load static %}
+<head>
+    <style>
+        .image-priview{
+            width: 300px;
+            min-height: 100px;
+            border: 2px solid #dddddd;
+            margin-top: 15px;
+    
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #cccccc;
+        }
+        .image-priview__image{
+            display: none;
+            width: 100%;
+        }
+    </style>
+</head>
 {% block title  %}Add Product{% endblock title %}
     {% block content %}
         {% include 'products/toolbar.html'  %}
         {% include 'products/navbar.html' %}
-    
-    
+
         <!-- Breadcrumb Start -->
         <div class="container-fluid">
             <div class="row px-xl-5">
@@ -29,24 +48,28 @@
                         <form action="" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="control-group">
+                                Name:
                                 <input type="text" class="form-control" id="id_name" placeholder="Product Name" name='name' value="{{name}}"
                                     required="required"/>
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
+                                Category:
                                 {{form.category}}
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
+                                Price:
                                 <input type="text" id="id_price" class="form-control" placeholder="price" name="price" value="{{price}}"
                                     required="required"/>
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div>
+                                Image:
                                 {{form.image}}
-                                <input id="photoinput" type="file" class="btn btn-block btn-lg btn-primary inout-margin mybut">
                             </div>
                             <div class="control-group">
+                                Discription:
                                 <textarea style="margin-top: 5px;" id="id_discription" class="form-control" rows="8" placeholder="About product" name="discription" value="{{discription}}"
                                     required="required"></textarea>
                                 <p class="help-block text-danger"></p>
@@ -70,27 +93,44 @@
         <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
     {% endblock %}
-    </body>
 <!-- Template Javascript -->
 <script src="{% static 'js/add_product.js' %}"></script>   
 <script>
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
     
-            reader.onload = function (e) {
-                $('#id_image').attr('src', e.target.result);
-            }
-    
-            reader.readAsDataURL(input.files[0]);
+    var imageimput = document.getElementById("id_image");
+    var previewImage = document.getElementById("prewiew-image");
+    imageInput.addEventListener("change",function(event){
+        if(event.target.files.length == 0){
+            return;
         }
-    }
-    
-    $(function () { //document ready call
-        $("#photoinput").change(function(){
-            readURL(this);
-        });
+        var tempUrl = URL.createObjectURL(event.target.files[1]);
+        previewImage.setAttribute("src",tempUrl);
     });
+    const inpFile = document.getElementById("id_image");
+    const previewContainer = document.getElementById("imagePraview");
+    const previewImage = previewContainer.querySelector(".image-preview__image");
+    const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
+
+    inpFile.addEventListener("change",function(){
+        const file = this.files[0];
+        
+        if (file){
+            const reader = new FileReader():
+            previewDefaultText.style.display = "none";
+            previewImage.style.display = "none";
+
+            reader.addEventListener("load", function(){
+                previewImage.setAttribute("src",this.result);
+            });
+            reader.readAsDataURL(file);
+        } else {
+            previewDefaultText.style.display = null;
+            previewImage.style.display = null;
+            previewImage.setAttribute("src","");
+        }; 
+    };
+    )
+ 
 </script>
  
 </html>

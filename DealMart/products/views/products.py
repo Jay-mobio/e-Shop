@@ -26,6 +26,6 @@ class AddProduct(FormView):
             discription  = form.cleaned_data.get('discription')
             created_by = request.user
             Products.objects.create(name=name,category=category,price=price,image=image,discription=discription,created_by=created_by)
-            return redirect('authentication:home')
+            return redirect('products:dashboard')
         return render(request,self.template_name,{'form':form})
 

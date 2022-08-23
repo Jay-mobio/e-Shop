@@ -42,9 +42,6 @@
                                     required="required"/>
                                 <p class="help-block text-danger"></p>
                             </div>
-                            <div>
-                                {{form.image}};
-                            </div>
                             <div class="control-group">
                                 <textarea style="margin-top: 5px;" class="form-control" rows="8" placeholder="About product" name="discription"
                                     required="required">{{form.discription.value}}</textarea>
@@ -54,21 +51,29 @@
                                 <button class="btn btn-primary py-2 px-4" type="submit">Update</button>
                             </div>
                         </form>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-5 mb-5">
-                    <div class="bg-light p-30 mb-30">
-                        <img src="{% static 'images/bg_1.jpg' %}" alt="" width="500px" height="450px">
+                    <div class="col-lg-5 mb-5">
+                        <div class="bg-light p-30 mb-30">
+                            <form action="{% url 'products:remove_image' product.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="close">
+                                  <span>&times;</span>
+                                </button>
+                                <img src="{{ product.image.url }}" alt="" width="500px" height="450px">
+                            </form>
+                        </div>
+                    <form action="{% url 'products:update_product_form' product.id %}" method="POST">
+                        {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon03">Upload</button>
+                        <input type="file" class="form-control" id="id_image" value="{{product.image}}" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
+                      </div>
+                    </form>
                     </div>
-                </div>
             </div>
         </div>
         <!-- Update Product End -->
         {% include 'products/footer.html' %}
     
 {% endblock %}
-
-
-<!-- Template Javascript -->
-<script src="{% static 'js/add_product.js' %}"></script>    
-</html>

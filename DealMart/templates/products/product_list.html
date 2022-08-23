@@ -5,7 +5,7 @@
         {% include 'products/toolbar.html'  %}
         {% include 'products/navbar.html' %}
         
-        <table id="row{{product.id}}" class="table table-sm">>
+        <table id="row{{product.id}}" class="table table-sm">
             <tr>
                 <th></th>
                 <th>Name</th>
@@ -16,10 +16,10 @@
             </tr>
             {% for product in products  %}
             <tr>
-                <td><img id="img{{product.id}}" src="{{ product.image.url }}" style="height: 200px; width: 200px;"  class="card-img-top" alt="..."></td>
+                <td><img id="img{{product.id}}" src="{{ product.image.url }}" style="height: 100px; width: 100px;"  class="card-img-top" alt="..."></td>
                 <span><td id="name{{product.id}}">{{product.name}}</td> </span>
                 <span><td id="price{{product.id}}">{{product.price}} Rs</td></span>
-                <td><a href="{% url 'products:update_product_form' product.pk %}" onclick="{% url 'products:update_product' product.id %}" class="btn btn-info">Update</a></td>
+                <td><a href="{% url 'products:update_product_form' product.pk %}" class="btn btn-info">Update</a></td>
                 <td><a href="{% url 'products:delete_product' product.pk %}" class="btn btn-danger">Delete</a></td>
             </tr>
             {% endfor %}
