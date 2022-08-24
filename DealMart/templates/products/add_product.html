@@ -45,19 +45,21 @@
             <div class="row px-xl-5">
                 <div class="col-lg-7 mb-5">
                     <div class="bg-light p-30">
-                        <form action="" method="POST" enctype="multipart/form-data">
+                        <form action="" method="POST" enctype="multipart/form-data" id="addproduct">
                             {% csrf_token %}
                             <div class="control-group">
-                                Name:
-                                <input type="text" class="form-control" id="id_name" placeholder="Product Name" name='name' value="{{name}}"
-                                    required="required"/>
+                                Name:   
+                                <input type="text" class="form-control" id="id_name" placeholder="Product Name" name="name" value="{{name}}" required="required"/>
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
                                 Category:
                                 {{form.category}}
                                 <p class="help-block text-danger"></p>
-                            </div>
+                            </div>  
+                            <select id="id_sub_category">Sub Category
+                                {% comment %} <option value="{{sub.id}}">{{sub.name}}</option> {% endcomment %}
+                                </select>
                             <div class="control-group">
                                 Price:
                                 <input type="text" id="id_price" class="form-control" placeholder="price" name="price" value="{{price}}"
@@ -89,48 +91,9 @@
         </div>
         <!-- Add Product End -->    
         {% include 'products/footer.html' %}
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
 
     {% endblock %}
-<!-- Template Javascript -->
-<script src="{% static 'js/add_product.js' %}"></script>   
-<script>
-    
-    var imageimput = document.getElementById("id_image");
-    var previewImage = document.getElementById("prewiew-image");
-    imageInput.addEventListener("change",function(event){
-        if(event.target.files.length == 0){
-            return;
-        }
-        var tempUrl = URL.createObjectURL(event.target.files[1]);
-        previewImage.setAttribute("src",tempUrl);
-    });
-    const inpFile = document.getElementById("id_image");
-    const previewContainer = document.getElementById("imagePraview");
-    const previewImage = previewContainer.querySelector(".image-preview__image");
-    const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
-
-    inpFile.addEventListener("change",function(){
-        const file = this.files[0];
-        
-        if (file){
-            const reader = new FileReader():
-            previewDefaultText.style.display = "none";
-            previewImage.style.display = "none";
-
-            reader.addEventListener("load", function(){
-                previewImage.setAttribute("src",this.result);
-            });
-            reader.readAsDataURL(file);
-        } else {
-            previewDefaultText.style.display = null;
-            previewImage.style.display = null;
-            previewImage.setAttribute("src","");
-        }; 
-    };
-    )
- 
-</script>
- 
-</html>
+{% block external_script %}
+<script src="{% static 'js/sub_category.js' %}"></script>
+{% endblock external_script %}

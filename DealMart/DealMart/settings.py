@@ -157,7 +157,7 @@ LOGIN_URL = 'authentication:login'
 
 MEDIA_URL = '/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 
 
 # Default primary key field type

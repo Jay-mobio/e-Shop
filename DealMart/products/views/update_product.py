@@ -1,6 +1,6 @@
 from products.forms import AddProductForm
 from django.views.generic import UpdateView,View
-from django.shortcuts import render,redirect
+from django.shortcuts import render,HttpResponseRedirect,redirect
 from products.models import Products
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -27,7 +27,7 @@ class UpdateForm(UpdateView):
             product.discription  = form.cleaned_data.get('discription') 
             product.updated_by = request.user
             product.save()
-            return redirect('products:dashboard')
+            return HttpResponseRedirect(request.path_info)
         return render(request,self.template_name,{'form':form})
 
 class RemoveProductImage(View):
@@ -35,4 +35,4 @@ class RemoveProductImage(View):
         product = Products.objects.get(id=pk)
         product.image = "static/images/default.jpg"
         product.save()
-        return redirect("products:dashboard")
+        return redirect("products:update_product_form",pk)

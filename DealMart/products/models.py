@@ -1,5 +1,8 @@
+from unicodedata import category
 from django.db import models
 from user_module.models import User
+
+
 
 # Create your models here.
 
@@ -10,18 +13,32 @@ class Category(models.Model):
     created_by = models.ForeignKey (User,on_delete=models.CASCADE, related_name="created_category")
     updated_by = models.ForeignKey (User,on_delete=models.CASCADE, related_name="updated_category")
     
+    
+    def __str__(self):
+        return self.name
+
+
+class SubCategory(models.Model):
+    name = models.CharField(max_length=255)
+    category = models.ManyToManyField(Category)
+    created_at = models.DateTimeField(auto_now_add = True, null = True)
+    updated_at = models.DateTimeField(auto_now_add = True, null = True)
+    created_by = models.ForeignKey (User,on_delete=models.CASCADE, related_name="created_sub_category",null=True)
+    updated_by = models.ForeignKey (User,on_delete=models.CASCADE, related_name="updated_sub_category",null=True)
+
     def __str__(self):
         return self.name
 
 class Products(models.Model):
     name = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+    sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE,null=True)
     price = models.IntegerField(null = True)
     image = models.ImageField(null=True, blank=True, default="static/images/default.jpg")
     discription = models.TextField(null = True)
     created_at = models.DateTimeField(auto_now_add = True, null = True)
     updated_at = models.DateTimeField(auto_now_add = True, null = True)
-    created_by = models.ForeignKey (User,on_delete=models.CASCADE, related_name="created_product")
+    created_by = models.ForeignKey (User,on_delete=models.CASCADE, related_name="created_product",null=True)
     updated_by = models.ForeignKey (User,on_delete=models.CASCADE,related_name="updated_product" ,null=True)
 
 
