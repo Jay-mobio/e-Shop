@@ -20,7 +20,7 @@ class Category(models.Model):
 
 class SubCategory(models.Model):
     name = models.CharField(max_length=255)
-    category = models.ManyToManyField(Category)
+    category = models.ForeignKey(Category,on_delete=models.CASCADE, related_name="sub_category",null=True)
     created_at = models.DateTimeField(auto_now_add = True, null = True)
     updated_at = models.DateTimeField(auto_now_add = True, null = True)
     created_by = models.ForeignKey (User,on_delete=models.CASCADE, related_name="created_sub_category",null=True)
@@ -32,7 +32,7 @@ class SubCategory(models.Model):
 class Products(models.Model):
     name = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
-    sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE,null=True)
+    sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE,null=True,blank=True)
     price = models.IntegerField(null = True)
     image = models.ImageField(null=True, blank=True, default="static/images/default.jpg")
     discription = models.TextField(null = True)

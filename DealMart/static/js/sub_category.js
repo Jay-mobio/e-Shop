@@ -9,10 +9,9 @@ category.addEventListener('change', (e) => {
         .then((context) => {
             const data = context.data;
             console.log("data", data)
-            var select = "<select>"
+            var select = `<select value='${sub_category}'>`
             for (let i = 0; i < data.length; i++) {
-                console.log(data[i])
-                select += "<option>" + data[i].name + "</option>"
+                select += `<option value='${data[i].name}'>` + data[i].name + `</option>`
                 
             }
             select += "</select>"

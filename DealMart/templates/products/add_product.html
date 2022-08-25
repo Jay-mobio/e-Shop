@@ -47,6 +47,10 @@
                     <div class="bg-light p-30">
                         <form action="" method="POST" enctype="multipart/form-data" id="addproduct">
                             {% csrf_token %}
+                                <div class="alert alert-warning alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                                    {{ form.errors }}
+                                </div>
                             <div class="control-group">
                                 Name:   
                                 <input type="text" class="form-control" id="id_name" placeholder="Product Name" name="name" value="{{name}}" required="required"/>
@@ -57,8 +61,7 @@
                                 {{form.category}}
                                 <p class="help-block text-danger"></p>
                             </div>  
-                            <select id="id_sub_category">Sub Category
-                                </select>
+                            <select id="id_sub_category" name="sub_category">Sub Category<select>
                             <div class="control-group">
                                 Price:
                                 <input type="text" id="id_price" class="form-control" placeholder="price" name="price" value="{{price}}"
@@ -90,6 +93,7 @@
         </div>
         <!-- Add Product End -->    
         {% include 'products/footer.html' %}
+
 
     {% endblock %}
 {% block external_script %}
