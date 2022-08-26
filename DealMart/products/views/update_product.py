@@ -25,8 +25,8 @@ class UpdateForm(UpdateView):
             category = Category.objects.get(id=category_id)
             product.category = category
             sub_category_id = request.POST.get('sub_category')
-            print(sub_category_id)
             sub_category = SubCategory.objects.get(id=sub_category_id)
+            brand = request.POST.get('brand')
             product.price = request.POST.get('price')
             try:
                 product.image = request.FILES['image']

@@ -33,6 +33,7 @@ class Products(models.Model):
     name = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE,null=True,blank=True)
+    brand = models.CharField(max_length=255,null=True)
     price = models.IntegerField(null = True)
     image = models.ImageField(null=True, blank=True, default="static/images/default.jpg")
     discription = models.TextField(null = True)
@@ -51,5 +52,8 @@ class Inventory(models.Model):
     is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add = True,null = True)
     updated_at = models.DateTimeField(auto_now_add = True,null = True)
-    created_by = models.ForeignKey (User,on_delete=models.CASCADE, related_name="created_inventory")
-    updated_by = models.ForeignKey (User,on_delete=models.CASCADE, related_name="updated_inventory")
+    created_by = models.ForeignKey (User,on_delete=models.CASCADE, related_name="created_inventory",null=True)
+    updated_by = models.ForeignKey (User,on_delete=models.CASCADE, related_name="updated_inventory",null=True)
+
+    def __str__(self):
+        return self.product.name

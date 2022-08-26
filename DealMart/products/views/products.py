@@ -39,10 +39,11 @@ class AddProduct(FormView):
             category = Category.objects.get(id=category_id)
             sub_category_id = request.POST.get('sub_category')
             sub_category = SubCategory.objects.get(id=sub_category_id)
+            brand = request.POST.get('brand')
             price = request.POST.get('price')
             discription  = request.POST.get('discription')
             created_by = request.user
-            Products.objects.create(name=name,category=category,price=price,discription=discription,created_by=created_by,sub_category=sub_category,image=images)
+            Products.objects.create(name=name,category=category,price=price,discription=discription,created_by=created_by,sub_category=sub_category,brand=brand,image=images)
             messages.success(request,"Product has been successfully added")
             return redirect('products:dashboard')
         return render(request,self.template_name,{'form':form})

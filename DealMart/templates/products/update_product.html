@@ -47,6 +47,12 @@
                             </div>
                             <div class="control-group">
                             <select id="id_sub_category" name="sub_category">Sub Category<select>
+                            <div class="control-group">
+                                Brand:
+                                <input type="text" class="form-control" placeholder="Product Name" name='brand' value="{{product.brand}}"
+                                    required="required"/>
+                                <p class="help-block text-danger"></p>
+                            </div>
                                 Price:
                                 <input type="text" class="form-control" placeholder="price" name="price" value="{{product.price}}"
                                     required="required"/>
@@ -71,9 +77,12 @@
                             <div class="bg-light p-30 mb-30">
                                 <form action="{% url 'products:remove_image' product.id %}" method="POST">
                                     {% csrf_token %}
+                                    {% if a %}
+                                    {% else %}
                                     <button type="submit" class="close">
                                         <span>&times;</span>
                                     </button>
+                                    {% endif %}
                                     <img src="{{ product.image.url }}" alt="" width="500px" height="450px">
                                 </form>
                             </div> 

@@ -4,7 +4,7 @@ class AddProductForm(forms.ModelForm):
     sub_category = forms.ChoiceField(required=False, widget=forms.Select())
     class Meta:
         model=Products
-        fields = ['name','category','sub_category','price','image','discription']
+        fields = ['name','category','sub_category','brand','price','image','discription']
 
     def is_valid(self) -> bool:
         return True

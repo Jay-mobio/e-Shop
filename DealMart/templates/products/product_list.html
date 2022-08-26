@@ -14,13 +14,13 @@
                 <th></th>
                 
             </tr>
-            {% for product in products  %}
+            {% for i in products  %}
             <tr>
-                <td><img id="img{{product.id}}" src="{{ product.image.url }}" style="height: 100px; width: 100px;"  class="card-img-top" alt="..."></td>
-                <span><td id="name{{product.id}}">{{product.name}}</td> </span>
-                <span><td id="price{{product.id}}">{{product.price}} Rs</td></span>
-                <td><a href="{% url 'products:update_product_form' product.pk %}" class="btn btn-info">Update</a></td>
-                <td><a href="{% url 'products:delete_product' product.pk %}" class="btn btn-danger">Delete</a></td>
+                <td><img src="{{ i.product.image.url }}" style="height: 100px; width: 100px;"  class="card-img-top"></td>
+                <span><td>{{i.product.name}}</td> </span>
+                <span><td>{{i.product.price}} Rs</td></span>
+                <td><a href="{% url 'products:update_product_form' i.pk %}" class="btn btn-info">Update</a></td>
+                <td><a href="{% url 'products:delete_product' i.pk %}" class="btn btn-danger">Delete</a></td>
             </tr>
             {% endfor %}
         </tabel>

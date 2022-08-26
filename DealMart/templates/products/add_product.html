@@ -65,6 +65,12 @@
                             </div>  
                             <select id="id_sub_category" name="sub_category">Sub Category<select>
                             <div class="control-group">
+                                Brand:
+                                <input type="text" class="form-control" placeholder="Product Name" name='brand' value="{{product.brand}}"
+                                    required="required"/>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
                                 Price:
                                 <input type="text" id="id_price" class="form-control" placeholder="price" name="price" value="{{price}}"
                                     required="required"/>
