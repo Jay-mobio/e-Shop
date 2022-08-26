@@ -1,3 +1,5 @@
+from functools import cache
+from unicodedata import category
 from products.models import Category,SubCategory
 from products.forms import AddProductForm
 from django.views.generic import FormView
@@ -35,8 +37,8 @@ class AddProduct(FormView):
             name = request.POST.get('name')
             category_id = request.POST.get('category')  
             category = Category.objects.get(id=category_id)
-            sub_category_name = request.POST.get('sub_category')
-            sub_category = SubCategory.objects.get(name=sub_category_name)
+            sub_category_id = request.POST.get('sub_category')
+            sub_category = SubCategory.objects.get(id=sub_category_id)
             price = request.POST.get('price')
             discription  = request.POST.get('discription')
             created_by = request.user

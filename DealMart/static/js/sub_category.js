@@ -11,7 +11,7 @@ category.addEventListener('change', (e) => {
             console.log("data", data)
             var select = `<select value='${sub_category}'>`
             for (let i = 0; i < data.length; i++) {
-                select += `<option value='${data[i].name}'>` + data[i].name + `</option>`
+                select += `<option value='${data[i].id}'>` + data[i].name + `</option>`
                 
             }
             select += "</select>"
