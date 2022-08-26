@@ -1,7 +1,7 @@
 from products.forms import AddProductForm
 from django.views.generic import UpdateView,View
 from django.shortcuts import render,HttpResponseRedirect,redirect
-from products.models import Products,Category
+from products.models import Products,Category,SubCategory
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib import messages
@@ -24,6 +24,8 @@ class UpdateForm(UpdateView):
             category_id = request.POST.get('category')
             category = Category.objects.get(id=category_id)
             product.category = category
+            sub_category_name = request.POST.get('sub_category')
+            product.sub_category = SubCategory.objects.get(name=sub_category_name)
             product.price = request.POST.get('price')
             try:
                 product.image = request.FILES['image']

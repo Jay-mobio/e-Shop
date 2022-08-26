@@ -46,6 +46,7 @@
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
+                            <select id="id_sub_category" name="sub_category">Sub Category<select>
                                 Price:
                                 <input type="text" class="form-control" placeholder="price" name="price" value="{{product.price}}"
                                     required="required"/>
@@ -82,5 +83,7 @@
         </div>
         <!-- Update Product End -->
         {% include 'products/footer.html' %}
-    
+        {% block external_script %}
+        <script src="{% static 'js/sub_category.js' %}"></script>
+        {% endblock external_script %}
 {% endblock %}
