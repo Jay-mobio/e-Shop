@@ -28,6 +28,12 @@
                     <div class="bg-light p-30">
                         <form action="" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
+                            {% if form.errors %}
+                                <div class="alert alert-warning alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                                    {{ form.errors }}
+                                </div>
+                                {% endif %}
                             <div class="control-group">
                                 Name:
                                 <input type="text" class="form-control" placeholder="Product Name" name='name' value="{{product.name}}"

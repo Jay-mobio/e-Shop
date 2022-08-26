@@ -1,9 +1,10 @@
 from products.forms import AddProductForm
 from django.views.generic import UpdateView,View
 from django.shortcuts import render,HttpResponseRedirect,redirect
-from products.models import Products,Category,SubCategory
+from products.models import Products,Category
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.contrib import messages
 from django.utils.datastructures import MultiValueDictKeyError
 
 @method_decorator(login_required, name='dispatch')
@@ -17,7 +18,7 @@ class UpdateForm(UpdateView):
 
     def post(self,request,pk):
         product = Products.objects.get(id=pk)
-        form = AddProductForm(request.POST,request.FILES,instance=product)
+        form = AddProductForm(instance=product)
         if form.is_valid():
             product.name = request.POST.get('name')
             category_id = request.POST.get('category')
@@ -31,7 +32,9 @@ class UpdateForm(UpdateView):
             product.discription  = request.POST.get('discription') 
             product.updated_by = request.user
             product.save()
+            messages.success(request,"Product has been updated succefully")
             return HttpResponseRedirect(request.path_info)
+
         return render(request,self.template_name,{'form':form})
 
 class RemoveProductImage(View):
@@ -39,4 +42,5 @@ class RemoveProductImage(View):
         product = Products.objects.get(id=pk)
         product.image = "static/images/default.jpg"
         product.save()
+        messages.success(request,"Product has been updated succefully")
         return redirect("products:update_product_form",pk)
