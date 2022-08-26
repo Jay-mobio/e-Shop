@@ -1,11 +1,10 @@
 from products.forms import AddProductForm
 from django.views.generic import UpdateView,View
 from django.shortcuts import render,HttpResponseRedirect,redirect
-from products.models import Products
+from products.models import Products,Category,SubCategory
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.utils.datastructures import MultiValueDictKeyError
 
 @method_decorator(login_required, name='dispatch')
 class UpdateForm(UpdateView):
@@ -20,11 +19,16 @@ class UpdateForm(UpdateView):
         product = Products.objects.get(id=pk)
         form = AddProductForm(request.POST,request.FILES,instance=product)
         if form.is_valid():
-            product.name = form.cleaned_data.get('name')
-            product.category = form.cleaned_data.get('category')
-            product.price = form.cleaned_data.get('price')
-            product.image = form.cleaned_data.get('image')
-            product.discription  = form.cleaned_data.get('discription') 
+            product.name = request.POST.get('name')
+            category_id = request.POST.get('category')
+            category = Category.objects.get(id=category_id)
+            product.category = category
+            product.price = request.POST.get('price')
+            try:
+                product.image = request.FILES['image']
+            except MultiValueDictKeyError:
+                pass 
+            product.discription  = request.POST.get('discription') 
             product.updated_by = request.user
             product.save()
             return HttpResponseRedirect(request.path_info)
