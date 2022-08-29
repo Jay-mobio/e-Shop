@@ -20,10 +20,40 @@
                 <span><td>{{i.product.name}}</td> </span>
                 <span><td>{{i.product.price}} Rs</td></span>
                 <td><a href="{% url 'products:update_product_form' i.pk %}" class="btn btn-info">Update</a></td>
-                <td><a href="{% url 'products:delete_product' i.pk %}" class="btn btn-danger">Delete</a></td>
+                <td><button class="btn btn-danger" data-toggle="modal" data-target="#fm-modal-grid_{{forloop.counter}}">Delete</button></td>
             </tr>
             {% endfor %}
         </tabel>
+            {% for i in products %}
+            <div class="modal fade" id="fm-modal-grid_{{forloop.counter}}" tabindex="-1"
+                role="dialog" aria-labelledBy="fm-modal-grid"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" data-dismiss="modal" aria-label="Cerrar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12 col-sm-6">   
+                                        <p>Are you sure you want to delete {{i}}?</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="modal-footer">
+                            <a href="{% url 'products:delete_product' i.product.id %}" class="btn btn-danger">Delete</a>
+                            <button class="btn btn-primary" data-dismiss="modal">Cancel</button>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         {% comment %} {% include 'products/footer.html' %} {% endcomment %}
 {% endblock %}
 

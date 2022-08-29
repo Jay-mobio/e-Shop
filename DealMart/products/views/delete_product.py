@@ -7,13 +7,10 @@ from django.contrib import messages
 
 @method_decorator(login_required, name='dispatch')
 class DeleteProduct(DeleteView):
-    template_name = "products/delete_product.html"
-    def get(self,request,pk):
-        product = Products.objects.get(id=pk)
-        return render(request,self.template_name,{'product':product})
+    template_name = "products/product_list.html"
 
-    def post(self,request,pk):
+    def get(self,request,pk):
         product = Products.objects.get(id=pk)
         product.delete()        
         messages.success(request,"Product has been updated succefully")
-        return redirect('products:dashboard')
+        return redirect("products:dashboard")
