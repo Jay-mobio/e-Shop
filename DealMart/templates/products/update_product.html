@@ -77,13 +77,12 @@
                             <div class="bg-light p-30 mb-30">
                                 <form action="{% url 'products:remove_image' product.id %}" method="POST">
                                     {% csrf_token %}
-                                    {% if a %}
-                                    {% else %}
+                                    {% if product.image != "static/images/default.jpg" %}                                    
                                     <button type="submit" class="close">
-                                        <span>&times;</span>
+                                        <span hiddn>&times;</span>
                                     </button>
                                     {% endif %}
-                                    <img src="{{ product.image.url }}" alt="" width="500px" height="450px">
+                                    <img src="{{ product.image.url }}" alt="" width="500px" height="450px" id="img">
                                 </form>
                             </div> 
                         </div>                   
@@ -95,4 +94,5 @@
         {% block external_script %}
         <script src="{% static 'js/sub_category.js' %}"></script>
         {% endblock external_script %}
+
 {% endblock %}

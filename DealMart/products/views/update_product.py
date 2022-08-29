@@ -13,12 +13,14 @@ class UpdateForm(UpdateView):
 
     def get(self,request,pk):
         product = Products.objects.get(id=pk)
+        print(product.image)
         form = AddProductForm(instance=product)
         return render(request,self.template_name,{'form':form, 'product':product})
 
     def post(self,request,pk):
         product = Products.objects.get(id=pk)
         form = AddProductForm(instance=product)
+        
         if form.is_valid():
             product.name = request.POST.get('name')
             category_id = request.POST.get('category')
