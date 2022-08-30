@@ -11,5 +11,5 @@ class DeleteProduct(DeleteView):
     def get(self,request,pk):
         product = Products.objects.get(id=pk)
         product.delete()        
-        messages.success(request,"Product has been updated succefully")
+        messages.success(request,"Product has been delete succefully")
         return redirect("products:dashboard")

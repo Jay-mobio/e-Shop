@@ -1,0 +1,86 @@
+{% extends 'products/product_header.html' %}
+{% load static %}
+{% block title  %}Product etail{% endblock title %}
+{% block content %}
+        {% include 'products/toolbar.html'  %}
+        {% include 'products/navbar.html' %}
+    
+    
+        <!-- Breadcrumb Start -->
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col-12">
+                    <nav class="breadcrumb bg-light mb-30">
+                        <a class="breadcrumb-item text-dark" href="#">Home</a>
+                        <span class="breadcrumb-item active">Product Detail</span>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+    
+    
+        <!-- Update Product -->
+        <div class="container-fluid">
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Product Detail</span></h2>
+            <div class="row px-xl-5">
+                <div class="col-lg-7 mb-5">
+                    <div class="bg-light p-30">
+                        <form action="">
+                            <div class="control-group">
+                                Name:
+                                <input type="text" class="form-control" placeholder="Product Name" name='name' value="{{product.product.name}}"
+                                    required="required"/>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                Category:
+                                {{product.product.category}}
+                            <div class="control-group">
+                                Sub Category:
+                                {{product.product.sub_category}}
+                                Brand:
+                                <input type="text" class="form-control" placeholder="Product Name" name='brand' value="{{product.product.brand}}"
+                                    required="required" readonly/>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                                Price:
+                                <input type="text" class="form-control" placeholder="price" name="price" value="{{product.product.price}}"
+                                    required="required" readonly/>
+                                <p class="help-block text-danger"></p>
+                            </div><div>
+                                Quantity:
+                                <input type="text" class="form-control" placeholder="price" name="price" value="{{product.product_quantity}}"
+                                    required="required" readonly/>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            Available?:
+                                <input type="text" class="form-control " placeholder="price" name="price" value="{{product.is_active}}"
+                                    required="required" readonly/>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            </div>
+                            <div class="control-group">
+                            </div>
+                                <textarea style="margin-top: 5px;" class="form-control" rows="6" placeholder="About product" name="discription"
+                                    required="required" readonly>{{product.product.discription}}</textarea>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </form>
+                        </div>
+                        <div class="col-lg-5 mb-5">
+                        </div>                   
+                            <div class="bg-light p-30 mb-30">
+                                    <img src="{{ product.product.image.url }}" alt="" width="500px" height="450px" id="img">
+                                </form>
+                            </div> 
+                    </div>
+                </div>
+        </div>
+        <!-- Update Product End -->
+        {% include 'products/footer.html' %}
+        {% block external_script %}
+        <script src="{% static 'js/sub_category.js' %}"></script>
+        {% endblock external_script %}
+
+{% endblock %}
