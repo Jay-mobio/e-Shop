@@ -13,7 +13,6 @@ class UpdateForm(UpdateView):
 
     def get(self,request,pk):
         product = Products.objects.get(id=pk)
-        print(product.image)
         form = AddProductForm(instance=product)
         return render(request,self.template_name,{'form':form, 'product':product})
 
