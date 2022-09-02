@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+from DealMart.config import Config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-e$!%s7evln1+eo7pbz^3ze-*mdkrdz9zd-6igb2f9dhdlzkvl5'
+SECRET_KEY = Config.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = Config.DEBUG_MODE
 
 ALLOWED_HOSTS = []
 
@@ -38,8 +39,26 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user_module'
+    'django.contrib.sites',
+    'user_module',
+    'authentication',
+    'products',
+    'django_filters',
+
+    # djang all-auth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+    'crispy_forms',
+
+
 ]
+
+SITE_ID = 1
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,7 +76,7 @@ AUTH_USER_MODEL = 'user_module.User'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,10 +84,20 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
+                
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'DealMart.wsgi.application'
 
@@ -78,11 +107,11 @@ WSGI_APPLICATION = 'DealMart.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'DealMart',
-        'USER': 'postgres',
-        'PASSWORD': '1713',
-        'HOST':'localhost'
+        'ENGINE': Config.ENGINE ,
+        'NAME': Config.NAME ,
+        'USER': Config.USER ,
+        'PASSWORD': Config.PASSWORD ,
+        'HOST': Config.HOST
     }
 }
 
@@ -123,7 +152,59 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [BASE_DIR/"static"]
+
+LOGIN_URL = 'authentication:login'
+
+MEDIA_URL = '/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_FILE_PATH = str(BASE_DIR.joinpath('sent_emails'))
+EMAIL_BACKEND = Config.EMAIL_BACKEND
+EMAIL_HOST = Config.EMAIL_HOST
+EMAIL_PORT = Config.EMAIL_PORT
+EMAIL_USE_TLS = Config.EMAIL_USE_TLS
+EMAIL_HOST_USER = Config.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = Config.EMAIL_HOST_PASSWORD
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+        }
+    }
+}
+
+LOGIN_REDIRECT_URL = 'authentication:customer_page'
+
+ACCOUNT_LOGOUT_REDIRECT_URL = 'authentication:login'
+
+ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_USERNAME_REQUIRED = False
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+ACCOUNT_SESSION_REMEMBER = True
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+ACCOUNT_FORMS = { 'signup': 'user_module.forms.CustomSignupForm', }
+
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+
+# 619445567254-bs08ck9kmaivktq2sll1nu553rocqgjh.apps.googleusercontent.com
+# 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

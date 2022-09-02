@@ -1,0 +1,145 @@
+{% extends 'products/product_header.html' %}
+{% load static %}
+{% block title  %}Home{% endblock title %}
+{% block content %}
+        {% include 'products/toolbar.html'  %}
+        {% include 'products/navbar.html' %}
+        {% load product_sorting %}
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+            <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% if products %}
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <!-- Shop Sidebar Start -->
+                <div class="bg-light p-4 mb-30">
+                    <form action="" method="GET">
+                            <div class="col-lg-3 col-md-4">
+                                <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl();" id="sort" name="ordering" value="{{ordering}}">
+                                    <option selected disabled>-------</option>
+                                    <option value="low_to_high">Price Low To High</option>
+                                    <option value="high_to_low">Price High To Low</option>
+                                </select> 
+                                <input type="submit">
+                    </form>
+                </div>
+                <!-- Price Start -->
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
+                <div class="bg-light p-4 mb-30">
+                    <form>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" checked id="price-all">
+                            <label class="custom-control-label" for="price-all">All Price</label>
+                            <span class="badge border font-weight-normal">1000</span>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-1">
+                            <label class="custom-control-label" for="price-1">$0 - $100</label>
+                            <span class="badge border font-weight-normal">150</span>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-2">
+                            <label class="custom-control-label" for="price-2">$100 - $200</label>
+                            <span class="badge border font-weight-normal">295</span>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-3">
+                            <label class="custom-control-label" for="price-3">$200 - $300</label>
+                            <span class="badge border font-weight-normal">246</span>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-4">
+                            <label class="custom-control-label" for="price-4">$300 - $400</label>
+                            <span class="badge border font-weight-normal">145</span>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
+                            <input type="checkbox" class="custom-control-input" id="price-5">
+                            <label class="custom-control-label" for="price-5">$400 - $500</label>
+                            <span class="badge border font-weight-normal">168</span>
+                        </div>
+                    </form>
+                </div>
+                <!-- Price End -->
+            </div>
+                <!-- Shop Sidebar End -->
+    
+                <!-- Shop Product Start -->
+                <div class="col-lg-9 col-md-8">
+                    <table class="table table-sm">
+                        <tr>
+                            <th>No.</th>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Brand</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th style="text-align:center" colspan="3">Action</th>
+                            <th></th>
+                            <th></th>
+                            
+                        </tr>
+                        {% for i in finalproducts  %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td><img src="{{ i.product.image.url }}" style="height: 100px; width: 100px;"  class="card-img-top"></td>
+                                <span><td>{{i.product.name}}</td> </span>
+                                <span><td>{{i.product.brand}}</td> </span>
+                                <span><td>{{i.product.price}} Rs</td></span>
+                                <span><td>{{i.product_quantity}}</td></span>
+                                <td><a href="{% url 'products:update_product_form' i.pk %}" class="btn btn-info">Update</a></td>
+                                <td><button class="btn btn-danger" data-toggle="modal" data-target="#fm-modal-grid_{{forloop.counter}}">Delete</button></td>
+                                <td><a href="{% url 'products:product_detail' i.pk %}" class="btn btn-primary">Detail</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    {% comment %} <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {% if finalproducts.has_previous %}
+                            <li class="page-item"><a class="page-link" href="{% my_url finalproducts.previous_page_number 'page_number' request.GET.urlencode %}">Previous</a></li>
+                            {% endif %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="/page{{page_number}}">{{page_number}}<span class="sr-only">(current)</span></a>
+                            </li>
+                        {% if finalproducts.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% my_url finalproducts.next_page_number 'page_number' request.GET.urlencode %}">Next</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav> {% endcomment %}
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {% if finalproducts.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?{% query_transform page=finalproducts.previous_page_number %}">Previous</a></li>
+                            {% endif %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="/page{{page_number}}">{{page_number}}<span class="sr-only">(current)</span></a>
+                            </li>
+                        {% if finalproducts.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?{% query_transform page=finalproducts.next_page_number %}">Next</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>No Products are available</p>
+        {% endif %}
+        <!-- Shop Product End -->
+
+        {% include 'products/footer.html' %}
+        {% block external_script %}
+        <script src="{% static 'js/sortingproduct.js' %}"></script>
+        <script src="{% static 'js/urlprams.js' %}"></script>
+        {% endblock external_script %}
+{% endblock %}
+
+
