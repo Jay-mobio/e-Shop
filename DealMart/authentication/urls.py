@@ -1,13 +1,14 @@
 from django.urls import path
 from authentication.views import (
     change_password, login, logout, otp, password_reset, 
-     register,customer
+     register,customer,home
 )
 
 
 app_name = "authentication"
 
 urlpatterns = [
+    path('home/',home.HomeView.as_view(),name="home"),
     path('login/',login.LoginView.as_view(),name = "login"),
     path('register/',register.CustomerRegisterView.as_view(),name = "register"),
     path('otp_verify/',otp.OTP.as_view(),name="verify_otp"),
