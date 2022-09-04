@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'user_module',
     'authentication',
+    'products',
+    'django_filters',
 
     # djang all-auth
     'allauth',
@@ -153,6 +155,10 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR/"static"]
 
 LOGIN_URL = 'authentication:login'
+
+MEDIA_URL = '/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 
 
 # Default primary key field type

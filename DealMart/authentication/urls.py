@@ -1,7 +1,5 @@
 from django.urls import path
-
-from ..product_admin.views import home
-from .views import (
+from authentication.views import (
     change_password, login, logout, otp, password_reset, 
      register,customer
 )

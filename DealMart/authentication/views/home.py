@@ -9,4 +9,4 @@ from django.utils.decorators import method_decorator
 class HomeView(TemplateView):
     @method_decorator(login_required)
     def get(self, request):
-        return render(request,'product_admin/home.html')   
+        return render(request,'authentication/home.html') 
