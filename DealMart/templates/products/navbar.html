@@ -43,7 +43,7 @@
                         <a href="{% url 'products:dashboard' %}" class="nav-item nav-link">Dashboard</a>
                         <a href="{% url 'products:add_product' %}" class="nav-item nav-link">Add Products</a>
                     </div>
-                    <div style="color:antiquewhite"><i>{{user.first_name}}</i></div>
+                    <div style="color:antiquewhite"><i><a href="{% url 'product_admin:profile' user.id %}" style="margin-left: 6px"></i>{{user.first_name}}</div>
                     <div><a href="{% url 'authentication:logout' %}" style="margin-left: 6px;">Logout</a></div>
                 </div>
             </nav>

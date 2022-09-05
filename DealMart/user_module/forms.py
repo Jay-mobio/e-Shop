@@ -7,6 +7,9 @@ class UserRegister(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name','last_name','email','phone','password1','password2')
+    
+    def is_valid(self) -> bool:
+        return True
 
     def clean_first_name(self):
         first_name = self.cleaned_data['first_name']

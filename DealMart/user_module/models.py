@@ -10,7 +10,6 @@ class User(AbstractUser):
     profile_pic = models.ImageField(null=True, blank = True,default="/static/images/profile1.png")
     address = models.TextField()
 
-    is_email_varified = models.BooleanField(default=False)
 
 
     objects = UserManager()

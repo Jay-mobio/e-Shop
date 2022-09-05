@@ -14,7 +14,7 @@ from products.filters import ProductFilters
 class Dashboard(ListView):
     template_name = "products/product_list.html"
     model = Products
-    paginate_by = 3
+    paginate_by = 2
     
 
     def get(self,request):
