@@ -7,11 +7,12 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.template.loader import render_to_string
 from products.filters import ProductFilters
+from product_admin.mixins import CheckProductOwnerGroup
 
 
 
 
-class Dashboard(ListView):
+class Dashboard(CheckProductOwnerGroup,ListView):
     template_name = "products/product_list.html"
     model = Products
     paginate_by = 2

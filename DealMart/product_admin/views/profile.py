@@ -6,13 +6,13 @@ from user_module.forms import UserRegister
 from django.shortcuts import render,redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
-from django.urls import reverse_lazy
+from product_admin.mixins import CheckProductOwnerGroup
 
 
 
 
-# @method_decorator(login_required, name='dispatch')
-class ProfileUpdate(FormView):
+@method_decorator(login_required, name='dispatch')
+class ProfileUpdate(CheckProductOwnerGroup,FormView):
     title = ("Profile Update")
     template_name = "product_admin/profile.html"
     form_class = UserRegister
