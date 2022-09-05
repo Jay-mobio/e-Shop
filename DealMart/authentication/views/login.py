@@ -28,8 +28,8 @@ class LoginView(View):
             if user:
                 login(request, user)
                 if user.groups.filter(name='Product Owner').exists():
-                    return redirect('authentication:home')
-                return redirect('authentication:customer_page') 
+                    return redirect('products:dashboard')
+                return redirect('authentication:home') 
             else:
                 messages.error(request,'email or password not correct')
                 return redirect('authentication:login')  

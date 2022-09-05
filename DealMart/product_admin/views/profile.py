@@ -3,7 +3,7 @@ from django.views.generic import FormView,View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from user_module.forms import UserRegister
-from django.shortcuts import render,redirect,HttpResponseRedirect
+from django.shortcuts import render,redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
 from django.urls import reverse_lazy

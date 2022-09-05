@@ -15,7 +15,7 @@ from customer.mixins import CheckCustomerGroup
 @method_decorator(login_required, name='dispatch')
 class CustomerProfileUpdate(CheckCustomerGroup,FormView):
     title = ("Profile Update")
-    template_name = "product_admin/customer_profile.html"
+    template_name = "customer/customer_profile.html"
     form_class = UserRegister
 
 

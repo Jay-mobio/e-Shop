@@ -1,6 +1,8 @@
 from django.urls import path
 from customer.views import customer_profile
-app_name = 'product_admin'
+
+    
+app_name = 'customer'
 
 urlpatterns = [
     path("customer_profile/<int:pk>",customer_profile.CustomerProfileUpdate.as_view(),name="customer_profile"),
