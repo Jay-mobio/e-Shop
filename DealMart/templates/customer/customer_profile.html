@@ -69,7 +69,7 @@
                         </form>
                         <div class="col-lg-5 mb-5">
                           <div class="bg-light p-30 mb-30">
-                              <form action="{% url 'product_admin:remove_profile_pic' user.id %}" method="POST">  
+                              <form action="{% url 'customer:customer_sremove_profile_pic' user.id %}" method="POST">  
                                 {% csrf_token %}
                                 {% if user.profile_pic != "static/images/profile1.png" %}                                    
                                 <button type="submit" class="close">
