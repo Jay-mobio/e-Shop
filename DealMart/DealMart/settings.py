@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'user_module',
     'authentication',
     'products',
+    'product_admin',
+    'customer',
     'django_filters',
 
     # djang all-auth

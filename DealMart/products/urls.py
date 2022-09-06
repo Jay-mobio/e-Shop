@@ -14,6 +14,6 @@ urlpatterns = [
     path('delete_product/<int:pk>/',delete_product.DeleteProduct.as_view(),name="delete_product"),
     path('remove_image/<int:pk>/',update_product.RemoveProductImage.as_view(),name="remove_image"),
     path('select_cat/<id>/',subcategory.ChooseSubCategory.as_view(),name="products_sub_categories"),
-    path('sort/',dashboard.sort,name="sort")
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

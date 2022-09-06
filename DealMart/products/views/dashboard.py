@@ -2,31 +2,23 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from products.models import Inventory
 from django.core.paginator import Paginator
-from products.models import Products
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.template.loader import render_to_string
-from products.filters import ProductFilters
-from product_admin.mixins import CheckProductOwnerGroup
 
 
 
 
-class Dashboard(CheckProductOwnerGroup,ListView):
+class Dashboard(ListView):
     template_name = "products/product_list.html"
-    model = Products
-    paginate_by = 2
+    model = Inventory
+    paginate_by = 3
     
 
     def get(self,request):
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")
         products = Inventory.objects.filter(is_active=True)
-
-        filtered_product = ProductFilters(
-            request.GET,
-            queryset= Inventory.objects.filter(is_active=True)
-        )
 
 
         sort = {
@@ -53,21 +45,7 @@ class Dashboard(CheckProductOwnerGroup,ListView):
         page_number = request.GET.get('page',1)
         finalproducts = paginator.get_page(page_number)
 
-        context = {'products':products,'search':search,'finalproducts':finalproducts,'page_number':page_number,'filtered_product':filtered_product.qs}
+        context = {'products':products,'search':search,'finalproducts':finalproducts,'page_number':page_number}
         return render(request,self.template_name,context)
         
-
-@csrf_exempt
-def sort(request):
-    ordering = request.GET.get('sortID')
-    products = Dashboard.get(products)
-    if ordering == 'low_to_high':
-        products = products.order_by('price')
-    elif ordering == 'high_to_low':
-        products = products.order_by('-price')
-
-    
-    t = render_to_string('products/product_list.html', {'products': products})
-
-    return JsonResponse({'data':t})
 
