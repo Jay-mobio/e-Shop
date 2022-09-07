@@ -9,7 +9,8 @@ class ListCart(ListView):
     template_name = "customer/cart.html"
 
     def get(self,request):
-        cart = Cart.objects.all()
+        user = request.user
+        cart = Cart.objects.filter(created_by=user)
         return render(request,self.template_name,{'cart':cart})
 
 class RemoveCartProduct(DeleteView):
@@ -30,7 +31,7 @@ def addtocart(request, id):
     #     # return JsonResponse({'status':"Product has been added in Cart"})
     
     product = Products.objects.get(id=id)
-    Cart.objects.create(product=product)
+    Cart.objects.create(product=product,created_by=request.user)
     return JsonResponse({'status':200})
 
 
