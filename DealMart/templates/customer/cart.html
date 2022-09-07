@@ -15,115 +15,36 @@
             <th>Remove</th>
         </tr>
     </thead>
-    <tbody class="align-middle">
-        <tr>
-            <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"> Product Name</td>
-            <td class="align-middle">$150</td>
-            <td class="align-middle">
-                <div class="input-group quantity mx-auto" style="width: 100px;">
-                    <div class="input-group-btn">
-                        <button class="btn btn-sm btn-primary btn-minus" >
-                        <i class="fa fa-minus"></i>
-                        </button>
+    {% for i in cart %}
+        <tbody class="align-middle" id="carttable">
+            <tr class="cart-row">
+                <td class="align-middle"><img src="{{i.product.image.url}}" alt="" style="width: 100px;">{{i.product.name}}</td>
+                <td class="align-middle cart-price" id="price{{i.product.id}}" value="{{i.product.price}}">{{i.product.price}}</td>
+                <td class="align-middle">
+                    <div class="input-group quantity mx-auto" style="width: 100px;">
+                        <div class="input-group-btn">
+                            <button class="btn btn-sm btn-primary btn-minus" onclick="multiplyBy({{i.product.id}}, 'subtract')">
+                            <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center cart-quantity-input"id="quantity{{i.product.id}}"  value="0">
+                        <div class="input-group-btn">
+                            <button class="btn btn-sm btn-primary btn-plus" onclick="multiplyBy({{i.product.id}}, 'plus')">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
-                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="1">
-                    <div class="input-group-btn">
-                        <button class="btn btn-sm btn-primary btn-plus">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-            </td>
-            <td class="align-middle">$150</td>
-            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
-        </tr>
-        <tr>
-            <td class="align-middle"><img src="img/product-2.jpg" alt="" style="width: 50px;"> Product Name</td>
-            <td class="align-middle">$150</td>
-            <td class="align-middle">
-                <div class="input-group quantity mx-auto" style="width: 100px;">
-                    <div class="input-group-btn">
-                        <button class="btn btn-sm btn-primary btn-minus" >
-                        <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="1">
-                    <div class="input-group-btn">
-                        <button class="btn btn-sm btn-primary btn-plus">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-            </td>
-            <td class="align-middle">$150</td>
-            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
-        </tr>
-        <tr>
-            <td class="align-middle"><img src="img/product-3.jpg" alt="" style="width: 50px;"> Product Name</td>
-            <td class="align-middle">$150</td>
-            <td class="align-middle">
-                <div class="input-group quantity mx-auto" style="width: 100px;">
-                    <div class="input-group-btn">
-                        <button class="btn btn-sm btn-primary btn-minus" >
-                        <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="1">
-                    <div class="input-group-btn">
-                        <button class="btn btn-sm btn-primary btn-plus">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-            </td>
-            <td class="align-middle">$150</td>
-            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
-        </tr>
-        <tr>
-            <td class="align-middle"><img src="img/product-4.jpg" alt="" style="width: 50px;"> Product Name</td>
-            <td class="align-middle">$150</td>
-            <td class="align-middle">
-                <div class="input-group quantity mx-auto" style="width: 100px;">
-                    <div class="input-group-btn">
-                        <button class="btn btn-sm btn-primary btn-minus" >
-                        <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="1">
-                    <div class="input-group-btn">
-                        <button class="btn btn-sm btn-primary btn-plus">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-            </td>
-            <td class="align-middle">$150</td>
-            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
-        </tr>
-        <tr>
-            <td class="align-middle"><img src="img/product-5.jpg" alt="" style="width: 50px;"> Product Name</td>
-            <td class="align-middle">$150</td>
-            <td class="align-middle">
-                <div class="input-group quantity mx-auto" style="width: 100px;">
-                    <div class="input-group-btn">
-                        <button class="btn btn-sm btn-primary btn-minus" >
-                        <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="1">
-                    <div class="input-group-btn">
-                        <button class="btn btn-sm btn-primary btn-plus">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-            </td>
-            <td class="align-middle">$150</td>
-            <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
-        </tr>
-    </tbody>
+                </td>
+                <td class="align-middle" id="result{{i.product.id}}"></td>
+                <td class="align-middle"><a href="{% url 'customer:remove_item' i.product.id %}"class="btn btn-sm btn-danger"><i class="fa fa-times"></i>Remove</a></td>
+            </tr>
+        </tbody>
+    {% endfor %}
 </table>
 
-{% include 'products/footer.html' %}
 
+    {% include 'products/footer.html' %}
+    {% block external_script %}
+        <script src="{% static 'js/livetotal.js' %}"></script>
+    {% endblock external_script %}
 {% endblock %}

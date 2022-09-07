@@ -2,36 +2,133 @@
 {% load static %}
 {% block title  %}Home{% endblock title %}
 {% block content %}
-{% include 'products/toolbar.html'  %}
-{% include 'products/navbar.html' %}s
-
-{% comment %} {% if forloop.counter|divisibleby:3 %} {% endcomment %}
-<div class="row">
-            {% for i in products %}
-            <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden" style="width: 300px;">
-                        <img class="img-fluid w-100" src="{{i.product.image.url}}" alt="">
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">{{i.products.name}}</a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>{{i.product.price}}</h5><h6 class="text-muted ml-2"><del>{{i.product.price}}</del></h6>
+        {% include 'products/toolbar.html'  %}
+        {% include 'products/navbar.html' %}
+        {% load product_sorting %}
+        {% if products %}        
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <!-- Shop Sidebar Start -->
+                <div class="bg-light p-4 mb-30">
+                    <form action="" method="GET">
+                            <div class="col-lg-3 col-md-4">
+                                <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl();" id="sort" name="ordering" value="{{ordering}}">
+                                    <option selected disabled>-------</option>
+                                    <option value="low_to_high">Price Low To High</option>
+                                    <option value="high_to_low">Price High To Low</option>
+                                </select>
+                    </form>
+                </div>
+                <!-- Price Start -->
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
+                <div class="bg-light p-4 mb-30">
+                    <form>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" checked id="price-all">
+                            <label class="custom-control-label" for="price-all">All Price</label>
+                            <span class="badge border font-weight-normal">1000</span>
                         </div>
-                        <div>
-                            <button data-product="{{i.product.id}}" data-action="add" class="btn btn-primary add-btn update-cart">Add to Cart</button>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-1">
+                            <label class="custom-control-label" for="price-1">$0 - $100</label>
+                            <span class="badge border font-weight-normal">150</span>
                         </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-2">
+                            <label class="custom-control-label" for="price-2">$100 - $200</label>
+                            <span class="badge border font-weight-normal">295</span>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-3">
+                            <label class="custom-control-label" for="price-3">$200 - $300</label>
+                            <span class="badge border font-weight-normal">246</span>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-4">
+                            <label class="custom-control-label" for="price-4">$300 - $400</label>
+                            <span class="badge border font-weight-normal">145</span>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
+                            <input type="checkbox" class="custom-control-input" id="price-5">
+                            <label class="custom-control-label" for="price-5">$400 - $500</label>
+                            <span class="badge border font-weight-normal">168</span>
+                        </div>
+                    </form>
+                </div>
+                <!-- Price End -->
+            </div>
+                <!-- Shop Sidebar End -->
+    
+                <!-- Shop Product Start -->
+                <div class="col-lg-9 col-md-8">
+                {% comment %} {% if forloop.counter|divisibleby:3 %} {% endcomment %}
+                    <div class="row">
+                        {% for i in products %}
+                        {% csrf_token %}
+                        <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                            <div class="product-item bg-light mb-">
+                                <input type="hidden" value="{{i.product.id}}" class="product_id" id="product_id">
+                                {% comment %} <select "hidden" value="{{i.products.sub_category}}" class="subcat_id"> {% endcomment %}
+                                <div class="product-img position-relative overflow-hidden">
+                                    <img src="{{i.product.image.url}}" alt="" style="width:100%; height:275px ;">
+                                </div>
+                                <div class="text-center py-4">
+                                    <a class="h6 text-decoration-none text-truncate" href="">{{i.products.name}}</a>
+                                    <div class="d-flex align-items-center justify-content-center mt-2">
+                                        <h5>{{i.product.price}}</h5><h6 class="text-muted ml-2"><del>{{i.product.price}}</del></h6>
+                                    </div>
+                                    <div>
+                                        <button data-id = "{{i.product.id   }}" data-action="add" class="btn btn-primary add-btn addtocart" id="addtocart">Add to Cart</button>
+                                        <button data-product="" data-action="" class="btn btn-primary add-btn buy-now">Buy Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
+                    {% comment %} {% endif %} {% endcomment %}
+                    {% comment %} <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {% if finalproducts.has_previous %}
+                            <li class="page-item"><a class="page-link" href="{% my_url finalproducts.previous_page_number 'page_number' request.GET.urlencode %}">Previous</a></li>
+                            {% endif %}
+                            <li class="page-item disabled">
+                                <a class="pa    ge-link" href="/page{{page_number}}">{{page_number}}<span class="sr-only">(current)</span></a>
+                            </li>
+                        {% if finalproducts.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% my_url finalproducts.next_page_number 'page_number' request.GET.urlencode %}">Next</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav> {% endcomment %}
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {% if finalproducts.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?{% query_transform page=finalproducts.previous_page_number %}">Previous</a></li>
+                            {% endif %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="/page{{page_number}}">{{page_number}}<span class="sr-only">(current)</span></a>
+                            </li>   
+                        {% if finalproducts.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?{% query_transform page=finalproducts.next_page_number %}">Next</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
                 </div>
             </div>
-            {% endfor %}
         </div>
-    {% comment %} {% endif %} {% endcomment %}
+    </div>
+        {% else %}
+        <p>No Products are available</p>
+        {% endif %}
+        <!-- Shop Product End -->
 
-    {% include 'products/footer.html' %}
-    {% block external_script %}
-            <script src="{% static 'js/cart.js' %}"></script>
-            <script src="{% static 'js/csrf.js' %}"></script>
-    {% endblock external_script %}
-
+        {% include 'products/footer.html' %}
+        {% block external_script %}
+        <script src="{% static 'js/sortingproduct.js' %}"></script>
+        <script src="{% static 'js/urlprams.js' %}"></script>
+        <script src="{% static 'js/searching.js' %}"></script>
+        <script src="{% static 'js/cart.js' %}"></script>
+        {% endblock external_script %}
 {% endblock %}
