@@ -30,7 +30,9 @@ def addtocart(request, id):
     #     # return JsonResponse({'status':"Product has been added in Cart"})
     
     product = Products.objects.get(id=id)
-    Cart.objects.create(product=product)
+    cart = Cart.objects.create(product=product)
+    cart.created_by = request.user
+    cart.save()
     return JsonResponse({'status':200})
 
 
