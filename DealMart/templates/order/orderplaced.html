@@ -1,0 +1,10 @@
+{% extends 'products/product_header.html' %}
+{% load static %}
+{% block title  %}Cart{% endblock title %}
+{% block content %}
+{% include 'products/toolbar.html'  %}
+{% include 'products/navbar.html' %}
+<p>Your order has been placed</p>
+
+    {% include 'products/footer.html' %}
+{% endblock %}

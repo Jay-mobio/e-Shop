@@ -12,7 +12,7 @@ class Order(models.Model):
         ('delivered','delivered'),
     )
 
-    cart = models.ForeignKey(Cart,on_delete=models.CASCADE,null=True)
+    cart = models.ManyToManyField(Cart)
     total_amount = models.IntegerField(null=True,blank=True)
     status = models.CharField(max_length=200,null = True,choices=STATUS)
     created_at = models.DateTimeField(auto_now_add = True, null = True)

@@ -20,19 +20,8 @@ class RemoveCartProduct(DeleteView):
 
 @csrf_exempt
 def addtocart(request, id):
-    # if request.method=='POST':
-    # product_id = id)
-    # if (Cart.objects.filter(user=request.user.id,product_id=id)):
-    #     return JsonResponse({'status':"Product Already in Cart"})
-    # else:
-    #     quantity = product.quantity + 1
-    #     Cart.objects.create(user=request.user,product_id=id,quantity=quantity)
-    #     # return JsonResponse({'status':"Product has been added in Cart"})
-    
     product = Products.objects.get(id=id)
-    cart = Cart.objects.create(product=product)
-    cart.created_by = request.user
-    cart.save()
+    Cart.objects.create(product=product,created_by=request.user)
     return JsonResponse({'status':200})
 
 

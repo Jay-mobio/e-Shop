@@ -1,6 +1,6 @@
 {% extends 'products/product_header.html' %}
 {% load static %}
-{% block title  %}Cart{% endblock title %}
+{% block title  %}Checkout{% endblock title %}
 {% block content %}
 {% include 'products/toolbar.html'  %}
 {% include 'products/navbar.html' %}
@@ -19,7 +19,7 @@
     </div>
     <!-- Breadcrumb End -->
 
-
+    {% if cart %}
     <!-- Checkout Start -->
     <div class="container-fluid">
         <div class="row px-xl-5">
@@ -189,14 +189,17 @@
                                 <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
                             </div>
                         </div>
+                        <form action="{% url 'order:create_order' %}" method="post">
+                            {% csrf_token %}
                         <button class="btn btn-block btn-primary font-weight-bold py-3">Place Order</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Checkout End -->
-
+{% endif %}
 
     {% include 'products/footer.html' %}
 {% endblock %}

@@ -7,9 +7,6 @@ class Checkout(ListView):
     template_name = "order/checkout.html"
 
     def get(self,request):
-        cart = Cart.objects.all()
-        user = request.user
-        user = User.objects.filter(email=user)
-
+        cart = Cart.objects.filter(created_by = request.user)
         return render(request,self.template_name,{'cart':cart})
 
