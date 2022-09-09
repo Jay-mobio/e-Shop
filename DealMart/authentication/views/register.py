@@ -15,7 +15,7 @@ class UserCreation(CreateView):
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
-            email = form.cleaned_data.get('email')
+            email = request.POST.get('email')
             if User.objects.filter(email=email).exists():
                 messages.success(request,"User already exists") 
                 return redirect(self.redirect_url)
