@@ -6,11 +6,11 @@
     font-family: 'Roboto', sans-serif;
 }
 body{
-    background-color: #fff3e0;
+    background-color: #fff4ca;
 }
 
 #order-heading{
-    background-color: #edf4f7;
+    background-color: #ffd333;
     position: relative;
     border-top-left-radius: 25px;
     max-width: 800px;

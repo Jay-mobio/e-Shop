@@ -9,7 +9,7 @@ class ListCart(ListView):
     template_name = "customer/cart.html"
 
     def get(self,request):
-        cart = Cart.objects.all()
+        cart = Cart.objects.filter(is_active=True)
         return render(request,self.template_name,{'cart':cart})
 
 class RemoveCartProduct(DeleteView):

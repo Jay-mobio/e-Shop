@@ -4,18 +4,13 @@ from django.views.generic import TemplateView
 from customer.models import Cart
 from order.models import Order
 
-class CreateOrder(CreateView):
-    template_name = "order/orders.html"
-
-    def get(self,request):
-        order = Order.objects.filter(created_by=request.user)
-        return render(request,self.template_name,{'orsder':order})
-    
+class CreateOrder(CreateView):    
     def post(self, request):
         cart = Cart.objects.filter(created_by = request.user)
         order = Order.objects.create(created_by=request.user)
-        order.cart.set(cart)
-        cart.delete()
+        for i in cart:
+            order.cart.add(i)
+        Cart.objects.filter(created_by = request.user).update(is_active=False)
         return redirect("order:order_placed")
 
 class OrderPlaced(TemplateView):

@@ -21,15 +21,15 @@
                         </tr>
                     </thead>
                     {% for i in cart %}
-                        <tbody class="align-middle" id="carttable">
-                            <tr class="cart-row">
-                                <td class="align-middle"><img src="{{i.product.image.url}}" alt="" style="width: 100px;">{{i.product.name}}</td>
-                                <td class="align-middle cart-price" id="price{{i.product.id}}" value="{{i.product.price}}">{{i.product.price}}</td>
-                                <td class="align-middle">
-                                    <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        <div class="input-group-btn">
+                    <tbody class="align-middle" id="carttable">
+                        <tr class="cart-row">
+                            <td class="align-middle"><img src="{{i.product.image.url}}" id="img{{i.product.id}}" alt="" style="width: 100px;">{{i.product.name}}</td>
+                            <td class="align-middle cart-price" id="price{{i.product.id}}" value="{{i.product.price}}">{{i.product.price}}</td>
+                            <td class="align-middle">
+                                <div class="input-group quantity mx-auto" style="width: 100px;">
+                                    <div class="input-group-btn">
                                             <button class="btn btn-sm btn-primary btn-minus" onclick="multiplyBy({{i.product.id}}, 'subtract')">
-                                            <i class="fa fa-minus"></i>
+                                                <i class="fa fa-minus"></i>
                                             </button>
                                         </div>
                                         <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center cart-quantity-input"id="quantity{{i.product.id}}"  value="0">
@@ -41,21 +41,57 @@
                                     </div>
                                 </td>
                                 <td class="align-middle" id="result{{i.product.id}}"></td>
-                                <td class="align-middle"><a href="{% url 'customer:remove_item' i.product.id %}"class="btn btn-sm btn-danger"><i class="fa fa-times"></i>Remove</a></td>
+                                <td class="align-middle"><a href="{% url 'customer:remove_item' i.product.id %}"class="btn btn-sm btn-danger">Remove</a>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#EditCart">Edit</button>
+                                </td>
                             </tr>
                         </tbody>
-                    {% endfor %}
-                </table>
-            </div>
-            <div class="col-lg-4">
-                <form class="mb-30" action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control border-0 p-4" placeholder="Coupon Code">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary">Apply Coupon</button>
+                        <!-- Model Starts-->
+                        <div class="modal fade" id="EditCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <button type="button" class="close d-flex align-items-center justify-content-center" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="ion-ios-close"></span>
+                                </button>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div class="col-md-6 d-flex">
+                                        <div class="modal-body p-5 img d-flex">
+                                        <img src="{{i.product.image.url}}" alt="" style="width: 200px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 d-flex">
+                                        <div class="modal-body p-5 d-flex align-items-center">
+                                            <div class="text w-100 text-center py-5">
+                                                <h2 class="mb-0">50<span>%</span> Off</h2>
+                                                <h4 class="mb-4">On all Colorlib Brands</h4>
+                                                <form action="#" class="code-form">
+                                        <div class="form-group d-flex">
+                                            <input type="text" class="form-control" placeholder="Enter code">
+                                        </div>
+                                        </form>
+                                                <a href="#" class="btn btn-primary d-block py-3">Start Shopping</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                            </div>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                        <!-- Model End -->
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="col-lg-4">
+                    <form class="mb-30" action="">
+                        <div class="input-group">
+                            <input type="text" class="form-control border-0 p-4" placeholder="Coupon Code">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary">Apply Coupon</button>
+                            </div>
+                        </div>
+                    </form>
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cart Summary</span></h5>
                 <div class="bg-light p-30 mb-5">
                     <div class="border-bottom pb-2">
@@ -79,7 +115,41 @@
             </div>
         </div>
     </div>
-    <!-- Cart End -->
+    
+    <!-- Model Starts-->
+    <div class="modal fade" id="EditCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close d-flex align-items-center justify-content-center" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" class="ion-ios-close"></span>
+            </button>
+          </div>
+          <div class="row no-gutters">
+              <div class="col-md-6 d-flex">
+                  <div class="modal-body p-5 img d-flex">
+                    <img src="{{product.image.url}}" id="img{{i.product.id}}" alt="" style="width: 100px;">
+                  </div>
+                </div>
+                <div class="col-md-6 d-flex">
+                  <div class="modal-body p-5 d-flex align-items-center">
+                      <div class="text w-100 text-center py-5">
+                          <h2 class="mb-0">50<span>%</span> Off</h2>
+                          <h4 class="mb-4">On all Colorlib Brands</h4>
+                          <form action="#" class="code-form">
+                    <div class="form-group d-flex">
+                      <input type="text" class="form-control" placeholder="Enter code">
+                    </div>
+                  </form>
+                          <a href="#" class="btn btn-primary d-block py-3">Start Shopping</a>
+                      </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+    <!-- Model End -->
 {% else %}
 <h3>Your Cart is Empty</h3>
 {% endif %}
