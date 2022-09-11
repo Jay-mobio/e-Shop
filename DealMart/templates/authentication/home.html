@@ -2,8 +2,9 @@
 {% load static %}
 {% block title  %}Home{% endblock title %}
 {% block content %}
-        {% include 'products/toolbar.html'  %}
-        {% include 'products/navbar.html' %}
+{% include 'products/toolbar.html'  %}
+{% include 'products/navbar.html' %}
+{% load has_group %}
         {% load product_sorting %}
         {% if products %}        
         <div class="container-fluid">
