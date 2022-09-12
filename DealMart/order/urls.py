@@ -1,5 +1,5 @@
 from django.urls import path
-from order.views import checkout,order,orderhistory
+from order.views import checkout,order,orderhistory,product_order
 
 
 app_name = 'order'

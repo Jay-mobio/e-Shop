@@ -14,14 +14,16 @@ class ListCart(ListView):
 
 class RemoveCartProduct(DeleteView):
     def get(self,request,pk):
-        cart = Cart.objects.get(product_id=pk)
+        cart = Cart.objects.get(product=pk)
         cart.delete()
         return redirect('customer:cart')
 
 @csrf_exempt
 def addtocart(request, id):
     product = Products.objects.get(id=id)
-    Cart.objects.create(product=product,created_by=request.user)
+    quantity = request.GET.get('quantity')
+    print(quantity)
+    Cart.objects.create(product=product,created_by=request.user,quantity=quantity)
     return JsonResponse({'status':200})
 
 

@@ -1,7 +1,7 @@
 from django import forms
 from products.models import Products
 class AddProductForm(forms.ModelForm):
-    sub_category = forms.ChoiceField(required=False, widget=forms.Select())
+    # sub_category = forms.ChoiceField(required=False, widget=forms.Select())
     class Meta:
         model=Products
         fields = ['name','category','sub_category','brand','price','image','discription']

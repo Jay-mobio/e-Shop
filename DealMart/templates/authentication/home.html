@@ -78,8 +78,9 @@
                                         <h5>{{i.product.price}}</h5><h6 class="text-muted ml-2"><del>{{i.product.price}}</del></h6>
                                     </div>
                                     <div>
-                                        <button data-id = "{{i.product.id   }}" data-action="add" class="btn btn-primary add-btn addtocart" id="addtocart">Add to Cart</button>
-                                        <button data-product="" data-action="" class="btn btn-primary add-btn buy-now">Buy Now</button>
+                                        <a href="{% url 'customer:product_view' i.product.id %}" class="btn btn-primary">View</a>
+                                        {% comment %} <button data-id = "{{i.product.id}}" data-action="add" class="btn btn-primary add-btn addtocart" id="addtocart">Add to Cart</button> {% endcomment %}
+                                        {% comment %} <button data-product="" data-action="" class="btn btn-primary add-btn buy-now">Buy Now</button> {% endcomment %}
                                     </div>
                                 </div>
                             </div>
@@ -129,6 +130,6 @@
         <script src="{% static 'js/sortingproduct.js' %}"></script>
         <script src="{% static 'js/urlprams.js' %}"></script>
         <script src="{% static 'js/searching.js' %}"></script>
-        <script src="{% static 'js/cart.js' %}"></script>
+        {% comment %} <script src="{% static 'js/cart.js' %}"></script> {% endcomment %}
         {% endblock external_script %}
 {% endblock %}

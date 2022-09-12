@@ -10,6 +10,7 @@ class CreateOrder(CreateView):
         order = Order.objects.create(created_by=request.user)
         for i in cart:
             order.cart.add(i)
+
         Cart.objects.filter(created_by = request.user).update(is_active=False)
         return redirect("order:order_placed")
 

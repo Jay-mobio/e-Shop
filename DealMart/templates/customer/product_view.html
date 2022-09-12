@@ -1,0 +1,76 @@
+{% extends 'products/product_header.html' %}
+{% load static %}
+{% block title  %}Product Detail{% endblock title %}
+{% block content %}
+        {% include 'products/toolbar.html'  %}
+        {% include 'products/navbar.html' %}
+            <div class="container-fluid">
+                <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Product Detail</span></h2>
+                <div class="row px-xl-5">
+                    <div class="col-lg-7 mb-5">
+                        <div class="contact-form bg-light p-30">
+                            {% for message in messages %}
+                                <div class="alert alert-success">
+                                    <a class="close" href="#" data-dismiss="alert">×</a>
+                                    {{ message }}
+                                </div>
+
+                            {% endfor %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="control-group">
+                                    Product Name:
+                                    {{product.name}}
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="control-group">
+                                    Category:
+                                    {{product.category}}
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="control-group">
+                                    Discription:
+                                    {{product.discription}}
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="control-group">
+                                    Size :
+                                    <select class="form-select" aria-label="Default select example" name="sub_category">
+                                        {% for i in sub_categorys %}
+                                        <option value="{{i}}">{{i}}</option>
+                                        {% endfor %}
+                                      </select>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="input-group quantity" style="width: 100px;">
+                                    <div class="input-group-btn">
+                                            {% comment %} <button class="btn btn-sm btn-primary btn-minus">
+                                                <i class="fa fa-minus"></i>
+                                            </button> {% endcomment %}
+                                        </div>
+                                        Quantity:
+                                        <input type="text" name="quantity" class="form-control form-control-sm bg-secondary border-0 text-center cart-quantity-input">
+                                        <div class="input-group-btn">
+                                            {% comment %} <button class="btn btn-sm btn-primary btn-plus">
+                                                <i class="fa fa-plus"></i>
+                                            </button> {% endcomment %}
+                                        </div>
+                                    </div>
+                                <div>
+                                    <a class="btn btn-primary py-2 px-4" href={% url 'authentication:home' %}>Back</a>
+                                    <button type="submit" class="btn btn-primary">Add To Cart</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 mb-5">
+                        <img src="{{product.image.url}}" alt="" width="500px" height="450px" id="img">
+                    </div>
+                </div>
+            </div>    
+        {% include 'products/footer.html' %}
+        {% block external_script %}
+        <script src="{% static 'js/sub_category.js' %}"></script>
+        {% endblock external_script %}
+
+{% endblock %}
