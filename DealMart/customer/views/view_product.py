@@ -24,8 +24,10 @@ class ProductView(DetailView):
         if form.is_valid():
             quantity = request.POST.get('quantity')
             sub_category = request.POST.get('sub_category')
+
             print(sub_category)
             sub_category = request.POST.get('sub_category')
-            Cart.objects.create(product=product,created_by=request.user,quantity=quantity)
+            product_total = int(quantity)*product.price
+            Cart.objects.create(product=product,created_by=request.user,quantity=quantity,product_total=product_total)
             messages.success(request,"Product Has Been Added To Cart")
             return redirect(request.path_info)

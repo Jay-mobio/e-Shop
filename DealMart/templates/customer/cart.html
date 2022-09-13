@@ -4,8 +4,6 @@
 {% block content %}
 {% include 'products/toolbar.html'  %}
 {% include 'products/navbar.html' %}
-
-{% if cart %}
     <!-- Cart Start -->
     <div class="container-fluid">
         <div class="row px-xl-5">
@@ -20,58 +18,61 @@
                             <th>Remove</th>
                         </tr>
                     </thead>
-                    {% for i in cart %}
+                    {% for i, j  in mylist %}
                     <tbody class="align-middle" id="carttable">
                         <tr class="cart-row">
                             <td class="align-middle"><img src="{{i.product.image.url}}" id="img{{i.product.id}}" alt="" style="width: 100px;">{{i.product.name}}</td>
-                            <td class="align-middle cart-price" id="price{{i.product.id}}" value="{{i.product.price}}">{{i.product.price}}</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-minus" onclick="multiplyBy({{i.product.id}}, 'subtract')">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center cart-quantity-input"id="quantity{{i.product.id}}"  value="{{i.quantity}}">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary btn-plus" onclick="multiplyBy({{i.product.id}}, 'plus')">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="align-middle" id="result{{i.product.id}}"></td>
+                            <td class="align-middle cart-price" id="price{{i.product.id}}" id="{{i.product.price}}_id" value="{{i.product.price}}">{{i.product.price}}</td>
+                            <td class="align-middle">{{i.quantity}}</td>
+                                <td class="align-middle" id="result{{i.product.id}}">{{i.product_total}}</td>
                                 <td class="align-middle"><a href="{% url 'customer:remove_item' i.product.id %}"class="btn btn-sm btn-danger">Remove</a>
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#EditCart">Edit</button>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#EditCart-{{forloop.counter}}">Edit</button>
                                 </td>
                             </tr>
                         </tbody>
                         <!-- Model Starts-->
-                        <div class="modal fade" id="EditCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal fade" id="EditCart-{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                <button type="button" class="close d-flex align-items-center justify-content-center" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true" class="ion-ios-close"></span>
-                                </button>
+                                <div class="modal-header">                                
                                 </div>
                                 <div class="row no-gutters">
                                     <div class="col-md-6 d-flex">
-                                        <div class="modal-body p-5 img d-flex">
+                                        <div class="modal-body p-4 img d-flex">
                                         <img src="{{i.product.image.url}}" alt="" style="width: 200px;">
                                         </div>
                                     </div>
                                     <div class="col-md-6 d-flex">
-                                        <div class="modal-body p-5 d-flex align-items-center">
-                                            <div class="text w-100 text-center py-5">
-                                                <h2 class="mb-0">50<span>%</span> Off</h2>
-                                                <h4 class="mb-4">On all Colorlib Brands</h4>
-                                                <form action="#" class="code-form">
-                                        <div class="form-group d-flex">
-                                            <input type="text" class="form-control" placeholder="Enter code">
-                                        </div>
-                                        </form>
-                                                <a href="#" class="btn btn-primary d-block py-3">Start Shopping</a>
+                                        <div class="modal-body p-5">
+                                            <form action="{% url 'customer:update_cart' i.product.id %}" class="code-form">
+                                                <div class="text  py-5">
+                                                    Name: {{i.product.name}}
+                                                    <div style="margin-top:5px ;">
+                                                        Quantity
+                                                        <select class="form-select" aria-label="Default select example" value="{{i.quantity}}" name="quantity">
+                                                            <option selected disabled>{{i.quantity}}</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="3">4</option>
+                                                            <option value="3">5</option>
+                                                        </select>
+                                                    </div>
+                                                <div>
+                                                <div style="margin-top: 5px;">
+                                                    Size :
+                                                    <select class="form-select" aria-label="Default select example" name="sub_category" value="{{i.product.sub_category}}">
+                                                        {% for k in j %}
+                                                        <option value="{{k}}">{{k}}</option>
+                                                        {% endfor %}
+
+                                                    </select>
+                                                </div>
+                                                </div>
+                                                <div style="margin-top: 5px;">
+                                                    <button class="btn btn-primary">Save</button>
+                                                </div>  
+                                            </form>
                                             </div>
                                         </div>
                                     </div>
@@ -89,17 +90,17 @@
                     <div class="border-bottom pb-2">
                         <div class="d-flex justify-content-between mb-3">
                             <h6>Subtotal</h6>
-                            <h6 id="subtotal"></h6>
+                            <h6 id="subtotal">Rs{{total}}</h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Shipping</h6>
-                            <h6 class="font-weight-medium">$10</h6>
+                            <h6 class="font-weight-medium">Free</h6>
                         </div>
                     </div>
                     <div class="pt-2">
                         <div class="d-flex justify-content-between mt-2">
                             <h5>Total</h5>
-                            <h5>$160</h5>
+                            <h5>Rs{{total}}</h5>
                         </div>
                         <a href="{% url 'order:checkout' %}" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</a>
                     </div>
@@ -107,44 +108,6 @@
             </div>
         </div>
     </div>
-    
-    <!-- Model Starts-->
-    <div class="modal fade" id="EditCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close d-flex align-items-center justify-content-center" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true" class="ion-ios-close"></span>
-            </button>
-          </div>
-          <div class="row no-gutters">
-              <div class="col-md-6 d-flex">
-                  <div class="modal-body p-5 img d-flex">
-                    <img src="{{product.image.url}}" id="img{{i.product.id}}" alt="" style="width: 100px;">
-                  </div>
-                </div>
-                <div class="col-md-6 d-flex">
-                  <div class="modal-body p-5 d-flex align-items-center">
-                      <div class="text w-100 text-center py-5">
-                          <h2 class="mb-0">50<span>%</span> Off</h2>
-                          <h4 class="mb-4">On all Colorlib Brands</h4>
-                          <form action="#" class="code-form">
-                    <div class="form-group d-flex">
-                      <input type="text" class="form-control" placeholder="Enter code">
-                    </div>
-                  </form>
-                          <a href="#" class="btn btn-primary d-block py-3">Start Shopping</a>
-                      </div>
-                  </div>
-                </div>
-              </div>
-        </div>
-      </div>
-    </div>
-    <!-- Model End -->
-{% else %}
-<h3>Your Cart is Empty</h3>
-{% endif %}
 
 
     {% include 'products/footer.html' %}

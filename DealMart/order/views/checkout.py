@@ -8,5 +8,8 @@ class Checkout(ListView):
 
     def get(self,request):
         cart = Cart.objects.filter(created_by = request.user)
-        return render(request,self.template_name,{'cart':cart})
+        total = 0
+        for i in cart:
+            total = i.product.price * i.quantity + total
+        return render(request,self.template_name,{'cart':cart,'total':total})
 

@@ -40,8 +40,11 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
                         <a href={% url 'authentication:home' %} class="nav-item nav-link">Home</a>
-                        <a href="{% url 'products:dashboard' %}" class="nav-item nav-link">Dashboard</a>
-                        <a href="{% url 'products:add_product' %}" class="nav-item nav-link">Add Products</a>
+                        {% if request.user.groups.all.0.name == 'Product Owner' %}
+                            <a href="{% url 'products:dashboard' %}" class="nav-item nav-link">Dashboard</a>
+                            <a href="{% url 'order:current_order' %}" class="nav-item nav-link">Pending Orders</a>
+                            <a href="{% url 'products:add_product' %}" class="nav-item nav-link">Add Products</a>
+                        {% endif %}
                     </div>
                     <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                         <a href="{% url 'order:orderhistory' %}" class="btn px-0">

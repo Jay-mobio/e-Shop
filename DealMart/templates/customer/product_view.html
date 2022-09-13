@@ -44,17 +44,16 @@
                                 </div>
                                 <div class="input-group quantity" style="width: 100px;">
                                     <div class="input-group-btn">
-                                            {% comment %} <button class="btn btn-sm btn-primary btn-minus">
-                                                <i class="fa fa-minus"></i>
-                                            </button> {% endcomment %}
                                         </div>
-                                        Quantity:
-                                        <input type="text" name="quantity" class="form-control form-control-sm bg-secondary border-0 text-center cart-quantity-input">
-                                        <div class="input-group-btn">
-                                            {% comment %} <button class="btn btn-sm btn-primary btn-plus">
-                                                <i class="fa fa-plus"></i>
-                                            </button> {% endcomment %}
-                                        </div>
+                                        Quantity
+                                            <select class="form-select" aria-label="Default select example" value="{{i.quantity}}" name="quantity" required>
+                                                <option selected disabled>{{i.quantity}}</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="3">4</option>
+                                                <option value="3">5</option>
+                                            </select>
                                     </div>
                                 <div>
                                     <a class="btn btn-primary py-2 px-4" href={% url 'authentication:home' %}>Back</a>
