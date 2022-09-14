@@ -15,8 +15,7 @@ class ListCart(ListView):
             total = i.product.price * i.quantity + total
             sub_category = SubCategory.objects.filter(category = i.product.category)
             sub_categorys.append(sub_category)
-
-        print("sub_category",len(sub_categorys))
+            
         context = {
             'mylist': zip(cart, sub_categorys),
             'total':total

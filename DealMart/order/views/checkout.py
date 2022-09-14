@@ -7,7 +7,7 @@ class Checkout(ListView):
     template_name = "order/checkout.html"
 
     def get(self,request):
-        cart = Cart.objects.filter(created_by = request.user)
+        cart = Cart.objects.filter(created_by = request.user,is_active=True)
         total = 0
         for i in cart:
             total = i.product.price * i.quantity + total
