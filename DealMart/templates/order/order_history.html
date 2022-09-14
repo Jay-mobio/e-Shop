@@ -17,15 +17,32 @@
             </div>
         </div>
         <div class="wrapper bg-white" style="margin-top: 5px;">
-
-            {% for i in order.cart.all %}
-                <div class="d-flex justify-content-start align-items-center list py-1">
-                    <div class="mx-3">
-                        <img src="{{ i.product.image.url }}" class="rounded-circle" width="30" height="30">
-                    </div>
-                    <div class="order-item"><a href="{% url 'products:product_detail' i.product.id %}" style="color: blue;">{{i.product.name}}</a></div>
-                </div>
-            {% endfor %}
+            <table>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="text-align: center;">Name</th>
+                            <th scope="col" style="text-align: center;">Price</th>
+                            <th scope="col" style="text-align: center;">Size</th>
+                            <th scope="col" style="text-align: center;">Qyantity</th>
+                        </tr>
+                    </thead>
+                    {% for i in order.cart.all %}
+                    <tbody>
+                        <tr >
+                            <div class="d-flex justify-content-start align-items-center list py-1">
+                                <div>
+                                    <td style="padding: 12px; text-align: center;   "><img src="{{ i.product.image.url }}" class="rounded-circle" width="30" height="30"></td>
+                                </div>
+                                    <td style="padding: 12px; text-align: center;"><div class="order-item"><a href="{% url 'products:product_detail' i.product.id %}" style="color: blue;">{{i.product.name}}</a></div></td>
+                                    <td style="padding: 12px; text-align: center;">{{i.product.price}}</td>
+                                    <td style="padding: 12px; text-align: center;">{{i.quantity}}</td>
+                                </div>
+                            </div>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+        </table>    
             <div class="pt-2 border-bottom mb-3"></div>
             <table class="table table-borderless">
                 <thead>
