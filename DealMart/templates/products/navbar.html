@@ -1,3 +1,5 @@
+
+
 <!-- Navbar Start -->
 <div class="container-fluid bg-dark mb-30">
     <div class="row px-xl-5">
@@ -40,11 +42,18 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
                         <a href={% url 'authentication:home' %} class="nav-item nav-link">Home</a>
+<<<<<<< HEAD
                         {% if request.user.groups.all.0.name == 'Product Owner' %}
                             <a href="{% url 'products:dashboard' %}" class="nav-item nav-link">Dashboard</a>
                             <a href="{% url 'order:current_order' %}" class="nav-item nav-link">Pending Orders</a>
                             <a href="{% url 'products:add_product' %}" class="nav-item nav-link">Add Products</a>
                         {% endif %}
+=======
+                        <a href="{% url 'products:dashboard' %}" class="nav-item nav-link">Dashboard</a>
+                        {% comment %} {% if request.user|has_group:"Product Owner" %} {% endcomment %}
+                        <a href="{% url 'products:add_product' %}" class="nav-item nav-link">Add Products</a>
+                        {% comment %} {% endif %} {% endcomment %}
+>>>>>>> feature/customer
                     </div>
                     <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                         <a href="{% url 'order:orderhistory' %}" class="btn px-0">
@@ -56,7 +65,7 @@
                             <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">{{cart|length}}</span>
                         </a>
                     </div>
-                    <div style="color:antiquewhite"><i><a href="{% url 'product_admin:profile' user.id %}" style="margin-left: 6px"></i>{{user.first_name}}</div>
+                    <div style="color:antiquewhite"><i><a href="{% url 'product_admin:profile' %}" style="margin-left: 6px"></i>{{user.first_name}}</div>
                     <div><a href="{% url 'authentication:logout' %}" style="margin-left: 6px;">Logout</a></div>
                 </div>
             </nav>

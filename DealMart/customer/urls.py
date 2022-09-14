@@ -5,7 +5,7 @@ from customer.views import customer_profile,cart,view_product,update_cart
 app_name = 'customer'
 
 urlpatterns = [
-    path("customer_profile/<int:pk>",customer_profile.CustomerProfileUpdate.as_view(),name="customer_profile"),
+    path("customer_profile/",customer_profile.CustomerProfileUpdate.as_view(),name="customer_profile"),
     path("customer_remove_profile_image/<int:pk>",customer_profile.CustomerRemoveProfileImage.as_view(),name="customer_remove_profile_pic"),
     path('product_view/<int:pk>/',view_product.ProductView.as_view(),name="product_view"),
     # path('add_to_cart/<id>/', view_product.ProductView.as_view(), name="addtocart"),

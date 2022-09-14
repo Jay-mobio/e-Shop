@@ -20,9 +20,9 @@ class CustomerProfileUpdate(CheckCustomerGroup,FormView):
 
 
 
-    def get(self,request,pk):
-        user = User.objects.get(id=pk)
-        form = UserRegister(instance=user)
+    def get(self,request):
+        # user = User.objects.get(id=pk)
+        form = UserRegister(instance=request.user)
         return render(request,self.template_name,{'form':form})
 
     def post (self,request,pk):
