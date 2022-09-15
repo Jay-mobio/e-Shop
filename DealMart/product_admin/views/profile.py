@@ -24,8 +24,8 @@ class ProfileUpdate(CheckProductOwnerGroup,FormView):
         form = UserRegister(instance=request.user)
         return render(request,self.template_name,{'form':form})
 
-    def post (self,request,pk):
-        user = User.objects.get(id=pk)
+    def post (self,request):
+        user = request.user
         form = UserRegister(instance=user)
 
 
@@ -61,4 +61,4 @@ class RemoveProfileImage(View):
         user.profile_pic = "static/images/profile1.png"
         user.save()
         messages.success(request,"Product has been updated succefully")
-        return redirect("product_admin:profile",pk)
+        return redirect("product_admin:profile")

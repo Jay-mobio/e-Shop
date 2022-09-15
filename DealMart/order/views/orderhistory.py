@@ -7,7 +7,7 @@ class OrderHistory(ListView):
 
     def get(self,request):  
         total = 0
-        orders = Order.objects.filter(created_by=request.user)
+        orders = Order.objects.filter(created_by=request.user).order_by('id')
         for i in orders:
             for j in i.cart.all():
                 total = j.product.price * j.quantity + total

@@ -10,9 +10,8 @@
         <div class="row px-xl-5">
             <div class="col-12">
                 <nav class="breadcrumb bg-light mb-30">
-                    <a class="breadcrumb-item text-dark" href="#">Home</a>
-                    <a class="breadcrumb-item text-dark" href="#">Shop</a>
-                    <span class="breadcrumb-item active">Checkout</span>
+                    <a class="breadcrumb-item text-dark" href="{% url 'authentication:home' %}">Home</a>
+                    <span class="breadcrumb-item active">Profile</span>
                 </nav>
             </div>
         </div>
@@ -32,40 +31,48 @@
                           {{ form.errors }}
                       </div>
                   {% endif %}
+                  {% for message in messages %}
+    
+                  <div class="alert alert-success">
+                      <a class="close" href="#" data-dismiss="alert">×</a>
+                        {{ message }}
+                  </div>
+
+                  {% endfor %}
                     <div class="bg-light p-30 mb-5">
-                          <div class="control-group">
-                            First Name:
-                            <input type="text" class="form-control" placeholder="Product Name" name='first_name' value="{{user.first_name}}"/>
-                            <p class="help-block text-danger"></p>
-                          </div>
-                          <div class="control-group">
-                            Last Name:
-                            <input type="text" class="form-control" placeholder="Product Name" name='last_name' value="{{user.last_name}}"/>
-                            <p class="help-block text-danger"></p>
-                          </div>
-                          <div class="control-group">
-                            Email:
-                            <input type="email" class="form-control" placeholder="email" name='email' value="{{user.email}}"/>
-                            <p class="help-block text-danger"></p>
-                          </div>
-                          <div class="input-group mb-3">
-                            Change Image:
-                            <input type="file" class="form-control" id="id_profile_pic" accept="image/*" name="profile_pic" value="{{user.profile_pic}}" aria-label="Upload">
-                          </div>
-                          <div class="control-group">
-                            Phone:
-                            <input type="number" class="form-control" placeholder="phone" name='phone' value="{{user.phone}}"/>
-                            <p class="help-block text-danger"></p>
-                          </div>
-                          <div class="control-group">
-                            <textarea style="margin-top: 5px;" class="form-control" rows="4" placeholder="Address" name="address">{{user.address}}</textarea>
-                            <p class="help-block text-danger"></p>
-                          </div>
-                          <div>
-                            <button class="btn btn-primary py-2 px-4" type="submit">Update</button>
-                          </div>
-                      </div>
-                    </form>
+                        <div class="control-group">
+                          First Name:
+                          <input type="text" class="form-control" placeholder="Product Name" name='first_name' value="{{user.first_name}}"/>
+                          <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                          Last Name:
+                          <input type="text" class="form-control" placeholder="Product Name" name='last_name' value="{{user.last_name}}"/>
+                          <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                          Email:
+                          <input type="email" class="form-control" placeholder="email" name='email' value="{{user.email}}"/>
+                          <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="input-group mb-3">
+                          Change Image:
+                          <input type="file" class="form-control" id="id_profile_pic" accept="image/*" name="profile_pic" value="{{user.profile_pic}}" aria-label="Upload">
+                        </div>
+                        <div class="control-group">
+                          Phone:
+                          <input type="number" class="form-control" placeholder="phone" name='phone' value="{{user.phone}}"/>
+                          <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                          <textarea style="margin-top: 5px;" class="form-control" rows="4" placeholder="Address" name="address">{{user.address}}</textarea>
+                          <p class="help-block text-danger"></p>
+                        </div>
+                        <div>
+                          <button class="btn btn-primary py-2 px-4" type="submit">Update</button>
+                        </div>
+                    </div>
+                  </form>
             </div>
             <div class="col-lg-4">
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Profile Picture</span></h5>
