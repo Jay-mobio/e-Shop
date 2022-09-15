@@ -14,12 +14,14 @@ class CreateOrder(CreateView):
     def post(self, request):
         cart = Cart.objects.filter(created_by = request.user,is_active=True)
         order = Order.objects.create(created_by=request.user)
+        address = request.user.address
         total = 0
         for i in cart:
             total = i.product.price * i.quantity + total
             order.cart.add(i)
+        print(request.user.address)
         Cart.objects.filter(created_by = request.user).update(is_active=False)
-        context = {'cart':cart,'total':total}
+        context = {'cart':cart,'total':total,'address':address}
         message = get_template('order/order_email.html').render(context)
         msg = EmailMessage(
         'Order recieved',
