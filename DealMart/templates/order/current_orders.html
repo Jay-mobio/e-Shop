@@ -4,7 +4,7 @@
 {% block external_css %} <link rel="stylesheet" href="{% static 'css/orderhistory.css' %}">{% endblock external_css %}
 {% block content %}
         {% include 'products/navbar.html' %}        
-        
+
         {% if orders %}
         {% for order in orders %}
         <div class="d-flex flex-column justify-content-center align-items-center" id="order-heading">
@@ -29,8 +29,8 @@
         </div>
         <div class="wrapper bg-white" style="margin-top: 5px;">
 
-            {% for i in order.cart.all %}
-            {% if i.product.created_by == request.user %}
+            {% comment %} {% for i in order.cart.all %} {% endcomment %}
+            {% comment %} {% if i.product.created_by == request.user %} {% endcomment %}
                 <table class="table">
                     <thead>
                         <tr>
@@ -41,6 +41,7 @@
                         </tr>
                     </thead>
                     {% for i in order.cart.all %}
+                    {% if i.product.created_by == request.user %}
                     <tbody>
                         <tr >
                             <div class="d-flex justify-content-start align-items-center list py-1">
@@ -55,10 +56,11 @@
                             </div>
                         </tr>
                     </tbody>
+                    {% endif %}
                     {% endfor %}
                 </table>
-            {% endif %}
-            {% endfor %}
+            {% comment %} {% endif %} {% endcomment %}
+            {% comment %} {% endfor %} {% endcomment %}
 
             <div class="pt-2 border-bottom mb-3"></div>
             <table class="table table-borderless">
