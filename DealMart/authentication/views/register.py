@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.views.generic.edit import CreateView
 from django.contrib import messages
-from user_module.forms import UserRegister
+from user_module.forms import RegisterUser
 from user_module.models import User
 from authentication.views.otp import OTP
 from django.contrib.auth.models import Group
@@ -33,7 +33,7 @@ class UserCreation(CreateView):
 class ProductAdminRegisterView(UserCreation):
     title = ("Register Page")
     template_name = 'authentication/product_admin_register.html'
-    form_class = UserRegister
+    form_class = RegisterUser
     redirect_url = "authentication:product_admin_register"
     user_group = Group.objects.get(name='Product Owner')
 
@@ -41,7 +41,7 @@ class ProductAdminRegisterView(UserCreation):
 class CustomerRegisterView(UserCreation):
     title = ("Register Page")
     template_name = 'authentication/register_page.html'
-    form_class = UserRegister
+    form_class = RegisterUser
     redirect_url = "authentication:otp"
     user_group = Group.objects.get(name='Customer')   
     

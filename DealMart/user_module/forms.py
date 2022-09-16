@@ -8,8 +8,8 @@ class UserRegister(UserCreationForm):
         model = User
         fields = ('first_name','last_name','email','phone','password1','password2')
     
-    def is_valid(self) -> bool:
-        return True
+    # def is_valid(self) -> bool:
+    #     return True
 
     def clean_first_name(self):
         first_name = self.cleaned_data['first_name']
@@ -70,3 +70,36 @@ class ForgotPassword(PasswordResetForm):
             raise ValidationError("There is no user registered with the specified email address!")
 
         return email
+
+class RegisterUser(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('first_name','last_name','email','phone','password1','password2')
+    
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data['first_name']
+        if first_name == "":
+            raise ValidationError("First name is required!")
+        return first_name
+
+    def clean_last_name(self):
+        last_name = self.cleaned_data['last_name']
+        if last_name == "":
+            raise ValidationError('Last name is required!')
+        return last_name
+
+    def clean_email(self):
+          email = self.cleaned_data['email']
+          if email == "":
+              raise ValidationError('Email is required')
+          return email
+    def clean_phone(self):
+        phone = self.cleaned_data['phone']
+        if phone == "":
+            raise ValidationError('Phone is required')
+        if not phone.isdigit():
+            raise ValidationError('Please Enter Valid Mobile Number')
+        if len(phone) < 10 :
+            raise ValidationError('Phone not valid')
+        return phone

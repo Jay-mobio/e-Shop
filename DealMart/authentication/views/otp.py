@@ -1,6 +1,5 @@
 from authentication.models import UserOTP
 from django.core.mail import send_mail
-from django.views import View
 from django.views.generic.edit import CreateView
 from user_module.models import User
 from django.contrib import messages
@@ -15,17 +14,18 @@ class OTP(CreateView):
 		get_otp = request.POST.get('otp')
 		get_usr = request.POST.get('usr')
 		usr = User.objects.get(email=get_usr)
-		
-		if int(get_otp) == UserOTP.objects.filter(user = usr).last().otp:
-			usr.is_active = True
-			usr.save()
-			messages.success(request, f'Account is Created For '+ usr.email)
-			return redirect('authentication:login')
-		else:
-			if ValueError:
-				messages.warning(request,f'Otp is Not Valid')
-			messages.error(request, f'You Entered a Wrong OTP')
-			return render(request, 'authentication/otp.html', {'otp': True, 'usr': usr})
+		try :
+			if int(get_otp) == UserOTP.objects.filter(user = usr).last().otp:
+				usr.is_active = True
+				usr.save()
+				messages.success(request, f'Account is Created For '+ usr.email)
+				return redirect('authentication:login')
+			else:
+				messages.error(request, f'You Entered a Wrong OTP')
+				return render(request, 'authentication/otp.html', {'otp': True, 'usr': usr})
+		except ValueError :
+			return redirect("authentication:verify_otp")
+
 		
 
 	def generateotp(self,request,usr):

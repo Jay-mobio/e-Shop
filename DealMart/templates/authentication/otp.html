@@ -8,13 +8,15 @@
   <div class="d-lg-flex half" > 
     <div class="bg order-1 order-md-2" style="background-image: url('{% static "images/bg_1.jpg" %}');"></div>
     <div class="contents order-2 order-md-1" style="background:#ffd700;">
-
       <div class="container">
         <div class="row align-items-center justify-content-center">
           <div class="col-md-7 py-5">
+            {{form.valye.errors}}
             {% if messages %}
                 {% for mess in messages %}
-                <div class="alert alert-{{mess.tags}}" role="alert">
+                <div class="alert alert-{{mess.tags}} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                {% comment %} <div class="alert alert-{{mess.tags}}" role="alert"> {% endcomment %}
                   {{mess}}
                 </div>
                 {% endfor %}
