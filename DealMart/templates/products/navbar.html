@@ -60,8 +60,10 @@
                     </div>
                     {% if request.user.groups.all.0.name == 'Product Owner' %}
                         <div style="color:antiquewhite"><i><a href="{% url 'product_admin:profile' %}" style="margin-left: 6px"></i>{{user.first_name}}</div>
+                        <img src="{{request.user.profile_pic.url}}" class="avatar avatar-small circle" size="20" width="20" height="20" alt=""></a>
                     {% else %}
                         <div style="color:antiquewhite"><i><a href="{% url 'customer:customer_profile' %}" style="margin-left: 6px"></i>{{user.first_name}}</div>
+                        <img src="{{request.user.profile_pic.url}}" class="avatar avatar-small circle" size="20" width="20" height="20" alt=""></a>
                     {% endif %}        
                     <div><a href="{% url 'authentication:logout' %}" style="margin-left: 6px;">Logout</a></div>
                 </div>

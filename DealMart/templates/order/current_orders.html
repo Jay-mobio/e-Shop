@@ -15,7 +15,8 @@
             <div class="pt-1">
                 <form action="{% url 'order:status_change' order.id %}">
                 <p>Order #{{order.id}} is currently<b class="text-dark">
-                    <select name="status">
+                    <select name="status" value="">
+                        <option value="{{order.status}}" disabled selected>{{order.status}}</option>
                         {% for x in order_status %}
                             <option value="{{x}}">{{x}}</option>
                         {% endfor %}
@@ -30,14 +31,35 @@
 
             {% for i in order.cart.all %}
             {% if i.product.created_by == request.user %}
-                <div class="d-flex justify-content-start align-items-center list py-1">
-                    <div class="mx-3">
-                        <img src="{{ i.product.image.url }}" class="rounded-circle" width="30" height="30">
-                    </div>
-                    <div class="order-item"><a href="{% url 'products:product_detail' i.product.id %}" style="color: blue;">{{i.product.name}}</a></div>
-                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="text-align: center;">Name</th>
+                            <th scope="col" style="text-align: center;">Price</th>
+                            <th scope="col" style="text-align: center;">Size</th>
+                            <th scope="col" style="text-align: center;">Qyantity</th>
+                        </tr>
+                    </thead>
+                    {% for i in order.cart.all %}
+                    <tbody>
+                        <tr >
+                            <div class="d-flex justify-content-start align-items-center list py-1">
+                                <div>
+                                    <td style="padding: 12px; text-align: center;   "><div class="order-item"><a href="{% url 'products:product_detail' i.product.id %}" style="color: blue;"><img src="{{ i.product.image.url }}" class="rounded-circle" width="30" height="30">{{i.product.name}}
+                                    </a></div></td>
+                                </div>
+                                <td style="padding: 12px; text-align: center;">{{i.product.price}}</td>
+                                <td style="padding: 12px; text-align: center;">{{i.product.sub_category}}</td>
+                                    <td style="padding: 12px; text-align: center;">{{i.quantity}}</td>
+                                </div>
+                            </div>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
             {% endif %}
             {% endfor %}
+
             <div class="pt-2 border-bottom mb-3"></div>
             <table class="table table-borderless">
                 <thead>

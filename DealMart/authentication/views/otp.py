@@ -15,13 +15,16 @@ class OTP(CreateView):
 		get_otp = request.POST.get('otp')
 		get_usr = request.POST.get('usr')
 		usr = User.objects.get(email=get_usr)
+		
 		if int(get_otp) == UserOTP.objects.filter(user = usr).last().otp:
 			usr.is_active = True
 			usr.save()
 			messages.success(request, f'Account is Created For '+ usr.email)
 			return redirect('authentication:login')
 		else:
-			messages.warning(request, f'You Entered a Wrong OTP')
+			if ValueError:
+				messages.warning(request,f'Otp is Not Valid')
+			messages.error(request, f'You Entered a Wrong OTP')
 			return render(request, 'authentication/otp.html', {'otp': True, 'usr': usr})
 		
 

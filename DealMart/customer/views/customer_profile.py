@@ -61,4 +61,4 @@ class CustomerRemoveProfileImage(View):
         user.profile_pic = "static/images/profile1.png"
         user.save()
         messages.success(request,"Product has been updated succefully")
-        return redirect("product_admin:profile")
+        return redirect("customer:customer_profile")

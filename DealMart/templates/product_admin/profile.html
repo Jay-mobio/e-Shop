@@ -77,7 +77,7 @@
             <div class="col-lg-4">
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Profile Picture</span></h5>
                   <div class="border-bottom">
-                    <form action="{% url 'customer:customer_remove_profile_pic' user.id %}" method="POST">  
+                    <form action="{% url 'product_admin:remove_profile_pic' user.id %}" method="POST">  
                       {% csrf_token %}
                       {% if user.profile_pic != "static/images/profile1.png" %}                                    
                       <button type="submit" class="close">

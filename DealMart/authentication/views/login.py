@@ -17,9 +17,10 @@ class LoginView(View):
 
     def post(self, request):
         email = request.POST['email']
+        print(email)
         password = request.POST['password']
-        user = User.objects.get(email=email)
         if User.objects.filter(email=email).exists():
+            user = User.objects.get(email=email)
             if not user.is_active:
                 otp = OTP.generateotp(self,request,user)
                 return render(request,"authentication/otp.html",{'usr':user})

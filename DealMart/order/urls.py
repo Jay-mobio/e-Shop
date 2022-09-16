@@ -10,5 +10,5 @@ urlpatterns = [
     path('order_placed/',order.OrderPlaced.as_view(),name="order_placed"),
     path('order_history/',orderhistory.OrderHistory.as_view(),name="orderhistory"),
     path('current_order',current_orders.CurrentOrders.as_view(),name="current_order"),
-    path('status_chaneg/<int:pk>',current_orders.OrderStatusUpdate.as_view(),name="status_change")
+    path('status_change/<int:pk>',current_orders.OrderStatusUpdate.as_view(),name="status_change")
 ]

@@ -17,7 +17,6 @@
             </div>
         </div>
         <div class="wrapper bg-white" style="margin-top: 5px;">
-            <table>
                 <table class="table">
                     <thead>
                         <tr>
@@ -32,17 +31,18 @@
                         <tr >
                             <div class="d-flex justify-content-start align-items-center list py-1">
                                 <div>
-                                    <td style="padding: 12px; text-align: center;   "><img src="{{ i.product.image.url }}" class="rounded-circle" width="30" height="30"></td>
+                                    <td style="padding: 12px; text-align: center;   "><div class="order-item"><a href="{% url 'products:product_detail' i.product.id %}" style="color: blue;"><img src="{{ i.product.image.url }}" class="rounded-circle" width="30" height="30">{{i.product.name}}
+                                    </a></div></td>
                                 </div>
-                                    <td style="padding: 12px; text-align: center;"><div class="order-item"><a href="{% url 'products:product_detail' i.product.id %}" style="color: blue;">{{i.product.name}}</a></div></td>
-                                    <td style="padding: 12px; text-align: center;">{{i.product.price}}</td>
+                                <td style="padding: 12px; text-align: center;">{{i.product.price}}</td>
+                                <td style="padding: 12px; text-align: center;">{{i.product.sub_category}}</td>
                                     <td style="padding: 12px; text-align: center;">{{i.quantity}}</td>
                                 </div>
                             </div>
                         </tr>
                     </tbody>
                     {% endfor %}
-        </table>    
+                </table>    
             <div class="pt-2 border-bottom mb-3"></div>
             <table class="table table-borderless">
                 <thead>
