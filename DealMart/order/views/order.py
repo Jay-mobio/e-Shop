@@ -8,6 +8,8 @@ from order.models import Order
 from django.template.loader import get_template
 from django.core.mail import EmailMessage
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 class CreateOrder(CreateView):    
     def post(self, request):
@@ -38,6 +40,8 @@ class CreateOrder(CreateView):
 
         return redirect("order:order_placed")
 
+
+@method_decorator(login_required, name='dispatch')
 class OrderPlaced(TemplateView):
     template_name = "order/orderplaced.html"
     def get(self,request):

@@ -1,9 +1,6 @@
-import json
 from django.views import View
-from django.shortcuts import render
 from products.models import SubCategory
 from django.http import JsonResponse
-from django.core import serializers
 
 
 class ChooseSubCategory(View):

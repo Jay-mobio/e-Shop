@@ -2,12 +2,10 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from products.models import Inventory
 from django.core.paginator import Paginator
-from django.views.decorators.csrf import csrf_exempt
-from django.template.loader import render_to_string
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
-
-
-
+@method_decorator(login_required, name='dispatch')
 class Dashboard(ListView):
     template_name = "products/product_list.html"
     model = Inventory

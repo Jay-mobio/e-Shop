@@ -1,5 +1,3 @@
-from functools import cache
-from unicodedata import category
 from products.models import Category,SubCategory
 from products.forms import AddProductForm
 from django.views.generic import FormView

@@ -2,7 +2,11 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from customer.models import Cart
 from user_module.models import User
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
+
+@method_decorator(login_required, name='dispatch')
 class Checkout(ListView):
     template_name = "order/checkout.html"
 

@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 from order.models import Order
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
+@method_decorator(login_required, name='dispatch')
 class OrderHistory(ListView):
     template_name = "order/order_history.html"
 
