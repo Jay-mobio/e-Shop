@@ -35,7 +35,6 @@ class CustomerProfileUpdate(CheckCustomerGroup,FormView):
 
             user.first_name = request.POST.get('first_name')
             user.last_name = request.POST.get('last_name')
-            user.email = request.POST.get('email')
             user.address = request.POST.get('address')
             user.phone = request.POST.get('phone')
 

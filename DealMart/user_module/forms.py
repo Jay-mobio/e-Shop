@@ -15,12 +15,16 @@ class UserRegister(UserCreationForm):
         first_name = self.cleaned_data['first_name']
         if first_name == "":
             raise ValidationError("First name is required!")
+        if not first_name.isalpha():
+            raise ValidationError("Invalid First name!")
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data['last_name']
         if last_name == "":
             raise ValidationError('Last name is required!')
+        if not last_name.isalpha():
+            raise ValidationError("Invalid Last name!")
         return last_name
 
     def clean_email(self):
@@ -81,12 +85,16 @@ class RegisterUser(UserCreationForm):
         first_name = self.cleaned_data['first_name']
         if first_name == "":
             raise ValidationError("First name is required!")
+        if not first_name.isalpha():
+            raise ValidationError("Invalid First name!")
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data['last_name']
         if last_name == "":
             raise ValidationError('Last name is required!')
+        if not last_name.isalpha():
+            raise ValidationError("Invalid Last name!")
         return last_name
 
     def clean_email(self):
