@@ -73,7 +73,9 @@
                           </div>
                       </div>
                     </form>
+                    {% if request.user.groups.all.0.name == 'Customer' %}
                     <a href="{% url 'authentication:change_password' %}" class="btn btn-primary">Change Password</a>
+                    {% endif %}
             </div>
             <div class="col-lg-4">
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Profile Picture</span></h5>
