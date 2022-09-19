@@ -7,11 +7,12 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
+from product_admin.mixins import CheckProductOwnerGroup
 
 
 
 @method_decorator(login_required, name='dispatch')
-class AddProduct(FormView):
+class AddProduct(CheckProductOwnerGroup,FormView):
 
     template_name = "products/add_product.html" 
     form_class = AddProductForm

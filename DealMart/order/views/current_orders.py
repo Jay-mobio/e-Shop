@@ -3,10 +3,10 @@ from order.models import Order
 from django.views.generic import TemplateView,View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
+from product_admin.mixins import CheckProductOwnerGroup
 
 @method_decorator(login_required, name='dispatch')
-class CurrentOrders(TemplateView):
+class CurrentOrders(CheckProductOwnerGroup,TemplateView):
     template_name = "order/current_orders.html"
 
     def get(self,request):

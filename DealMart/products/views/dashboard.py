@@ -4,9 +4,9 @@ from products.models import Inventory
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
+from product_admin.mixins import CheckProductOwnerGroup
 @method_decorator(login_required, name='dispatch')
-class Dashboard(ListView):
+class Dashboard(CheckProductOwnerGroup,ListView):
     template_name = "products/product_list.html"
     model = Inventory
     paginate_by = 3

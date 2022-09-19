@@ -6,9 +6,10 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.utils.datastructures import MultiValueDictKeyError
+from product_admin.mixins import CheckProductOwnerGroup
 
 @method_decorator(login_required, name='dispatch')
-class UpdateForm(UpdateView):
+class UpdateForm(CheckProductOwnerGroup,UpdateView):
     template_name = "products/update_product.html"
 
     def get(self,request,pk):
