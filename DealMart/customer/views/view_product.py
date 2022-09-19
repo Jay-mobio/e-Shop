@@ -24,10 +24,18 @@ class ProductView(DetailView):
         if form.is_valid():
             quantity = request.POST.get('quantity')
             sub_category = request.POST.get('sub_category')
-
-            print(sub_category)
-            sub_category = request.POST.get('sub_category')
+            if Cart.objects.filter(product=product,is_active=True,created_by=request.user).exists():
+                cart = Cart.objects.filter(product=product,is_active=True,created_by=request.user)
+                print(cart[0].product.name)
+                quantityy = cart[0].quantity + int(quantity)
+                product_total = cart[0].quantity*product.price
+                Cart.objects.update(product=product,is_active=True,created_by=request.user,quantity=quantityy)
+                messages.success(request,"Quantity increased in cart")
+                return redirect(request.path_info)
             product_total = int(quantity)*product.price
-            Cart.objects.create(product=product,created_by=request.user,quantity=quantity,product_total=product_total)
+            cart = Cart.objects.create(product=product,created_by=request.user,quantity=quantity,product_total=product_total)
+            cart.sub_category = sub_category
+            cart.save()
+
             messages.success(request,"Product Has Been Added To Cart")
             return redirect(request.path_info)

@@ -54,7 +54,9 @@
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
-                            <select id="id_sub_category" name="sub_category">Sub Category<select>
+                            <select id="id_sub_category" name="sub_category">Sub Category
+                                <option value="form.sub_category" selected disabled>{{product.sub_category}}</option>
+                                <select>
                             <div class="control-group">
                                 Brand:
                                 <input type="text" class="form-control" placeholder="Product Name" name='brand' value="{{product.brand}}"
@@ -100,7 +102,7 @@
         <!-- Update Product End -->
         {% include 'products/footer.html' %}
         {% block external_script %}
-        <script src="{% static 'js/sub_category.js' %}"></script>
+        <script src="{% static 'js/sub_category.js' %}" defer></script>
         {% endblock external_script %}
 
 {% endblock %}

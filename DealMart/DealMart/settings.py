@@ -206,7 +206,6 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
 ACCOUNT_FORMS = { 'signup': 'user_module.forms.CustomSignupForm', }
 
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 

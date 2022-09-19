@@ -62,6 +62,7 @@
                                                 <div style="margin-top: 5px;">
                                                     Size :
                                                     <select class="form-select" aria-label="Default select example" name="sub_category" value="{{i.product.sub_category.id}}">
+                                                        <option value="{{i.product.sub_category}}" selected disabled>{{i.size}}</option>
                                                         {% for k in j %}
                                                         <option value="{{k}}">{{k}}</option>
                                                         {% endfor %}

@@ -6,6 +6,16 @@
 {% include 'products/navbar.html' %}
 {% load has_group %}
         {% load product_sorting %}
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+            <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
         {% if products %}        
         <div class="container-fluid">
             <div class="row px-xl-5">
