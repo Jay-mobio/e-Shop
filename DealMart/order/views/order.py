@@ -5,17 +5,17 @@ from django.core.mail import send_mail
 from django.conf import settings
 from customer.models import Cart
 from order.models import Order
-from django.template.loader import get_template,render_to_string
-from django.utils.html import strip_tags
+from django.template.loader import get_template
 from django.core.mail import EmailMessage
 from django.contrib import messages
 
 class CreateOrder(CreateView):    
     def post(self, request):
         cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        phone = request.user.phone
         address = request.user.address
-        if address=="":
-            messages.error(request,"Address is not mentioned")
+        if address=="" or phone =="":
+            messages.error(request,"Address or phone is not mentioned")
             return redirect('authentication:home')
         order = Order.objects.create(created_by=request.user)
         total = 0
