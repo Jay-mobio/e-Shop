@@ -17,24 +17,24 @@ class CreateOrder(CreateView):
         if address=="":
             messages.error(request,"Address is not mentioned")
             return redirect('authentication:home')
-        # order = Order.objects.create(created_by=request.user)
-        # total = 0
-        # for i in cart:
-        #     total = i.product.price * i.quantity + total
-        #     order.cart.add(i)
+        order = Order.objects.create(created_by=request.user)
+        total = 0
+        for i in cart:
+            total = i.product.price * i.quantity + total
+            order.cart.add(i)
         
 
-        # Cart.objects.filter(created_by = request.user).update(is_active=False)
-        # context = {'cart':cart,'total':total,'address':address}
-        # message = get_template('order/order_email.html').render(context)
-        # msg = EmailMessage(
-        # 'Order recieved',
-        # message,
-        # settings.EMAIL_HOST_USER,
-        # [request.user],
-        # )
-        # msg.content_subtype ="html"
-        # msg.send()
+        Cart.objects.filter(created_by = request.user).update(is_active=False)
+        context = {'cart':cart,'total':total,'address':address}
+        message = get_template('order/order_email.html').render(context)
+        msg = EmailMessage(
+        'Order recieved',
+        message,
+        settings.EMAIL_HOST_USER,
+        [request.user],
+        )
+        msg.content_subtype ="html"
+        msg.send()
 
         return redirect("order:order_placed")
 

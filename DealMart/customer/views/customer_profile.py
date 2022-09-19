@@ -25,11 +25,13 @@ class CustomerProfileUpdate(CheckCustomerGroup,FormView):
         return render(request,self.template_name,{'form':form})
 
     def post (self,request):
+        print("post")
         user = request.user
         form = UserRegister(instance=user)
 
 
         if form.is_valid():
+            print("form")
 
             user.first_name = request.POST.get('first_name')
             user.last_name = request.POST.get('last_name')
