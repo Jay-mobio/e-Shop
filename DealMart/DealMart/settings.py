@@ -190,7 +190,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-LOGIN_REDIRECT_URL = 'authentication:customer_page'
+LOGIN_REDIRECT_URL = 'authentication:home'
 
 ACCOUNT_LOGOUT_REDIRECT_URL = 'authentication:login'
 
