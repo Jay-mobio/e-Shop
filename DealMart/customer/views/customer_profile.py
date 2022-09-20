@@ -7,6 +7,7 @@ from django.shortcuts import render,redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
 from customer.mixins import CheckCustomerGroup
+from django.core.exceptions import ValidationError
 
 
 
@@ -25,18 +26,29 @@ class CustomerProfileUpdate(CheckCustomerGroup,FormView):
         return render(request,self.template_name,{'form':form})
 
     def post (self,request):
-        print("post")
         user = request.user
         form = UserRegister(instance=user)
 
 
         if form.is_valid():
-            print("form")
-
             user.first_name = request.POST.get('first_name')
             user.last_name = request.POST.get('last_name')
             user.address = request.POST.get('address')
-            user.phone = request.POST.get('phone')
+            phone = user.phone = request.POST.get('phone')
+
+            if not user.first_name.isalpha():
+                messages.error(request,"Inavlid First Name")
+                return redirect(request.path_info)
+
+            if not user.last_name.isalpha():
+                messages.error(request,"Invalid Last name!")
+                return redirect(request.path_info)
+            if not user.phone.isdigit():
+                messages.error(request,"Please Enter Valid Mobile Number")
+                return redirect(request.path_info)
+            if len(phone) < 10 :
+                messages.error(request,"Phone not valid")
+                return redirect(request.path_info)
 
             try:
                 user.profile_pic = request.FILES['profile_pic']

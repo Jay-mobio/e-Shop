@@ -31,23 +31,23 @@
                           {{ form.errors }}
                       </div>
                   {% endif %}
+                  <ul class="messages">
                   {% for message in messages %}
     
-                  <div class="alert alert-success">
-                      <a class="close" href="#" data-dismiss="alert">×</a>
-                        {{ message }}
-                  </div>
+                    <li{% if message.tags %} class="{{ messages.tags }}"{% endif %}>{{ message }}</li>
 
-                  {% endfor %}
+                    
+                    {% endfor %}
+                  </ul>
                     <div class="bg-light p-30 mb-5">
                         <div class="control-group">
                           First Name:
-                          <input type="text" class="form-control" placeholder="Product Name" name='first_name' value="{{user.first_name}}"/>
+                          <input type="text" class="form-control" placeholder="Product Name" name='first_name' value="{{user.first_name}}" required>
                           <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
                           Last Name:
-                          <input type="text" class="form-control" placeholder="Product Name" name='last_name' value="{{user.last_name}}"/>
+                          <input type="text" class="form-control" placeholder="Product Name" name='last_name' value="{{user.last_name}}" required>
                           <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
@@ -61,7 +61,7 @@
                         </div>
                         <div class="control-group">
                           Phone:
-                          <input type="number" class="form-control" placeholder="phone" name='phone' value="{{user.phone}}"/>
+                          <input type="number" class="form-control" placeholder="phone" name='phone' value="{{user.phone}}" required>
                           <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">

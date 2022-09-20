@@ -2,9 +2,10 @@
 {% load static %}
 {% block title  %}Cart{% endblock title %}
 {% block content %}
-{% include 'products/toolbar.html'  %}
+{% comment %} {% include 'products/toolbar.html'  %} {% endcomment %}
 {% include 'products/navbar.html' %}
     <!-- Cart Start -->
+    {% comment %} <p class="" style="text-align:center ;">No Items in Cart</p> {% endcomment %}
     <div class="container-fluid">
         <div class="row px-xl-5">
             <div class="col-lg-8 table-responsive mb-5">
@@ -106,6 +107,7 @@
                         <a href="{% url 'order:checkout' %}" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</a>
                     </div>
                 </div>
+                {% comment %} {% endif %} {% endcomment %}
             </div>
         </div>
     </div>

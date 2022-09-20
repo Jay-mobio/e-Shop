@@ -35,6 +35,19 @@ class ProfileUpdate(CheckProductOwnerGroup,FormView):
             user.last_name = request.POST.get('last_name')
             user.address = request.POST.get('address')
             user.phone = request.POST.get('phone')
+            if not user.first_name.isalpha():
+                messages.error(request,"Inavlid First Name")
+                return redirect(request.path_info)
+
+            if not user.last_name.isalpha():
+                messages.error(request,"Invalid Last name!")
+                return redirect(request.path_info)
+            if not user.phone.isdigit():
+                messages.error(request,"Please Enter Valid Mobile Number")
+                return redirect(request.path_info)
+            if len(user.phone) < 10 :
+                messages.error(request,"Phone not valid")
+                return redirect(request.path_info)
 
             try:
                 user.profile_pic = request.FILES['profile_pic']

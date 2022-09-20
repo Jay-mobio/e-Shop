@@ -40,7 +40,7 @@ class HomeView(ListView):
 
         paginator  = Paginator(products,self.paginate_by)
         page_number = request.GET.get('page',1)
-        finalproducts = paginator.get_page(page_number)
+        products = paginator.get_page(page_number)
 
-        context = {'products':products,'search':search,'finalproducts':finalproducts,'page_number':page_number}
+        context = {'products':products,'search':search,'page_number':page_number}
         return render(request,'authentication/home.html',context)

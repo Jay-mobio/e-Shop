@@ -30,6 +30,11 @@ class UpdateForm(CheckProductOwnerGroup,UpdateView):
             sub_category = SubCategory.objects.get(id=sub_category_id)
             brand = request.POST.get('brand')
             product.price = request.POST.get('price')
+
+            if not product.price.isdigit():
+                messages.error(request,"Invalid Price!")
+                return redirect(request.path_info)
+
             try:
                 product.image = request.FILES['image']
             except MultiValueDictKeyError:

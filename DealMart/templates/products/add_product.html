@@ -22,7 +22,7 @@
 </head>
 {% block title  %}Add Product{% endblock title %}
     {% block content %}
-        {% include 'products/toolbar.html'  %}
+        {% comment %} {% include 'products/toolbar.html'  %} {% endcomment %}
         {% include 'products/navbar.html' %}
 
         <!-- Breadcrumb Start -->
@@ -60,7 +60,7 @@
 
                             <div class="control-group">
                                 Name:   
-                                <input type="text" class="form-control" id="id_name" placeholder="Product Name" name="name" value="{{name}}" required="required"/>
+                                <input type="text" class="form-control" id="id_name" placeholder="Product Name" name="name" value="{{name}}" required>
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
@@ -72,13 +72,13 @@
                             <div class="control-group">
                                 Brand:
                                 <input type="text" class="form-control" placeholder="Product Name" name='brand' value="{{product.brand}}"
-                                    required="required"/>
+                                    required>
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
                                 Price:
-                                <input type="text" id="id_price" class="form-control" placeholder="price" name="price" value="{{price}}"
-                                    required="required"/>
+                                <input type="number" id="id_price" class="form-control" placeholder="price" name="price" value="{{price}}"
+                                    required>
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div>
@@ -88,7 +88,7 @@
                             <div class="control-group">
                                 Discription:
                                 <textarea style="margin-top: 5px;" id="id_discription" class="form-control" rows="8" placeholder="About product" name="discription" value="{{discription}}"
-                                    required="required"></textarea>
+                                    required></textarea>
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div>

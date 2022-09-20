@@ -21,50 +21,19 @@
                 <!-- Shop Sidebar Start -->
                 <div class="bg-light p-4 mb-30">
                     <form action="" method="GET">
+                        <h5 class="section-title position-relative text-uppercase mb-3" style="text-align: center;"><span class="bg-secondary pr-3">Sort By</span></h5>
                             <div class="col-lg-3 col-md-4">
                                 <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl();" id="sort" name="ordering" value="{{ordering}}">
                                     <option selected disabled>-------</option>
                                     <option value="low_to_high">Price Low To High</option>
                                     <option value="high_to_low">Price High To Low</option>
                                 </select> 
-                                <input type="submit">
                     </form>
                 </div>
                 <!-- Price Start -->
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
+                {% comment %} <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5> {% endcomment %}
                 <div class="bg-light p-4 mb-30">
                     <form>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" checked id="price-all">
-                            <label class="custom-control-label" for="price-all">All Price</label>
-                            <span class="badge border font-weight-normal">1000</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-1">
-                            <label class="custom-control-label" for="price-1">$0 - $100</label>
-                            <span class="badge border font-weight-normal">150</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-2">
-                            <label class="custom-control-label" for="price-2">$100 - $200</label>
-                            <span class="badge border font-weight-normal">295</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-3">
-                            <label class="custom-control-label" for="price-3">$200 - $300</label>
-                            <span class="badge border font-weight-normal">246</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-4">
-                            <label class="custom-control-label" for="price-4">$300 - $400</label>
-                            <span class="badge border font-weight-normal">145</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                            <input type="checkbox" class="custom-control-input" id="price-5">
-                            <label class="custom-control-label" for="price-5">$400 - $500</label>
-                            <span class="badge border font-weight-normal">168</span>
-                        </div>
-                    </form>
                 </div>
                 <!-- Price End -->
             </div>
@@ -97,22 +66,33 @@
                                 <td><button class="btn btn-danger" data-toggle="modal" data-target="#fm-modal-grid_{{forloop.counter}}">Delete</button></td>
                                 <td><a href="{% url 'products:product_detail' i.pk %}" class="btn btn-primary">Detail</a></td>
                             </tr>
+                            <div class="modal fade" id="fm-modal-grid_{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledBy="fm-modal-grid" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button class="close" data-dismiss="modal" aria-label="Cerrar">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-12 col-sm-6">   
+                                                        <p>Are you sure you want to delete {{i}}?</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <a href="{% url 'products:delete_product' i.product.id %}" class="btn btn-danger">Delete</a>
+                                            <button class="btn btn-primary" data-dismiss="modal">Cancel</button>
+
+                                        </div>
+                                    </div>
+                                </div>
                         {% endfor %}
                     </table>
-                    {% comment %} <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            {% if finalproducts.has_previous %}
-                            <li class="page-item"><a class="page-link" href="{% my_url finalproducts.previous_page_number 'page_number' request.GET.urlencode %}">Previous</a></li>
-                            {% endif %}
-                            <li class="page-item disabled">
-                                <a class="page-link" href="/page{{page_number}}">{{page_number}}<span class="sr-only">(current)</span></a>
-                            </li>
-                        {% if finalproducts.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="{% my_url finalproducts.next_page_number 'page_number' request.GET.urlencode %}">Next</a></li>
-                            {% endif %}
-                        </ul>
-                    </nav> {% endcomment %}
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             {% if finalproducts.has_previous %}

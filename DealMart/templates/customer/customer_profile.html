@@ -2,7 +2,7 @@
 {% load static %}
 {% block title  %}Customer Profile{% endblock title %}
 {% block content %}
-{% include 'products/toolbar.html'  %}
+{% comment %} {% include 'products/toolbar.html'  %} {% endcomment %}
 {% include 'products/navbar.html' %}
 
     <!-- Breadcrumb Start -->
@@ -42,12 +42,12 @@
                     <div>
                           <div class="control-group">
                             First Name:
-                            <input type="text" class="form-control" placeholder="Product Name" name='first_name' value="{{user.first_name}}"/>
+                            <input type="text" class="form-control" placeholder="Product Name" name='first_name' value="{{user.first_name}}" required>
                             <p class="help-block text-danger"></p>
                           </div>
                           <div class="control-group">
                             Last Name:
-                            <input type="text" class="form-control" placeholder="Product Name" name='last_name' value="{{user.last_name}}"/>
+                            <input type="text" class="form-control" placeholder="Product Name" name='last_name' value="{{user.last_name}}"required>
                             <p class="help-block text-danger"></p>
                           </div>
                           <div class="control-group">
@@ -61,7 +61,7 @@
                           </div>
                           <div class="control-group">
                             Phone:
-                            <input type="number" class="form-control" placeholder="phone" name='phone' value="{{user.phone}}"/>
+                            <input type="number" class="form-control" placeholder="phone" name='phone' value="{{user.phone}}" required>
                             <p class="help-block text-danger"></p>
                           </div>
                           <div class="control-group">

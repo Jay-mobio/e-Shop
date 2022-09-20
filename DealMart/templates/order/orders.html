@@ -2,7 +2,7 @@
 {% load static %}
 {% block title  %}Order HIstory{% endblock title %}
 {% block content %}
-{% include 'products/toolbar.html'  %}
+{% comment %} {% include 'products/toolbar.html'  %} {% endcomment %}
 {% include 'products/navbar.html' %}
 
     <!-- Cart Start -->
@@ -38,7 +38,7 @@
                     {% endfor %}
                 </table>
                 {% else %}
-                <p>You have no Order Hitory</p>
+                <p style="text-align: center ;">You have no Order Hitory</p>
                 {% endif %}
             </div>
         </div>
