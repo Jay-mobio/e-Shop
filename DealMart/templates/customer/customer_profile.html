@@ -33,9 +33,9 @@
                   {% endif %}
                   {% for message in messages %}
     
-                  <div class="alert alert-success">
-                      <a class="close" href="#" data-dismiss="alert">×</a>
-                        {{ message }}
+                  <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                      {{message}}
                   </div>
 
                   {% endfor %}
