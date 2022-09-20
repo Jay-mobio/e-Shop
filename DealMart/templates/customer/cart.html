@@ -6,6 +6,8 @@
 {% include 'products/navbar.html' %}
     <!-- Cart Start -->
     {% comment %} <p class="" style="text-align:center ;">No Items in Cart</p> {% endcomment %}
+    {% if cart %}
+    
     <div class="container-fluid">
         <div class="row px-xl-5">
             <div class="col-lg-8 table-responsive mb-5">
@@ -15,6 +17,7 @@
                             <th>Products</th>
                             <th>Price</th>
                             <th>Quantity</th>
+                            <th>Size</th>
                             <th>Total</th>
                             <th>Remove</th>
                         </tr>
@@ -25,10 +28,11 @@
                             <td class="align-middle"><img src="{{i.product.image.url}}" id="img{{i.product.id}}" alt="" style="width: 100px;">{{i.product.name}}</td>
                             <td class="align-middle cart-price" id="price{{i.product.id}}" id="{{i.product.price}}_id" value="{{i.product.price}}">{{i.product.price}}</td>
                             <td class="align-middle">{{i.quantity}}</td>
-                                <td class="align-middle" id="result{{i.product.id}}">{{i.product_total}}</td>
-                                <td class="align-middle"><a href="{% url 'customer:remove_item' i.product.id %}"class="btn btn-sm btn-danger">Remove</a>
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#EditCart-{{forloop.counter}}">Edit</button>
-                                </td>
+                            <td class="align-middle">{{i.size}}</td>
+                            <td class="align-middle">{{i.product_total}}</td>
+                            <td class="align-middle"><a href="{% url 'customer:remove_item' i.id %}"class="btn btn-sm btn-danger">Remove</a>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#EditCart-{{forloop.counter}}">Edit</button>
+                            </td>
                             </tr>
                         </tbody>
                         <!-- Model Starts-->
@@ -45,7 +49,7 @@
                                     </div>
                                     <div class="col-md-6 d-flex">
                                         <div class="modal-body p-5">
-                                            <form action="{% url 'customer:update_cart' i.product.id %}" class="code-form">
+                                            <form action="{% url 'customer:update_cart' i.id %}" class="code-form">
                                                 <div class="text  py-5">
                                                     Name: {{i.product.name}}
                                                     <div style="margin-top:5px ;">
@@ -62,10 +66,10 @@
                                                 <div>
                                                 <div style="margin-top: 5px;">
                                                     Size :
-                                                    <select class="form-select" aria-label="Default select example" name="sub_category" value="{{i.product.sub_category.id}}">
+                                                    <select class="form-select" aria-label="Default select example" name="sub_category" value="{{i.size}}">
                                                         <option value="{{i.product.sub_category}}" selected disabled>{{i.size}}</option>
                                                         {% for k in j %}
-                                                        <option value="{{k}}">{{k}}</option>
+                                                        <option value="{{k.id}}">{{k}}</option>
                                                         {% endfor %}
 
                                                     </select>
@@ -111,10 +115,10 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <p class="" style="text-align:center ;">No items in cart</p>
+    {% endif %}
 
 
     {% include 'products/footer.html' %}
-    {% block external_script %}
-        <script src="{% static 'js/livetotal.js' %}"></script>
-    {% endblock external_script %}
 {% endblock %}

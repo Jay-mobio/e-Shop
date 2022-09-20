@@ -11,7 +11,8 @@ class ListCart(ListView):
     template_name = "customer/cart.html"
 
     def get(self,request):
-        cart = Cart.objects.filter(is_active=True,created_by = request.user)     
+        cart = Cart.objects.filter(is_active=True,created_by = request.user)
+        # cart.delete()
         total = 0
         sub_categorys = []
         for i in cart:
@@ -21,13 +22,14 @@ class ListCart(ListView):
             
         context = {
             'mylist': zip(cart, sub_categorys),
-            'total':total
+            'total':total,
+            'cart':cart
         }
         return render(request,self.template_name,context)
 
 class RemoveCartProduct(DeleteView):
     def get(self,request,pk):
-        cart = Cart.objects.get(product=pk,is_active=True)
+        cart = Cart.objects.get(id=pk,is_active=True)
         cart.delete()
         return redirect('customer:cart')
 

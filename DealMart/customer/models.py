@@ -1,4 +1,5 @@
 from django.db import models
+from products.models import SubCategory
 from products.models import Inventory,Products
 from user_module.models import User
 
@@ -7,6 +8,7 @@ from user_module.models import User
 class Cart(models.Model):
     inventory = models.ForeignKey(Inventory,on_delete=models.CASCADE, related_name="inventory",null=True)
     product = models.ForeignKey(Products,on_delete=models.CASCADE, related_name="products",null=True)
+    size = models.ForeignKey(SubCategory,on_delete=models.CASCADE,related_name="suze",null=True)
     quantity = models.IntegerField(default=1,null=True,blank=True)
     product_total = models.IntegerField(default=1,null=True,blank=True)
     is_active = models.BooleanField(default=True)
