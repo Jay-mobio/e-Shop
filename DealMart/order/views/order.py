@@ -45,4 +45,5 @@ class CreateOrder(CreateView):
 class OrderPlaced(TemplateView):
     template_name = "order/orderplaced.html"
     def get(self,request):
-        return render(request,self.template_name)
+        cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        return render(request,self.template_name,{'cart':cart})

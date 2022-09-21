@@ -7,6 +7,7 @@ from django.shortcuts import render,redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
 from product_admin.mixins import CheckProductOwnerGroup
+from customer.models import Cart
 
 
 
@@ -20,9 +21,10 @@ class ProfileUpdate(CheckProductOwnerGroup,FormView):
 
 
     def get(self,request):
-        # user = User.objects.get(id=pk)
         form = UserRegister(instance=request.user)
-        return render(request,self.template_name,{'form':form})
+        cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        context = {'form':form,'cart':cart}
+        return render(request,self.template_name,context)
 
     def post (self,request):
         user = request.user

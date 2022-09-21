@@ -8,6 +8,7 @@ from django.utils.decorators import method_decorator
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
 from product_admin.mixins import CheckProductOwnerGroup
+from customer.models import Cart
 
 
 
@@ -19,7 +20,9 @@ class AddProduct(CheckProductOwnerGroup,FormView):
 
     def get(self,request):
         form = self.form_class
-        return render(request,self.template_name,{'form':form})
+        cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        context = {'form':form,'cart':cart}
+        return render(request,self.template_name,context)
 
 
 

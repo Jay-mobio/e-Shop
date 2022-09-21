@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 from product_admin.mixins import CheckProductOwnerGroup
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from customer.models import Cart
 
 @method_decorator(login_required, name='dispatch')
 class InventoryList(CheckProductOwnerGroup,TemplateView):
@@ -19,6 +20,7 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
         products = Products.objects.filter(created_by=request.user)
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")
+        cart = Cart.objects.filter(created_by = request.user,is_active=True)
 
         sort = {
             "low_to_high":'price',
@@ -44,7 +46,7 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
         page_number = request.GET.get('page',1)
         products = paginator.get_page(page_number)
 
-        context = {'products':products,'search':search,'page_number':page_number,'products':products}
+        context = {'products':products,'search':search,'page_number':page_number,'products':products,'cart':cart}
         return render(request,self.template_name,context)
 
 class AddInventory(CreateView):
@@ -53,8 +55,9 @@ class AddInventory(CreateView):
 
     def get(self,request,pk):
         product = Products.objects.get(id=pk)
+        cart = Cart.objects.filter(created_by = request.user,is_active=True)
         form = self.form_class
-        context = {'form':form,'product':product}
+        context = {'form':form,'product':product,'cart':cart}
         return render(request,self.template_name,context)
 
     def post(self,request,pk):

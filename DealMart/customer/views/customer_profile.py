@@ -7,7 +7,7 @@ from django.shortcuts import render,redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
 from customer.mixins import CheckCustomerGroup
-from django.core.exceptions import ValidationError
+from customer.models import Cart
 
 
 
@@ -23,7 +23,12 @@ class CustomerProfileUpdate(CheckCustomerGroup,FormView):
 
     def get(self,request):
         form = UserRegister(instance=request.user)
-        return render(request,self.template_name,{'form':form})
+        cart = Cart.objects.filter(is_active=True,created_by = request.user)
+        context = {
+            'form':form,
+            'cart':cart,
+        }
+        return render(request,self.template_name,context)
 
     def post (self,request):
         user = request.user
@@ -60,8 +65,6 @@ class CustomerProfileUpdate(CheckCustomerGroup,FormView):
             messages.success(request,"Profile has been updated succefully")
             return redirect(request.path_info)
         
-
-        return render(request,self.template_name,{'form':form})
 
     def get_success_url(self):
         return self.request.path

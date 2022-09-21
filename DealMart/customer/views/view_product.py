@@ -14,9 +14,16 @@ class ProductView(DetailView):
 
     def get(self,request,pk):
         product = Products.objects.get(pk=pk)
+        cart = Cart.objects.filter(is_active=True,created_by = request.user)
         sub_categorys = SubCategory.objects.filter(category = product.category)
         form = AddProductForm(initial={'name':product.name, 'category':product.category, 'discription':product.discription})
-        return render(request,self.template_name,{'form':form, 'product':product, 'sub_categorys':sub_categorys})
+        context = {
+            'form':form,
+            'product':product,
+            'sub_categorys':sub_categorys,
+            'cart':cart,
+        }
+        return render(request,self.template_name,context)
 
     def post(self,request,pk):
         product = Products.objects.get(pk=pk)

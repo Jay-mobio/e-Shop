@@ -5,6 +5,8 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from product_admin.mixins import CheckProductOwnerGroup
+from customer.models import Cart
+
 @method_decorator(login_required, name='dispatch')
 class Dashboard(CheckProductOwnerGroup,ListView):
     template_name = "products/product_list.html"
@@ -15,6 +17,7 @@ class Dashboard(CheckProductOwnerGroup,ListView):
     def get(self,request):
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")
+        cart = Cart.objects.filter(created_by = request.user,is_active=True)
         products = Inventory.objects.filter(is_active=True,created_by=request.user)
 
 
@@ -42,7 +45,7 @@ class Dashboard(CheckProductOwnerGroup,ListView):
         page_number = request.GET.get('page',1)
         finalproducts = paginator.get_page(page_number)
 
-        context = {'products':products,'search':search,'finalproducts':finalproducts,'page_number':page_number}
+        context = {'products':products,'search':search,'finalproducts':finalproducts,'page_number':page_number,'cart':cart}
         return render(request,self.template_name,context)
         
 

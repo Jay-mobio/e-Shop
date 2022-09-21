@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.utils.datastructures import MultiValueDictKeyError
 from product_admin.mixins import CheckProductOwnerGroup
+from customer.models import Cart
 
 @method_decorator(login_required, name='dispatch')
 class UpdateForm(CheckProductOwnerGroup,UpdateView):
@@ -15,7 +16,9 @@ class UpdateForm(CheckProductOwnerGroup,UpdateView):
     def get(self,request,pk):
         product = Products.objects.get(id=pk)
         form = AddProductForm(instance=product)
-        return render(request,self.template_name,{'form':form, 'product':product})
+        cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        context = {'form':form, 'product':product,'cart':cart}
+        return render(request,self.template_name,context)
 
     def post(self,request,pk):
         product = Products.objects.get(id=pk)

@@ -19,5 +19,6 @@ class Checkout(ListView):
         total = 0
         for i in cart:
             total = i.product.price * i.quantity + total
-        return render(request,self.template_name,{'cart':cart,'total':total})
+        context = {'cart':cart,'total':total}
+        return render(request,self.template_name,context)
 
