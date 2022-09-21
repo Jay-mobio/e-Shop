@@ -1,4 +1,3 @@
-from multiprocessing import context
 from django.contrib import messages
 from django.shortcuts import render,redirect
 from django.views.generic import CreateView,TemplateView
@@ -49,23 +48,29 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
         context = {'products':products,'search':search,'page_number':page_number,'products':products,'cart':cart}
         return render(request,self.template_name,context)
 
-class AddInventory(CreateView):
+class UpdateInventory(CreateView):
     template_name = "product_admin/inventory.html"
-    form_class = AddInventoryForm
 
     def get(self,request,pk):
         product = Products.objects.get(id=pk)
+        inventory = Inventory.objects.get(product=product)
         cart = Cart.objects.filter(created_by = request.user,is_active=True)
-        form = self.form_class
-        context = {'form':form,'product':product,'cart':cart}
+        form = AddInventoryForm(instance=product)
+        context = {'form':form,'product':product,'cart':cart,'inventory':inventory}
         return render(request,self.template_name,context)
 
     def post(self,request,pk):
-        form_class = AddInventoryForm
-        product = Products.objects.get(product=pk)
+        product = Products.objects.get(id=pk)
+        form = AddInventoryForm(instance=product)
+        inventory = Inventory.objects.filter(product=product,created_by=request.user)
         product_quantity = request.POST.get('product_quantity')
-        is_active = False
-        if product_quantity != 0 :
-            is_active = True
+        quantity = int(product_quantity)
         
-        Inventory.objects.create(product=product,is_active=is_active,created_by=request.user)
+        if quantity > 0 :
+            is_active = True
+        else :
+            is_active = False
+        
+        inventory.update(product=product,product_quantity=quantity,is_active=is_active,updated_by=request.user)
+        messages.success(request,"Product quantity Updated")
+        return redirect(request.path_info)

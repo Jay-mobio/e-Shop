@@ -1,7 +1,6 @@
 from django.shortcuts import redirect,render
 from django.views.generic.edit import CreateView
 from django.views.generic import TemplateView
-from django.core.mail import send_mail
 from django.conf import settings
 from customer.models import Cart
 from order.models import Order

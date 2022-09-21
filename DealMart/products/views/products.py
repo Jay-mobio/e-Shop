@@ -1,4 +1,4 @@
-from products.models import Category,SubCategory
+from products.models import Category,SubCategory,Inventory
 from products.forms import AddProductForm
 from django.views.generic import FormView
 from django.shortcuts import render,redirect
@@ -45,7 +45,8 @@ class AddProduct(CheckProductOwnerGroup,FormView):
             price = request.POST.get('price')
             discription  = request.POST.get('discription')
             created_by = request.user
-            Products.objects.create(name=name,category=category,price=price,discription=discription,created_by=created_by,sub_category=sub_category,brand=brand,image=images)
+            inventory = Products.objects.create(name=name,category=category,price=price,discription=discription,created_by=created_by,sub_category=sub_category,brand=brand,image=images)
+            Inventory.objects.create(product=inventory,created_by=request.user)
             messages.success(request,"Product has been successfully added")
             return redirect('products:dashboard')
         return render(request,self.template_name,{'form':form})

@@ -22,7 +22,6 @@
 </head>
 {% block title  %}Add Product{% endblock title %}
     {% block content %}
-        {% comment %} {% include 'products/toolbar.html'  %} {% endcomment %}
         {% include 'products/navbar.html' %}
 
         <!-- Breadcrumb Start -->
@@ -60,17 +59,26 @@
 
                             <div class="control-group">
                                 Product:   
-                                {{form.product}}
+                                {{inventory.product.name}}
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                Product:   
+                                {{inventory.product.brand}}
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                Product:   
+                                {{inventory.product.discription}}
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
                                 Product Qunatity:
-                                <input type="number" id="id_price" class="form-control" placeholder="price" name="price" value="{{product_quantity}}"
-                                    required>
+                                <input type="number" id="id_price" class="form-control" style="margin-top:5px;" placeholder="Quantity" name="product_quantity" value="{{inventory.product_quantity}}" required>
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div>
-                                <button class="btn btn-primary py-2 px-4" type="submit">Add Inventory</button>
+                                <button class="btn btn-primary py-2 px-4" type="submit">Add Quantity</button>
                             </div>
                         </form>
                     </div>
