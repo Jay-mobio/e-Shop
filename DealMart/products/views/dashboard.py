@@ -15,11 +15,11 @@ class Dashboard(CheckProductOwnerGroup,ListView):
     
 
     def get(self,request):
-        search = request.GET.get('search', "")
-        ordering = request.GET.get('ordering',"")
         products = Inventory.objects.filter(is_active=True)
         cart = Cart.objects.filter(is_active=True,created_by = request.user)
         category = Category.objects.all()
+        search = request.GET.get('search', "")
+        ordering = request.GET.get('ordering',"")
         catid = request.GET.get('categories',"")
 
         sort = {

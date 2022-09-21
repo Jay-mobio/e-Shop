@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import render,redirect
 from django.views.generic import CreateView,TemplateView
-from products.models import Products,Inventory
+from products.models import Products,Inventory,Category
 from product_admin.forms import AddInventoryForm
 from django.core.paginator import Paginator
 from product_admin.mixins import CheckProductOwnerGroup
@@ -20,6 +20,11 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")
         cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        
+        category = Category.objects.all()
+        search = request.GET.get('search', "")
+        ordering = request.GET.get('ordering',"")
+        catid = request.GET.get('categories',"")
 
         sort = {
             "low_to_high":'price',
@@ -27,17 +32,21 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
         }
 
         ordering =  sort[ordering] if ordering in sort else None
-      
-        if ordering != None and search != "":
+
+        if catid != "":
+            products = products.filter(category = catid)
+        else:
+            pass
+
+        if ordering != None:
             products = products.order_by(ordering)
+        else:
+            pass
+
+        if search != "":
             products = products.filter(name__icontains = search) | products.filter(brand__icontains=search)
-
-
-        elif ordering == None and search != None:
-            products = products.filter(name__icontains=search) | products.filter(brand__icontains=search)
-
-        elif ordering != None:
-            products = products.order_by(ordering)
+        else:
+            pass
 
             
 
@@ -45,7 +54,7 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
         page_number = request.GET.get('page',1)
         products = paginator.get_page(page_number)
 
-        context = {'products':products,'search':search,'page_number':page_number,'products':products,'cart':cart}
+        context = {'products':products,'search':search,'page_number':page_number,'products':products,'cart':cart,'category':category}
         return render(request,self.template_name,context)
 
 class UpdateInventory(CreateView):

@@ -25,15 +25,28 @@
                         <div class="col-lg-3 col-md-4">
                             <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl();" id="sort" name="ordering" value="{{ordering}}">
                                 <option selected disabled>-------</option>
+                                <option value="">Reset</option>
                                 <option value="low_to_high">Price Low To High</option>
                                 <option value="high_to_low">Price High To Low</option>
                             </select> 
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                    <!-- Filter Start -->
+                    <div class="bg-light p-4 mb-30">
+                        <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl4();" id="categroy" name="catid" name="categories">
+                            <option disabled selected>Select Category</option>
+                            <option value="">All</option>
+                            {% for categories in category %}
+                            <option value="{{categories.id}}">{{categories.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!-- Filter End -->
                 </div>
                 <!-- Shop Sidebar End -->
-    
+                
                 <!-- Shop Product Start -->
+                {% comment %} {% if products %} {% endcomment %}
                 <div class="col-lg-9 col-md-8">
                     <table class="table table-sm">
                         <tr>
@@ -53,7 +66,7 @@
                                 <td><img src="{{ i.image.url }}" style="height: 100px; width: 100px;"  class="card-img-top"></td>
                                 <span><td>{{i.name}}</td> </span>
                                 <span><td>{{i.brand}}</td> </span>
-                                <span><td>{{i.price}} Rs</td></span>
+                                <span><td>&#x20b9;{{i.price}}</td></span>
                                 <td><a href="{% url 'products:update_product_form' i.pk %}" class="btn btn-info">Update</a></td>
                                 <td><div><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#fm-modal-grid_{{forloop.counter}}">Delete</button></div></td>
                                 <td><a href="{% url 'products:product_detail' i.pk %}" class="btn btn-primary">Detail</a></td>
@@ -104,7 +117,7 @@
             </div>
         </div>
         {% else %}
-        <p>No Products are available</p>
+        <p style="text-align: center;">No Products are available</p>
         {% endif %}
         <!-- Shop Product End -->
 
@@ -113,6 +126,7 @@
         <script src="{% static 'js/sortingproduct.js' %}"></script>
         <script src="{% static 'js/urlprams.js' %}"></script>
         <script src="{% static 'js/searching.js' %}"></script>
+        <script src="{% static 'js/category_filter.js' %}"></script>
         {% endblock external_script %}
 {% endblock %}
 
