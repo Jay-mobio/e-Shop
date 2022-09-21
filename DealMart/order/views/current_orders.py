@@ -12,7 +12,13 @@ class CurrentOrders(CheckProductOwnerGroup,TemplateView):
 
     def get(self,request):
         orders = Order.objects.filter(status__in = ('pending','out for delivery')).order_by('-id')
-        cart = Cart.objects.filter(created_by = request.user,is_active=True)    
+        cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        total = 0
+        for i in orders:
+            for j in i.cart.all():
+                total = j.product.price * j.quantity + total
+            i.total_amount = total
+            total = 0    
         context = {'orders':orders, 'order_status':[i for i,j  in Order.STATUS],'cart':cart}
         return render(request,self.template_name,context)
 

@@ -24,20 +24,26 @@
                     <form action="" method="GET">
                         <h5 class="section-title position-relative text-uppercase mb-3" style="text-align: center;"><span class="bg-secondary pr-3">Sort By</span></h5>
                             <div class="col-lg-3 col-md-4">
-                                <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl();" id="sort" name="ordering" value="{{ordering}}">
-                                    <option disabled selected>----------</option>
+                                <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl();" id="sort" name="ordering">
+                                    <option disabled selected>Sort</option>
+                                    <option value="">Reset</option>
                                     <option value="low_to_high">Price Low To High</option>
                                     <option value="high_to_low">Price High To Low</option>
                                 </select>
                     </form>
                 </div>
-                <!-- Price Start -->
-                {% comment %} <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5> {% endcomment %}
+                <!-- Filter Start -->
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by Category</span></h5>
                 <div class="bg-light p-4 mb-30">
-                
-                    </form>
+                    <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl4();" id="categroy" name="catid" name="categories">
+                        <option disabled selected>Select Category</option>
+                        <option value="">All</option>
+                        {% for categories in category %}
+                        <option value="{{categories.id}}">{{categories.name}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
-                <!-- Price End -->
+                <!-- Filter End -->
             </div>
                 <!-- Shop Sidebar End -->
     
@@ -86,7 +92,7 @@
         </div>
     </div>
         {% else %}
-        <p>No Products are available</p>
+        <p style="text-align: center;">No Products are available</p>
         {% endif %}
         <!-- Shop Product End -->
 
@@ -95,5 +101,6 @@
         <script src="{% static 'js/sortingproduct.js' %}"></script>
         <script src="{% static 'js/urlprams.js' %}"></script>
         <script src="{% static 'js/searching.js' %}"></script>
+        <script src="{% static 'js/category_filter.js' %}"></script>
         {% endblock external_script %}
 {% endblock %}

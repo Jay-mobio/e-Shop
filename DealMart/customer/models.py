@@ -10,7 +10,7 @@ class Cart(models.Model):
     product = models.ForeignKey(Products,on_delete=models.CASCADE, related_name="products",null=True)
     size = models.ForeignKey(SubCategory,on_delete=models.CASCADE,related_name="suze",null=True)
     quantity = models.IntegerField(default=1,null=True,blank=True)
-    product_total = models.IntegerField(default=1,null=True,blank=True)
+    product_total = models.BigIntegerField(default=1,null=True,blank=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add = True, null = True)
     updated_at = models.DateTimeField(auto_now_add = True, null = True)

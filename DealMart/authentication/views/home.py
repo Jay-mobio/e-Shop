@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView
-from products.models import Inventory
+from products.models import Inventory,Category
 from customer.models import Cart
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -18,6 +18,12 @@ class HomeView(ListView):
         ordering = request.GET.get('ordering',"")
         products = Inventory.objects.filter(is_active=True)
         cart = Cart.objects.filter(is_active=True,created_by = request.user)
+        category = Category.objects.all()
+        catid = request.GET.get('categories',"")
+        if catid != "":
+            products = products.filter(product__category = catid)
+        else:
+            pass
 
 
         sort = {
@@ -44,5 +50,5 @@ class HomeView(ListView):
         page_number = request.GET.get('page',1)
         products = paginator.get_page(page_number)
 
-        context = {'products':products,'search':search,'page_number':page_number,'cart':cart}
+        context = {'products':products,'search':search,'page_number':page_number,'cart':cart,'category':category}
         return render(request,'authentication/home.html',context)
