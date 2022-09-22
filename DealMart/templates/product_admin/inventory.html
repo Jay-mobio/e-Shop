@@ -46,16 +46,14 @@
                     <div class="bg-light p-30">
                         <form action="" method="POST" enctype="multipart/form-data" id="addproduct">
                             {% csrf_token %}
-                            {% if messages %}
-                            <ul class="messages">
-                                {% for message in messages %}
-                                <div class="alert alert-success" role="alert">
-                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
-                                <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                            {% for message in messages %}
+                                <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                                    {{message}}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
+                            {% endfor %}
 
                             <div class="control-group">
                                 Product:   

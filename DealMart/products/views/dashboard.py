@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from product_admin.mixins import CheckProductOwnerGroup
-from customer.models import Cart
+from customer.models import Cart    
 
 @method_decorator(login_required, name='dispatch')
 class Dashboard(CheckProductOwnerGroup,ListView):

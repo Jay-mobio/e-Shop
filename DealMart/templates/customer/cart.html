@@ -5,7 +5,14 @@
 {% comment %} {% include 'products/toolbar.html'  %} {% endcomment %}
 {% include 'products/navbar.html' %}
     <!-- Cart Start -->
-    {% comment %} <p class="" style="text-align:center ;">No Items in Cart</p> {% endcomment %}
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                {{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
     {% if cart %}
     
     <div class="container-fluid">

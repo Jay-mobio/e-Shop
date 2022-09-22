@@ -11,16 +11,13 @@
       <div class="container">
         <div class="row align-items-center justify-content-center">
           <div class="col-md-7 py-5">
-            {{form.valye.errors}}
-            {% if messages %}
-                {% for mess in messages %}
-                <div class="alert alert-warning alert-dismissible" role="alert">
+                {% for message in messages %}
+                <div class="alert alert-{{message.tags}} alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
                 {% comment %} <div class="alert alert-{{mess.tags}}" role="alert"> {% endcomment %}
-                  {{mess}}
+                  {{message}}
                 </div>
                 {% endfor %}
-            {% endif %} 
                 <br>
             <p class="mb-4" style="color:black"><strong>Become a member of DealMart.</strong></p>
                 <form method="POST" action="{% url 'authentication:verify_otp' %}">

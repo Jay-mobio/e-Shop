@@ -32,45 +32,45 @@
                       </div>
                   {% endif %}
                   {% for message in messages %}
-    
-                  <div class="alert alert-warning alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
                       {{message}}
-                  </div>
-
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
                   {% endfor %}
                     <div>
-                          <div class="control-group">
-                            First Name:
-                            <input type="text" class="form-control" placeholder="Product Name" name='first_name' value="{{user.first_name}}" required>
-                            <p class="help-block text-danger"></p>
-                          </div>
-                          <div class="control-group">
-                            Last Name:
-                            <input type="text" class="form-control" placeholder="Product Name" name='last_name' value="{{user.last_name}}"required>
-                            <p class="help-block text-danger"></p>
-                          </div>
-                          <div class="control-group">
-                            Email:
-                            <input type="email" class="form-control" placeholder="email" name='email' value="{{user.email}}" disabled>
-                            <p class="help-block text-danger"></p>
-                          </div>
-                          <div class="input-group mb-3">
-                            Change Image:
-                            <input type="file" class="form-control" id="id_profile_pic" accept="image/*" name="profile_pic" value="{{user.profile_pic}}" aria-label="Upload">
-                          </div>
-                          <div class="control-group">
-                            Phone:
-                            <input type="number" class="form-control" placeholder="phone" name='phone' value="{{user.phone}}" required>
-                            <p class="help-block text-danger"></p>
-                          </div>
-                          <div class="control-group">
-                            <textarea style="margin-top: 5px;" class="form-control" rows="4" placeholder="Address" name="address">{{user.address}}</textarea>
-                            <p class="help-block text-danger"></p>
-                          </div>
-                          <div>
-                            <button class="btn btn-primary py-2 px-4" type="submit">Update</button>
-                          </div>
+                        <div class="control-group">
+                          First Name:
+                          <input type="text" class="form-control" placeholder="Product Name" name='first_name' value="{{user.first_name}}" required>
+                          <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                          Last Name:
+                          <input type="text" class="form-control" placeholder="Product Name" name='last_name' value="{{user.last_name}}"required>
+                          <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                          Email:
+                          <input type="email" class="form-control" placeholder="email" name='email' value="{{user.email}}" disabled>
+                          <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="input-group mb-3">
+                          Change Image:
+                          <input type="file" class="form-control" id="id_profile_pic" accept="image/*" name="profile_pic" value="{{user.profile_pic}}" aria-label="Upload">
+                        </div>
+                        <div class="control-group">
+                          Phone:
+                          <input type="number" class="form-control" placeholder="phone" name='phone' value="{{user.phone}}" required>
+                          <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                          <textarea style="margin-top: 5px;" class="form-control" rows="4" placeholder="Address" name="address">{{user.address}}</textarea>
+                          <p class="help-block text-danger"></p>
+                        </div>
+                        <div>
+                          <button class="btn btn-primary py-2 px-4" type="submit">Update</button>
+                        </div>
                       </div>
                     </form>
                     {% if request.user.groups.all.0.name == 'Customer' %}

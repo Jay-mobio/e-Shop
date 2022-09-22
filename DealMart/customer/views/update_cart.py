@@ -1,7 +1,7 @@
-from re import sub
 from django.shortcuts import redirect
 from customer.models import Cart
 from django.views.generic import UpdateView
+from django.contrib import messages
 
 
 class UpdateCart(UpdateView):
@@ -18,6 +18,6 @@ class UpdateCart(UpdateView):
             sub_category = cart[0].size
         product_total = cart[0].product.price * quantity
         cart.update(size_id = sub_category,quantity = quantity,product_total=product_total)
-      
+        messages.success(request,"Cart updated")      
         return redirect('customer:cart')
         

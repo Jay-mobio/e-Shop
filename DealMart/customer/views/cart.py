@@ -12,7 +12,6 @@ class ListCart(ListView):
 
     def get(self,request):
         cart = Cart.objects.filter(is_active=True,created_by = request.user)
-        # cart.delete()
         total = 0
         sub_categorys = []
         for i in cart:

@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from email import message
 import os
 from pathlib import Path
 from DealMart.config import Config
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -211,3 +213,7 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 
 # 619445567254-bs08ck9kmaivktq2sll1nu553rocqgjh.apps.googleusercontent.com
 # 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
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}

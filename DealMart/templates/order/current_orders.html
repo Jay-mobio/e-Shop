@@ -28,9 +28,6 @@
             </div>
         </div>
         <div class="wrapper bg-white" style="margin-top: 5px;">
-
-            {% comment %} {% for i in order.cart.all %} {% endcomment %}
-            {% comment %} {% if i.product.created_by == request.user %} {% endcomment %}
                 <table class="table">
                     <thead>
                         <tr>
@@ -59,15 +56,12 @@
                     {% endif %}
                     {% endfor %}
                 </table>
-            {% comment %} {% endif %} {% endcomment %}
-            {% comment %} {% endfor %} {% endcomment %}
-
             <div class="pt-2 border-bottom mb-3"></div>
             <table class="table table-borderless">
                 <thead>
                     <tr class="text-uppercase text-muted">
                         <th scope="col"></th>
-                        <th scope="col" class="text-right">&#x20b9;{{order.total_amount}}</th>
+                        <th scope="col" class="text-right">Total<th>
                     </tr>
                 </thead>
             </table>
