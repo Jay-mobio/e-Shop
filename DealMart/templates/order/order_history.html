@@ -89,6 +89,20 @@
             </div>
         </div>
         {% endfor %}
+        <nav aria-label="Page navigation example" style="text-align: center;">
+        {% if orders.has_previous %}
+            <a href="?page={{ orders.previous_page_number }}">previous</a>
+            {% endif %}
+            
+            <span class="current">
+                Page {{ orders.number }} of {{ orders.paginator.num_pages }}.
+            </span>
+            
+            {% if orders.has_next %}
+            <a href="?page={{ orders.next_page_number }}">next</a>
+            {% endif %}
+        </nav>
+        
         {% endif %}
         
 

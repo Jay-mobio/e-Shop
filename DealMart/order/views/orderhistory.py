@@ -4,10 +4,12 @@ from order.models import Order
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from customer.models import Cart
+from django.core.paginator import Paginator
 
 @method_decorator(login_required, name='dispatch')
 class OrderHistory(ListView):
     template_name = "order/order_history.html"
+    paginate_by = 10
 
     def get(self,request):  
         total = 0
@@ -18,5 +20,8 @@ class OrderHistory(ListView):
                 total = j.product.price * j.quantity + total
             i.total_amount = total
             total = 0
-        context = {'orders':orders,'cart':cart}
+        paginator  = Paginator(orders,self.paginate_by)
+        page_number = request.GET.get('page',1)
+        orders = paginator.get_page(page_number)
+        context = {'orders':orders,'cart':cart,'page_number':page_number}
         return render(request,self.template_name,context)

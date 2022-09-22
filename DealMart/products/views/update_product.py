@@ -30,7 +30,12 @@ class UpdateForm(CheckProductOwnerGroup,UpdateView):
             category = Category.objects.get(id=category_id)
             product.category = category
             sub_category_id = request.POST.get('sub_category')
-            sub_category = SubCategory.objects.get(id=sub_category_id)
+            if sub_category_id == None:
+                pass
+            else:
+                sub_category = SubCategory.objects.get(id=sub_category_id)
+                product.sub_category = sub_category
+                
             brand = request.POST.get('brand')
             product.price = request.POST.get('price')
 

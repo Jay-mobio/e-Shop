@@ -9,6 +9,7 @@ from django.utils.decorators import method_decorator
 
 @method_decorator(login_required, name='dispatch')
 class HomeView(ListView):
+    template_name = 'authentication/home.html'
     model = Inventory
     paginate_by = 10
 
@@ -51,4 +52,4 @@ class HomeView(ListView):
         products = paginator.get_page(page_number)
 
         context = {'products':products,'search':search,'page_number':page_number,'cart':cart,'category':category}
-        return render(request,'authentication/home.html',context)
+        return render(request,self.template_name,context)

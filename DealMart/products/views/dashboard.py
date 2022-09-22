@@ -11,7 +11,7 @@ from customer.models import Cart
 class Dashboard(CheckProductOwnerGroup,ListView):
     template_name = "products/product_list.html"
     model = Inventory
-    paginate_by = 3
+    paginate_by = 10
     
 
     def get(self,request):
