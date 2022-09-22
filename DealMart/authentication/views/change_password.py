@@ -22,6 +22,4 @@ class ChangePasswordView(FormView):
             return redirect('authentication:logout')
         else:
             messages.error(request, 'Please correct the error below.')
-        return render(request, 'authentication/change_password.html', {
-            'form': form
-                })
+            return redirect(request.path_info)

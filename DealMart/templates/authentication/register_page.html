@@ -38,12 +38,12 @@
                       <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
                         {{ form.password1.errors }}
                     </div>
-                    {% else %}
+                    {% elif form.password2.errors %}
                     <div class="alert alert-warning alert-dismissible" role="alert">
                       <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
-                        {{ form.passowrd2.errors }}
+                        {{ form.errors }}
                     </div>
-                  {% endif %}
+                    {% endif %}
               {% endif %}
                 <p class="mb-4" style="color:black"><strong>DealMart is best online shopping Hub.</strong></p>
               <h3>Register</h3>

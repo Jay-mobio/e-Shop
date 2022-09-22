@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from .models import User
 from django.contrib.auth.forms import PasswordResetForm
+from django import forms
 
 class UserRegister(UserCreationForm):
     class Meta:
@@ -111,4 +112,10 @@ class RegisterUser(UserCreationForm):
         if len(phone) < 10 :
             raise ValidationError('Phone not valid')
         return phone
+
+    def clean_password1(self):
+        password1 = self.cleaned_data["password1"]
+        if password1 == "":
+            raise forms.ValidationError("Password required")
+        return password1
     
