@@ -17,7 +17,6 @@ class LoginView(View):
 
     def post(self, request):
         email = request.POST['email']
-        print(email)
         password = request.POST['password']
         if User.objects.filter(email=email).exists():
             user = User.objects.get(email=email)

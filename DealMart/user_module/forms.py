@@ -111,3 +111,4 @@ class RegisterUser(UserCreationForm):
         if len(phone) < 10 :
             raise ValidationError('Phone not valid')
         return phone
+    

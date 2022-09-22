@@ -14,8 +14,7 @@
                 {% for message in messages %}
                 <div class="alert alert-{{message.tags}} alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
-                {% comment %} <div class="alert alert-{{mess.tags}}" role="alert"> {% endcomment %}
-                  {{message}}
+                    {{message}}
                 </div>
                 {% endfor %}
                 <br>
@@ -31,7 +30,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">OTP</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Enter Your OTP" aria-label="OTP" aria-describedby="basic-addon1" name = 'otp' required>
+                        <input type="number" class="form-control" placeholder="Enter Your OTP" aria-label="OTP" aria-describedby="basic-addon1" name = 'otp' min="100000" max="999999" required>
                         </div>
                     </fieldset>
                         <div class="form-grounp">
