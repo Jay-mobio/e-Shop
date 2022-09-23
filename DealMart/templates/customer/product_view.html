@@ -53,19 +53,11 @@
                                       </select>
                                     <p class="help-block text-danger"></p>
                                 </div>
-                                <div class="input-group quantity" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        </div>
-                                        Quantity
-                                            <select class="form-select" aria-label="Default select example" value="{{i.quantity}}" name="quantity" required>
-                                                <option value="1" selected>1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="3">4</option>
-                                                <option value="3">5</option>
-                                            </select>
-                                    </div>
-                                <div>
+                                <div class="control-group">
+                                    <label for="quantity">Quantity :</label>
+                                    <input type="number" name = "quantity" min="1" max="999" required>
+                                </div>  
+                                    <div>
                                     <a class="btn btn-primary py-2 px-4" href={% url 'authentication:home' %}>Back</a>
                                     <button type="submit" class="btn btn-primary">Add To Cart</button>
                                 </div>

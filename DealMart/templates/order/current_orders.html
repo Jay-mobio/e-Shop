@@ -7,6 +7,7 @@
 
         {% if orders %}
         {% for order in orders %}
+        {% if order.total_amount > 0 %}
         <div class="d-flex flex-column justify-content-center align-items-center" id="order-heading">
             <div class="text-uppercase">
                 <p>Order detail</p>
@@ -101,18 +102,19 @@
                 </div>
             </div>
         </div>
+        {% endif %}
         {% endfor %}
         <nav aria-label="Page navigation example" style="text-align:center ;">
-        {% if orders.has_previous %}
-        <a href="?page={{ orders.previous_page_number }}">previous</a>
+        {% if current_ordres.has_previous %}
+        <a href="?page={{ current_ordres.previous_page_number }}">previous</a>
         {% endif %}
         
         <span class="current">
-            Page {{ orders.number }} of {{ orders.paginator.num_pages }}.
+            Page {{ current_ordres.number }} of {{ current_ordres.paginator.num_pages }}
         </span>
         
-        {% if orders.has_next %}
-        <a href="?page={{ orders.next_page_number }}">next</a>
+        {% if current_ordres.has_next %}
+        <a href="?page={{ current_ordres.next_page_number }}">next</a>
         {% endif %}
         {% endif %}
         </nav>

@@ -15,17 +15,21 @@ class CurrentOrders(CheckProductOwnerGroup,ListView):
     def get(self,request):
         orders = Order.objects.filter(status__in = ('pending','out for delivery')).order_by('-id')
         cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        current_ordres = []
         total = 0
         for i in orders:
             for j in i.cart.all():
-                total = j.product.price * j.quantity + total
+                if j.product.created_by == request.user:
+                    total = j.product.price * j.quantity + total
             i.total_amount = total
-            total = 0    
+            if total > 0:
+                current_ordres.append(total)
+            total = 0 
 
-        paginator  = Paginator(orders,self.paginate_by)
+        paginator  = Paginator(current_ordres,self.paginate_by)
         page_number = request.GET.get('page',1)
-        orders = paginator.get_page(page_number)
-        context = {'orders':orders,'page_number':page_number, 'order_status':[i for i,j  in Order.STATUS],'cart':cart}
+        current_ordres = paginator.get_page(page_number)
+        context = {'orders':orders,'page_number':page_number, 'order_status':[i for i,j  in Order.STATUS],'cart':cart,'current_ordres':current_ordres}
         return render(request,self.template_name,context)
 
 class OrderStatusUpdate(View):
