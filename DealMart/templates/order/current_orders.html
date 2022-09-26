@@ -1,125 +1,106 @@
 {% extends 'products/product_header.html' %}
 {% load static %}
-{% block title  %}Current Orders{% endblock title %}
-{% block external_css %} <link rel="stylesheet" href="{% static 'css/orderhistory.css' %}">{% endblock external_css %}
+{% block title  %}Current List{% endblock title %}
 {% block content %}
-        {% include 'products/navbar.html' %}        
+        {% include 'products/toolbar.html'  %}
+        {% include 'products/navbar.html' %}
 
-        {% if orders %}
-        {% for order in orders %}
-        {% if order.total_amount > 0 %}
-        <div class="d-flex flex-column justify-content-center align-items-center" id="order-heading">
-            <div class="text-uppercase">
-                <p>Order detail</p>
+        {% for message in messages %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="h4"> {{order.created_at}}</div>
-            <div class="pt-1">
-                <form action="{% url 'order:status_change' order.id %}">
-                <p>Order #{{order.id}} is currently<b class="text-dark">
-                    <select name="status" value="">
-                        <option value="{{order.status}}" disabled selected>{{order.status}}</option>
-                        {% for x in order_status %}
-                            <option value="{{x}}">{{x}}</option>
-                        {% endfor %}
-                    </select>
-
-                    <button class="btn btn-info">Save Change</button>
-                </form>
-                </b></p>    
-            </div>
-        </div>
-        <div class="wrapper bg-white" style="margin-top: 5px;">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col" style="text-align: center;">Name</th>
-                            <th scope="col" style="text-align: center;">Price</th>
-                            <th scope="col" style="text-align: center;">Size</th>
-                            <th scope="col" style="text-align: center;">Qyantity</th>
-                        </tr>
-                    </thead>
-                    {% for i in order.cart.all %}
-                    {% if i.product.created_by == request.user %}
-                    <tbody>
-                        <tr >
-                            <div class="d-flex justify-content-start align-items-center list py-1">
-                                <div>
-                                    <td style="padding: 12px; text-align: center;   "><div class="order-item"><a href="{% url 'products:product_detail' i.product.id %}" style="color: blue;"><img src="{{ i.product.image.url }}" class="rounded-circle" width="30" height="30">{{i.product.name}}
-                                    </a></div></td>
-                                </div>
-                                <td style="padding: 12px; text-align: center;">&#x20b9;{{i.product.price}}</td>
-                                <td style="padding: 12px; text-align: center;">{{i.product.sub_category}}</td>
-                                    <td style="padding: 12px; text-align: center;">{{i.quantity}}</td>
-                                </div>
-                            </div>
-                        </tr>
-                    </tbody>
-                    {% endif %}
-                    {% endfor %}
-                </table>
-            <div class="pt-2 border-bottom mb-3"></div>
-            <table class="table table-borderless">
-                <thead>
-                    <tr class="text-uppercase text-muted">
-                        <th scope="col"></th>
-                        <th scope="col" class="text-right">Total<th>
-                    </tr>
-                </thead>
-            </table>
-            <div class="d-flex justify-content-start align-items-center pl-3">
-                <div class="text-muted">Payment Method</div>
-                <div class="ml-auto">
-                    <label>Cash on Delivery</label>
-                </div>
-            </div>
-            <div class="d-flex justify-content-start align-items-center py-1 pl-3">
-                <div class="text-muted">Shipping</div>
-                <div class="ml-auto">
-                    <label>Free</label>
-                </div>
-            </div>
-            <div class="d-flex justify-content-start align-items-center pl-3 py-3 mb-4 border-bottom">
-                <div class="ml-auto h5">
-                    &#x20b9;{{order.total_amount}}
-                </div>
-            </div>
-            <div class="row border rounded p-1 my-3">
-                <div class="col-md-6 py-3">
-                    <div class="d-flex flex-column align-items start">
-                        <b>Billing Address</b>
-                        <p class="text-justify pt-2">{{order.created_by.address}}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="pl-3 font-weight-bold">Related Subsriptions</div>
-            <div class="d-sm-flex justify-content-between rounded my-3 subscriptions">
-                <div>
-                    <b>#{{order.id}}</b>
-                </div>
-                <div>Status: {{order.status}}</div>
-                <div>
-                    Total: <b> &#x20b9; {{order.total_amount}}</b>
-                </div>
-            </div>
-        </div>
-        {% endif %}
         {% endfor %}
-        <nav aria-label="Page navigation example" style="text-align:center ;">
-        {% if current_ordres.has_previous %}
-        <a href="?page={{ current_ordres.previous_page_number }}">previous</a>
+        {% if orders %}
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <!-- Shop Sidebar Start -->
+                <div class="bg-light p-4 mb-30">
+                    <form action="" method="GET">
+                        <h5 class="section-title position-relative text-uppercase mb-3" style="text-align: center;"><span class="bg-secondary pr-3">Sort By</span></h5>
+                        <div class="col-lg-3 col-md-4">
+                            <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl();" id="sort" name="ordering" value="{{ordering}}">
+                                <option selected disabled>-------</option>
+                                <option value="">Reset</option>
+                                <option value="low_to_high">Price Low To High</option>
+                                <option value="high_to_low">Price High To Low</option>
+                                <option value="is_active">Available</option>
+                                <option value="is_false">Available</option>
+                            </select> 
+                        </form>
+                    </div>
+                    <!-- Filter Start -->
+                    <div class="bg-light p-4 mb-30">
+                        <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl4();" id="categroy" name="catid" name="categories">
+                            <option disabled selected>Select Category</option>
+                            <option value="">All</option>
+                            {% for categories in category %}
+                            <option value="{{categories.id}}">{{categories.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!-- Filter End -->
+                </div>
+                <!-- Shop Sidebar End -->
+                
+                <!-- Shop Product Start -->
+                <div class="col-lg-9 col-md-8">
+                    <table class="table table-sm">
+                        <tr>
+                            <th style="text-align: center;">No.</th>
+                            <th style="text-align: center;"></th>
+                            <th style="text-align: center;">Name</th>
+                            <th style="text-align: center;">Email</th>
+                            <th style="text-align: center;">Date</th>
+                            <th style="text-align: center;">Order Id</th>
+                            <th style="text-align: center;">Status</th>
+                            <th style="text-align: center;">View</th>
+                            
+                        </tr>
+                        {% for i in orders  %}
+                            <tr>
+                                <td style="text-align: center;">{{forloop.counter}}</td>
+                                <td style="text-align: center;"><img src="{{i.created_by.profile_pic.url}}" width="20px" height="20px"></td>
+                                <td style="text-align: center;">{{i.created_by.first_name}} {{i.created_by.last_name}}</td>
+                                <td style="text-align: center;">{{i.created_by}}</td>
+                                <td style="text-align: center;">{{i.created_at}}</td>
+                                <td style="text-align: center;">{{i.id}}</td>
+                                <td style="text-align: center;">{{i.status}}</td>
+                                <td style="text-align: center;"><a href="{% url 'order:view_order' i.id %}" class="btn btn-success">View Order</a></td>
+                            </tr>
+                        </div>
+                        {% endfor %}
+                    </table>
+                    <nav aria-label="Page navigation example" style="text-align:center ;">
+                        {% if orders.has_previous %}
+                        <a href="?page={{ orders.previous_page_number }}">previous</a>
+                        {% endif %}
+                        
+                        <span class="current">
+                            Page {{ orders.number }} of {{ orders.paginator.num_pages }}
+                        </span>
+                        
+                        {% if orders.has_next %}
+                        <a href="?page={{ orders.next_page_number }}">next</a>
+                        {% endif %}
+                    </nav>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p style="text-align: center;">No Products are available</p>
         {% endif %}
-        
-        <span class="current">
-            Page {{ current_ordres.number }} of {{ current_ordres.paginator.num_pages }}
-        </span>
-        
-        {% if current_ordres.has_next %}
-        <a href="?page={{ current_ordres.next_page_number }}">next</a>
-        {% endif %}
-        {% endif %}
-        </nav>
-        
-        
+        <!-- Shop Product End -->
 
         {% include 'products/footer.html' %}
+        {% block external_script %}
+        <script src="{% static 'js/sortingproduct.js' %}"></script>
+        <script src="{% static 'js/urlprams.js' %}"></script>
+        <script src="{% static 'js/searching.js' %}"></script>
+        <script src="{% static 'js/category_filter.js' %}"></script>
+        {% endblock external_script %}
 {% endblock %}
+
+

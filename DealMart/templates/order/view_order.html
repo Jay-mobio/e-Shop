@@ -1,0 +1,67 @@
+{% extends 'products/product_header.html' %}
+{% load static %}
+{% block title  %}Order Detail{% endblock title %}
+{% block content %}
+        {% include 'products/toolbar.html'  %}
+        {% include 'products/navbar.html' %}
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+            <form action="{% url 'order:status_change' order.id %}">
+                  <select name="status" value=""  style="margin-left: 20px; margin-bottom: 20px;">
+                      <option value="{{order.status}}" disabled selected>{{order.status}}</option>
+                      {% for x in order_status %}
+                          <option value="{{x}}">{{x}}</option>
+                      {% endfor %}
+                  </select>
+
+                  <button class="btn btn-info">Save Change</button>
+              </form>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col" style="text-align:center ;">Order ID</th>
+                    <th scope="col" style="text-align:center ;">Name</th>
+                    <th scope="col" style="text-align:center ;">Brand</th>
+                    <th scope="col" style="text-align:center ;">Price</th>
+                    <th scope="col" style="text-align:center ;">Size</th>
+                    <th scope="col" style="text-align:center ;">Quantity</th>
+                    <th scope="col" style="text-align:center ;">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for i in order.cart.all %}
+                    <tr>
+                        <th style="text-align:center ;">{{i.id}}</th>
+                        <td style="text-align:center ;"><a href="{% url 'products:product_detail' i.product.id %}" class="">
+                                <img src="{{i.product.image.url}}" height="50px" width="50px" alt="">
+                                {{i.product.name}}
+                            </a>
+                        </td>
+                        <td style="text-align:center ;">{{i.product.brand}}</td>
+                        <td style="text-align:center ;">&#x20b9;{{i.product.price}}</td>
+                        <td style="text-align:center ;">{{i.size}}</td>
+                        <td style="text-align:center ;">{{i.quantity}}</td>
+                        <td style="text-align:center ;">&#x20b9;{{i.product_total}}</td>
+                    </tr>
+                  {% endfor %}
+                  <tr>
+                    <td style="text-align:center ;"></td>
+                    <td style="text-align:center ;"></td>
+                    <td style="text-align:center ;"></td>
+                    <td style="text-align:center ;"></td>
+                    <td style="text-align:center ;"></td>
+                    <td style="text-align:center ;"></td>
+                    <th style="text-align:center ;">&#x20b9;{{total_amount}}</th>
+                  </tr>
+                </tbody>
+              </table>
+        
+
+        {% include 'products/footer.html' %}
+{% endblock  %}

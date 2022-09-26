@@ -21,11 +21,6 @@ class HomeView(ListView):
         cart = Cart.objects.filter(is_active=True,created_by = request.user)
         category = Category.objects.all()
         catid = request.GET.get('categories',"")
-        if catid != "":
-            products = products.filter(product__category = catid)
-        else:
-            pass
-
 
         sort = {
             "low_to_high":'product__price',
@@ -34,16 +29,20 @@ class HomeView(ListView):
 
         ordering =  sort[ordering] if ordering in sort else None
       
-        if ordering != None and search != "":
+        if catid != "":
+            products = products.filter(product__category = catid)
+        else:
+            pass
+
+        if ordering != None:
             products = products.order_by(ordering)
+        else:
+            pass
+
+        if search != "":
             products = products.filter(product__name__icontains = search) | products.filter(product__brand__icontains=search)
-
-
-        elif ordering == None and search != None:
-            products = products.filter(product__name__icontains=search) | products.filter(product__brand__icontains=search)
-
-        elif ordering != None:
-            products = products.order_by(ordering)
+        else:
+            pass
 
             
 
@@ -51,5 +50,5 @@ class HomeView(ListView):
         page_number = request.GET.get('page',1)
         products = paginator.get_page(page_number)
 
-        context = {'products':products,'search':search,'page_number':page_number,'cart':cart,'category':category}
+        context = {'products':products,'search':search,'page_number':page_number,'cart':cart,'category':category,'ordering':ordering}
         return render(request,self.template_name,context)

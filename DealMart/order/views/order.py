@@ -13,12 +13,14 @@ from django.utils.decorators import method_decorator
 class CreateOrder(CreateView):    
     def post(self, request):
         cart = Cart.objects.filter(created_by = request.user,is_active=True)
-        phone = request.user.phone
-        address = request.user.address
-        if address=="" or phone =="":
-            messages.error(request,"Address or phone is not mentioned")
-            return redirect('authentication:home')
         order = Order.objects.create(created_by=request.user)
+
+        order.first_name = request.POST.get('first_name')
+        order.last_name = request.POST.get('last_name')
+        order.phone = request.POST.get('phone')
+        order.address = request.POST.get('address')
+        order.save()
+
         total = 0
         for i in cart:
             total = i.product.price * i.quantity + total
@@ -26,7 +28,7 @@ class CreateOrder(CreateView):
         
 
         Cart.objects.filter(created_by = request.user).update(is_active=False)
-        context = {'cart':cart,'total':total,'address':address}
+        context = {'cart':cart,'total':total}
         message = get_template('order/order_email.html').render(context)
         msg = EmailMessage(
         'Order recieved',

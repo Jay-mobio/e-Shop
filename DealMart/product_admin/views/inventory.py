@@ -1,3 +1,4 @@
+from operator import truediv
 from django.contrib import messages
 from django.shortcuts import render,redirect
 from django.views.generic import CreateView,TemplateView
@@ -16,7 +17,7 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
     
 
     def get(self,request):
-        products = Products.objects.filter(created_by=request.user)
+        products = Inventory.objects.filter(created_by=request.user)
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")
         cart = Cart.objects.filter(created_by = request.user,is_active=True)
@@ -27,14 +28,19 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
         catid = request.GET.get('categories',"")
 
         sort = {
-            "low_to_high":'price',
-            "high_to_low":'-price'
+            "low_to_high":'product__price',
+            "high_to_low":'-product__price'
         }
+        if ordering == 'is_active':
+            products = products.filter(is_active = True)
+        
+        if ordering == 'is_not_active':  
+            products = products.filter(is_active = False)
 
         ordering =  sort[ordering] if ordering in sort else None
 
         if catid != "":
-            products = products.filter(category = catid)
+            products = products.filter(product__category = catid)
         else:
             pass
 
@@ -44,7 +50,7 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
             pass
 
         if search != "":
-            products = products.filter(name__icontains = search) | products.filter(brand__icontains=search)
+            products = products.filter(product__name__icontains = search) | products.filter(product__brand__icontains=search)
         else:
             pass
 

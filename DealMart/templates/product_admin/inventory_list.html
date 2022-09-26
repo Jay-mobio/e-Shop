@@ -26,6 +26,8 @@
                                 <option value="">Reset</option>
                                 <option value="low_to_high">Price Low To High</option>
                                 <option value="high_to_low">Price High To Low</option>
+                                <option value="is_active">Available</option>
+                                <option value="is_false">Available</option>
                             </select> 
                         </form>
                     </div>
@@ -44,7 +46,6 @@
                 <!-- Shop Sidebar End -->
                 
                 <!-- Shop Product Start -->
-                {% comment %} {% if products %} {% endcomment %}
                 <div class="col-lg-9 col-md-8">
                     <table class="table table-sm">
                         <tr>
@@ -61,10 +62,10 @@
                         {% for i in products  %}
                             <tr>
                                 <td>{{forloop.counter}}</td>
-                                <td><img src="{{ i.image.url }}" style="height: 100px; width: 100px;"  class="card-img-top"></td>
-                                <span><td>{{i.name}}</td> </span>
-                                <span><td>{{i.brand}}</td> </span>
-                                <span><td>&#x20b9;{{i.price}}</td></span>
+                                <td><img src="{{ i.product.image.url }}" style="height: 100px; width: 100px;"  class="card-img-top"></td>
+                                <span><td>{{i.product.name}}</td> </span>
+                                <span><td>{{i.product.brand}}</td> </span>
+                                <span><td>&#x20b9;{{i.product.price}}</td></span>
                                 <td><a href="{% url 'products:update_product_form' i.pk %}" class="btn btn-info">Update</a></td>
                                 <td><div><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#fm-modal-grid_{{forloop.counter}}">Delete</button></div></td>
                                 <td><a href="{% url 'products:product_detail' i.pk %}" class="btn btn-primary">Detail</a></td>
