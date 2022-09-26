@@ -32,38 +32,20 @@ class CustomerProfileUpdate(CheckCustomerGroup,FormView):
 
     def post (self,request):
         user = request.user
-        form = UserRegister(instance=user)
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.address = request.POST.get('address')
+        user.phone = request.POST.get('phone')
 
+        try:
+            user.profile_pic = request.FILES['profile_pic']
+        except MultiValueDictKeyError:
+            pass 
+        user.updated_by = request.user
+        user.save()
 
-        if form.is_valid():
-            user.first_name = request.POST.get('first_name')
-            user.last_name = request.POST.get('last_name')
-            user.address = request.POST.get('address')
-            phone = user.phone = request.POST.get('phone')
-
-            if not user.first_name.isalpha():
-                messages.error(request,"Inavlid First Name")
-                return redirect(request.path_info)
-
-            if not user.last_name.isalpha():
-                messages.error(request,"Invalid Last name!")
-                return redirect(request.path_info)
-            if not user.phone.isdigit():
-                messages.error(request,"Please Enter Valid Mobile Number")
-                return redirect(request.path_info)
-            if len(phone) < 10 :
-                messages.error(request,"Phone not valid")
-                return redirect(request.path_info)
-
-            try:
-                user.profile_pic = request.FILES['profile_pic']
-            except MultiValueDictKeyError:
-                pass 
-            user.updated_by = request.user
-            user.save()
-
-            messages.success(request,"Profile has been updated succefully")
-            return redirect(request.path_info)
+        messages.success(request,"Your Profile has been updated succefully")
+        return redirect(request.path_info)
         
 
     def get_success_url(self):

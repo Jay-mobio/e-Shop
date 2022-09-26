@@ -44,8 +44,6 @@ class HomeView(ListView):
         else:
             pass
 
-            
-
         paginator  = Paginator(products,self.paginate_by)
         page_number = request.GET.get('page',1)
         products = paginator.get_page(page_number)

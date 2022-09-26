@@ -2,7 +2,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.views import PasswordResetView
-from django.contrib.auth.views import *
+from django.contrib.auth.views import PasswordContextMixin,INTERNAL_RESET_SESSION_TOKEN,UserModel
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import SetPasswordForm
 from django.views.decorators.debug import sensitive_post_parameters
@@ -15,9 +15,6 @@ from django.views.generic import TemplateView
 from django.shortcuts import resolve_url
 from django.conf import settings
 from user_module.forms import ForgotPassword
-
-
-
 
 
 class ResetPasswordViews(PasswordResetView):
@@ -48,7 +45,6 @@ class ResetPasswordViews(PasswordResetView):
         return super().form_valid(form)
 
 
-
 class PasswordResetConfirmView(PasswordContextMixin, FormView):
     form_class = SetPasswordForm
     post_reset_login = False
@@ -72,23 +68,16 @@ class PasswordResetConfirmView(PasswordContextMixin, FormView):
             if token == self.reset_url_token:
                 session_token = self.request.session.get(INTERNAL_RESET_SESSION_TOKEN)
                 if self.token_generator.check_token(self.user, session_token):
-                    # If the token is valid, display the password reset form.
                     self.validlink = True
                     return super().dispatch(*args, **kwargs)
             else:
                 if self.token_generator.check_token(self.user, token):
-                    # Store the token in the session and redirect to the
-                    # password reset form at a URL without the token. That
-                    # avoids the possibility of leaking the token in the
-                    # HTTP Referer header.
                     self.request.session[INTERNAL_RESET_SESSION_TOKEN] = token
                     redirect_url = self.request.path.replace(token, self.reset_url_token)
                     return HttpResponseRedirect(redirect_url)
-        # Display the "Password reset unsuccessful" page.
         return self.render_to_response(self.get_context_data())
     def get_user(self, uidb64):
         try:
-            # urlsafe_base64_decode() decodes to bytestring
             uid = urlsafe_base64_decode(uidb64).decode()
             user = UserModel._default_manager.get(pk=uid)
         except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist, ValidationError):

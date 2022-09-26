@@ -31,7 +31,7 @@ class LoginView(View):
                     return redirect('products:dashboard')
                 return redirect('authentication:home') 
             else:
-                messages.error(request,'email or password not correct')
+                messages.error(request,'Email or password is incorrect')
                 return redirect('authentication:login')  
         else :
             messages.error(request,"User dose not exist")

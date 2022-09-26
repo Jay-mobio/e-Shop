@@ -1,10 +1,10 @@
-from django.shortcuts import render
-from django.views.generic import ListView
+from django.contrib.auth.decorators import login_required
+from product_admin.mixins import CheckProductOwnerGroup
+from django.utils.decorators import method_decorator
 from products.models import Inventory,Category
 from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from product_admin.mixins import CheckProductOwnerGroup
+from django.views.generic import ListView
+from django.shortcuts import render
 from customer.models import Cart    
 
 @method_decorator(login_required, name='dispatch')
@@ -17,10 +17,10 @@ class Dashboard(CheckProductOwnerGroup,ListView):
     def get(self,request):
         products = Inventory.objects.filter(is_active=True)
         cart = Cart.objects.filter(is_active=True,created_by = request.user)
-        category = Category.objects.all()
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")
         catid = request.GET.get('categories',"")
+        category = Category.objects.all()
 
         sort = {
             "low_to_high":'product__price',
@@ -43,7 +43,6 @@ class Dashboard(CheckProductOwnerGroup,ListView):
             products = products.filter(product__name__icontains = search) | products.filter(product__brand__icontains=search)
         else:
             pass
-            
 
         paginator  = Paginator(products,self.paginate_by)
         page_number = request.GET.get('page',1)

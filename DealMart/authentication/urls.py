@@ -1,7 +1,7 @@
 from django.urls import path
 from authentication.views import (
     change_password, login, logout, otp, password_reset, 
-     register,customer,home
+     register,home
 )
 
 
@@ -13,7 +13,6 @@ urlpatterns = [
     path('register/',register.CustomerRegisterView.as_view(),name = "register"),
     path('otp_verify/',otp.OTP.as_view(),name="verify_otp"),
     path('resend_otp/',otp.resend_otp,name = "resend_otp"),
-    path('customer_page/',customer.CustomerView.as_view(),name='customer_page'),
     path('change_password/',change_password.ChangePasswordView.as_view(),name="change_password"),
     path('product_owner_register/',register.ProductAdminRegisterView.as_view(),name='product_admin_register'),
     path('reset_password/',password_reset.ResetPasswordViews.as_view(),name="reset_password"),
