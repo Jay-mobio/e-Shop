@@ -60,6 +60,7 @@
                             
                         </tr>
                         {% for i in orders  %}
+                        {% if i.total_amount > 0 %}
                             <tr>
                                 <td style="text-align: center;">{{forloop.counter}}</td>
                                 <td style="text-align: center;"><img src="{{i.created_by.profile_pic.url}}" width="20px" height="20px"></td>
@@ -71,6 +72,7 @@
                                 <td style="text-align: center;"><a href="{% url 'order:view_order' i.id %}" class="btn btn-success">View Order</a></td>
                             </tr>
                         </div>
+                        {% endif %}
                         {% endfor %}
                     </table>
                     <nav aria-label="Page navigation example" style="text-align:center ;">

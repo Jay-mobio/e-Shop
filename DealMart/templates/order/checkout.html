@@ -58,7 +58,7 @@
                         {% for i in cart %}
                         <div class="d-flex justify-content-between">
                             <p>{{i.product.name}}</p>
-                            <p>{{i.product_total}}</p>
+                            <p>{{i.product.price}} x {{i.quantity}}</p>
                         </div>
                         {% endfor %}
                         <div class="border-bottom pt-3 pb-2">

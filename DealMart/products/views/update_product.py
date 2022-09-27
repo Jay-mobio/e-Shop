@@ -1,12 +1,12 @@
-from products.forms import AddProductForm
-from django.views.generic import UpdateView,View
-from django.shortcuts import render,HttpResponseRedirect,redirect
-from products.models import Products,Category,SubCategory
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.contrib import messages
+from django.shortcuts import HttpResponseRedirect,render,redirect
 from django.utils.datastructures import MultiValueDictKeyError
+from django.contrib.auth.decorators import login_required
 from product_admin.mixins import CheckProductOwnerGroup
+from django.utils.decorators import method_decorator
+from django.views.generic import UpdateView,View
+from products.forms import AddProductForm
+from products.models import Products
+from django.contrib import messages
 from customer.models import Cart
 
 @method_decorator(login_required, name='dispatch')
@@ -33,10 +33,6 @@ class UpdateForm(CheckProductOwnerGroup,UpdateView):
 
         product.brand = request.POST.get('brand')
         product.price = request.POST.get('price')
-
-        if not product.price.isdigit():
-            messages.error(request,"Invalid Price!")
-            return redirect(request.path_info)
 
         try:
             product.image = request.FILES['image']

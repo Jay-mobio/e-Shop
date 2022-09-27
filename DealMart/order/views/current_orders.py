@@ -19,30 +19,28 @@ class CurrentOrders(CheckProductOwnerGroup,ListView):
                                                                                                         'created_at','cart__product__price','cart__quantity')
         cart = Cart.objects.filter(created_by = request.user,is_active=True).only('id')
         category = Category.objects.all().only('id','name')
-        current_ordres = []
+        current_orders = []
         total = 0
-
         for i in orders:
+            # total = [j.product.price * j.quantity + total for j in i.cart.all() if j.product.created_by == request.user]
             for j in i.cart.all():
                 if j.product.created_by == request.user:
                     total = j.product.price * j.quantity + total
-
-            i.total_amount = total
-            if total > 0:
-                current_ordres.append(total)
-
-            total = 0 
-
+                i.total_amount = total
+                if i.total_amount > 0:
+                    current_orders.append(i.total_amount)
+                total = 0
+                
         paginator  = Paginator(orders,self.paginate_by)
         page_number = request.GET.get('page',1)
         orders = paginator.get_page(page_number)
-        context = {'orders':orders,'page_number':page_number, 'order_status':[i for i,j  in Order.STATUS],'cart':cart,'current_ordres':current_ordres,'category':category}
+        context = {'orders':orders,'page_number':page_number, 'order_status':[i for i,j  in Order.STATUS],'cart':cart,'current_orders':current_orders,'category':category}
         return render(request,self.template_name,context)
 
 class OrderStatusUpdate(View):
 
     def get(self,request,pk):
-        order = Order.objects.get(id=pk).only('status')
+        order = Order.objects.get(id=pk)
         order.status = request.GET.get('status')
         order.save()
         return redirect("order:current_order")

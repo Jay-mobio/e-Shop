@@ -20,9 +20,13 @@ class UpdateCart(UpdateView):
         if quantity == None and sub_category == None:
             return redirect(request.path_info)
 
-        product_total = cart[0].product.price * quantity
+        product_total = self.get_product_total(cart,quantity)
         cart.update(size_id = sub_category,quantity = quantity,product_total=product_total)
         
         messages.success(request,"Cart updated")      
         return redirect('customer:cart')
-        
+
+    def get_product_total(self,cart,quantity):
+        product_total = 0
+        cart[0].product.price * quantity
+        return product_total

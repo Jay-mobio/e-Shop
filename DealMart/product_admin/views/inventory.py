@@ -30,8 +30,9 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
         if ordering == 'is_active':
             products = products.filter(is_active = True)
         
-        if ordering == 'is_not_active':  
+        if ordering == 'is_false':  
             products = products.filter(is_active = False)
+            
 
         ordering =  sort[ordering] if ordering in sort else None
 
@@ -40,7 +41,7 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
         else:
             pass
 
-        if ordering != None:
+        if ordering:
             products = products.order_by(ordering)
         else:
             pass

@@ -42,8 +42,7 @@ class CustomerProfileUpdate(CheckCustomerGroup,FormView):
         user.save()
 
         messages.success(request,"Your Profile has been updated succefully")
-        return redirect(request.path_info)
-        
+        return redirect(request.path_info)        
 
     def get_success_url(self):
         return self.request.path

@@ -14,7 +14,7 @@
         </div>
     {% endfor %}
     {% if cart %}
-    
+
     <div class="container-fluid">
         <div class="row px-xl-5">
             <div class="col-lg-8 table-responsive mb-5">
@@ -29,7 +29,7 @@
                             <th>Remove</th>
                         </tr>
                     </thead>
-                    {% for i, j  in mylist %}
+                    {% for i, j  in mylist %}   
                     <tbody class="align-middle" id="carttable">
                         <tr class="cart-row">
                             <td class="align-middle"><img src="{{i.product.image.url}}" id="img{{i.product.id}}" alt="" style="width: 100px;">{{i.product.name}}</td>
