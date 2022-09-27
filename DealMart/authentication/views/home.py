@@ -17,9 +17,9 @@ class HomeView(ListView):
     def get(self,request):
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")
-        products = Inventory.objects.filter(is_active=True)
-        cart = Cart.objects.filter(is_active=True,created_by = request.user)
-        category = Category.objects.all()
+        products = Inventory.objects.filter(is_active=True).only('product_id','product__image','product__name','product__price','product__brand')
+        cart = Cart.objects.filter(is_active=True,created_by = request.user).only('id')
+        category = Category.objects.all().only('id','name')
         catid = request.GET.get('categories',"")
 
         sort = {

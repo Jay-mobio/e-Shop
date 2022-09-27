@@ -11,12 +11,12 @@ class ListCart(ListView):
     template_name = "customer/cart.html"
 
     def get(self,request):
-        cart = Cart.objects.filter(is_active=True,created_by = request.user)
+        cart = Cart.objects.filter(is_active=True,created_by = request.user).only('id','product_id','product__image','product__name','product__price','quantity','product_total','size')
         total = 0
         sub_categorys = []
         for i in cart:
             total = i.product.price * i.quantity + total
-            sub_category = SubCategory.objects.filter(category = i.product.category)
+            sub_category = SubCategory.objects.filter(category = i.product.category).only('id','name')
             sub_categorys.append(sub_category)
             
         context = {

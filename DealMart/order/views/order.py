@@ -1,18 +1,17 @@
-from django.shortcuts import redirect,render
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView
+from django.template.loader import get_template
 from django.views.generic import TemplateView
+from django.shortcuts import redirect,render
+from django.core.mail import EmailMessage
 from django.conf import settings
 from customer.models import Cart
 from order.models import Order
-from django.template.loader import get_template
-from django.core.mail import EmailMessage
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 
 class CreateOrder(CreateView):    
     def post(self, request):
-        cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        cart = Cart.objects.filter(created_by = request.user,is_active=True).only('id','product_price','quantity')
         order = Order.objects.create(created_by=request.user)
 
         order.first_name = request.POST.get('first_name')
@@ -22,12 +21,13 @@ class CreateOrder(CreateView):
         order.save()
 
         total = 0
+        
         for i in cart:
             total = i.product.price * i.quantity + total
             order.cart.add(i)
         
 
-        Cart.objects.filter(created_by = request.user).update(is_active=False)
+        cart.update(is_active=False)
         context = {'cart':cart,'total':total}
         message = get_template('order/order_email.html').render(context)
         msg = EmailMessage(
@@ -46,5 +46,5 @@ class CreateOrder(CreateView):
 class OrderPlaced(TemplateView):
     template_name = "order/orderplaced.html"
     def get(self,request):
-        cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        cart = Cart.objects.filter(created_by = request.user,is_active=True).only('id')
         return render(request,self.template_name,{'cart':cart})

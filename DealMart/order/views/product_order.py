@@ -12,8 +12,9 @@ class ProductOrder(DetailView):
 
     def get(self,request,pk):
         product = Inventory.objects.get(pk=pk)
-        cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        cart = Cart.objects.filter(created_by = request.user,is_active=True).only('id')
         form = AddProductForm(instance=product)
         context = {'form':form, 'product':product,'cart':cart}
+        
         return render(request,self.template_name,context)
 

@@ -1,25 +1,28 @@
-from django.shortcuts import redirect
-from customer.models import Cart
 from django.views.generic import UpdateView
+from django.shortcuts import redirect
 from django.contrib import messages
+from customer.models import Cart
 
 
 class UpdateCart(UpdateView):
     
     def get(self,request,pk):
         sub_category = request.GET.get('sub_category')
-        qty = request.GET.get('quantity')
-        cart = Cart.objects.filter(id=pk,is_active=True)
-        if qty == None:
+        quantity = int(request.GET.get('quantity'))
+        cart = Cart.objects.filter(id=pk,is_active=True).only('id','product_id','product__name','size','quantity')
+
+        if quantity == None:
             quantity = cart[0].quantity
-        else:
-            quantity = int(qty)
+
         if sub_category == None:
             sub_category = cart[0].size
-        if qty == None and sub_category == None:
+
+        if quantity == None and sub_category == None:
             return redirect(request.path_info)
+
         product_total = cart[0].product.price * quantity
         cart.update(size_id = sub_category,quantity = quantity,product_total=product_total)
+        
         messages.success(request,"Cart updated")      
         return redirect('customer:cart')
         

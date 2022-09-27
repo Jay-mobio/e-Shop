@@ -4,7 +4,6 @@
 {% block content %}
 {% include 'products/toolbar.html'  %}
 {% include 'products/navbar.html' %}
-{% load has_group %}
         {% load product_sorting %}
         {% for message in messages %}
             <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">

@@ -15,12 +15,12 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
     paginate_by = 10
     
     def get(self,request):
-        products = Inventory.objects.filter(created_by=request.user)
-        cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        products = Inventory.objects.filter(created_by=request.user).only('product__name','product__price','product_quantity','product__brand','product__image')
+        cart = Cart.objects.filter(created_by = request.user,is_active=True).only('id')
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")
         catid = request.GET.get('categories',"")
-        category = Category.objects.all()
+        category = Category.objects.all().only('name')
 
         sort = {
             "low_to_high":'product__price',
@@ -62,16 +62,14 @@ class UpdateInventory(CreateView):
     template_name = "product_admin/inventory.html"
 
     def get(self,request,pk):
-        product = Products.objects.get(id=pk)
-        inventory = Inventory.objects.get(product=product)
+        inventory = Inventory.objects.get(product=pk)
         cart = Cart.objects.filter(created_by = request.user,is_active=True)
-        form = AddInventoryForm(instance=product)
-        context = {'form':form,'product':product,'cart':cart,'inventory':inventory}
+        form = AddInventoryForm(instance=inventory)
+        context = {'form':form,'cart':cart,'inventory':inventory}
         return render(request,self.template_name,context)
 
     def post(self,request,pk):
-        product = Products.objects.get(id=pk)
-        inventory = Inventory.objects.filter(product=product,created_by=request.user)
+        inventory = Inventory.objects.filter(product=pk,created_by=request.user)
         quantity = int(request.POST.get('product_quantity'))
         
         if quantity > 0 :
@@ -79,6 +77,6 @@ class UpdateInventory(CreateView):
         else :
             is_active = False
         
-        inventory.update(product=product,product_quantity=quantity,is_active=is_active,updated_by=request.user)
+        inventory.update(product=pk,product_quantity=quantity,is_active=is_active,updated_by=request.user)
         messages.success(request,"Product quantity Updated")
         return redirect(request.path_info)

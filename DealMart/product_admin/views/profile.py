@@ -20,7 +20,7 @@ class ProfileUpdate(CheckProductOwnerGroup,FormView):
 
     def get(self,request):
         form = UserRegister(instance=request.user)
-        cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        cart = Cart.objects.filter(created_by = request.user,is_active=True).only('id')
         context = {'form':form,'cart':cart}
         return render(request,self.template_name,context)
 

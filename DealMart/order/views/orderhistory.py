@@ -11,17 +11,20 @@ class OrderHistory(ListView):
     template_name = "order/order_history.html"
     paginate_by = 10
 
-    def get(self,request):  
+    def get(self,request): 
         total = 0
         orders = Order.objects.filter(created_by=request.user).order_by('-id')
-        cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        cart = Cart.objects.filter(created_by = request.user,is_active=True).only('id')
+
         for i in orders:
             for j in i.cart.all():
                 total = j.product.price * j.quantity + total
             i.total_amount = total
             total = 0
+
         paginator  = Paginator(orders,self.paginate_by)
         page_number = request.GET.get('page',1)
         orders = paginator.get_page(page_number)
         context = {'orders':orders,'cart':cart,'page_number':page_number}
+        
         return render(request,self.template_name,context)
