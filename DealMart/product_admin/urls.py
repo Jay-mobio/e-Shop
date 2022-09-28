@@ -1,5 +1,6 @@
-from product_admin.views import profile,inventory
+"""PRODUCT ADMIN URLS"""
 from django.urls import path
+from product_admin.views import profile,inventory
 
 app_name = 'product_admin'
 

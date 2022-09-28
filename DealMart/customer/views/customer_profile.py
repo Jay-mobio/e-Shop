@@ -1,17 +1,19 @@
+"""PROFILE UPDATE"""
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from customer.mixins import CheckCustomerGroup
 from django.views.generic import FormView,View
 from django.shortcuts import render,redirect
+from django.contrib import messages
+from customer.mixins import CheckCustomerGroup
 from user_module.forms import UserRegister
 from user_module.models import User
-from django.contrib import messages
 from customer.models import Cart
 
 
 @method_decorator(login_required, name='dispatch')
 class CustomerProfileUpdate(CheckCustomerGroup,FormView):
+    """CUSTOMER PROFILE UPDATE"""
     title = ("Profile Update")
     template_name = "customer/customer_profile.html"
     form_class = UserRegister
@@ -19,6 +21,7 @@ class CustomerProfileUpdate(CheckCustomerGroup,FormView):
 
 
     def get(self,request):
+        """GETTING USER DETAILS"""
         form = UserRegister(instance=request.user)
         cart = Cart.objects.filter(is_active=True,created_by = request.user).only('id')
         context = {
@@ -28,6 +31,7 @@ class CustomerProfileUpdate(CheckCustomerGroup,FormView):
         return render(request,self.template_name,context)
 
     def post (self,request):
+        """OPERATION FOR UPDATING PROFILE"""
         user = request.user
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
@@ -37,19 +41,21 @@ class CustomerProfileUpdate(CheckCustomerGroup,FormView):
         try:
             user.profile_pic = request.FILES['profile_pic']
         except MultiValueDictKeyError:
-            pass 
+            pass
         user.updated_by = request.user
         user.save()
 
         messages.success(request,"Your Profile has been updated succefully")
-        return redirect(request.path_info)        
+        return redirect(request.path_info)
 
     def get_success_url(self):
+        """GETTING SUCCESS URL"""
         return self.request.path
 
-        
 class CustomerRemoveProfileImage(View):
+    """REMOVE PROFILE IMAGE"""
     def post(self,request,pk):
+        """OPERATION FOR REMOVING PROFLE IMAGE"""
         user = User.objects.get(id=pk)
         user.profile_pic = "static/images/profile1.png"
         user.save()

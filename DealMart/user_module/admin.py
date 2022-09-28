@@ -1,3 +1,4 @@
+"""USERR ADMIN"""
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
@@ -5,7 +6,8 @@ from django.contrib.auth.admin import UserAdmin
 from .models import User
 
 class UserAdminConfig(UserAdmin):
-    search_fields = ('email','first_name','last_name') 
+    """USER ADMIN CONFIG"""
+    search_fields = ('email','first_name','last_name')
     ordering = ('email',)
     list_display = ('email','first_name','last_name')
 
@@ -13,7 +15,7 @@ class UserAdminConfig(UserAdmin):
         (None,{'fields':('email','first_name','last_name')}),
         ('Permissions',{'fields':('is_staff','is_active')}),
         ('Personal',{'fields':('phone','address','profile_pic','groups')})
-    )   
+    )
     add_fieldsets = (
         (None,{
             'classes':('wide',),

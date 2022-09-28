@@ -4,7 +4,7 @@
 {% block content %}
         {% include 'products/toolbar.html'  %}
         {% include 'products/navbar.html' %}
-
+        {% load product_sorting %}
         {% for message in messages %}
             <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
                 {{message}}
@@ -76,17 +76,18 @@
                         {% endfor %}
                     </table>
                     <nav aria-label="Page navigation example" style="text-align:center ;">
-                        {% if orders.has_previous %}
-                        <a href="?page={{ orders.previous_page_number }}">previous</a>
-                        {% endif %}
-                        
-                        <span class="current">
-                            Page {{ orders.number }} of {{ orders.paginator.num_pages }}
-                        </span>
-                        
-                        {% if orders.has_next %}
-                        <a href="?page={{ orders.next_page_number }}">next</a>
-                        {% endif %}
+                        <ul class="pagination">
+                            {% if orders.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?{% query_transform page=orders.previous_page_number %}">Previous</a></li>
+                            {% endif %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="/page{{page_number}}">{{page_number}}<span class="sr-only">(current)</span></a>
+                            </li>   
+                            {% if orders.has_next %}
+                            <li class="page-item">
+                            <a class="page-link" href="?{% query_transform page=orders.next_page_number %}">Next</a></li>
+                            {% endif %}
+                        </ul>
                     </nav>
                 </div>
             </div>

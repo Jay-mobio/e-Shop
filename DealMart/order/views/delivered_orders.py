@@ -20,13 +20,11 @@ class DeliveredOrder(CheckProductOwnerGroup,ListView):
 
         for i in orders:
             for j in i.cart.all():
-                if j.product.created_by == request.user:
-                    total = j.product.price * j.quantity + total
+                if j.product.created_by == request.user: total = j.product.price * j.quantity + total
 
             i.total_amount = total
 
-            if total > 0:
-                current_ordres.append(total)
+            if total > 0: current_ordres.append(total)
 
             total = 0 
 

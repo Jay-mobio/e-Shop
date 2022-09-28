@@ -1,3 +1,4 @@
+"""FORGET PASSWORD"""
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
@@ -18,6 +19,7 @@ from user_module.forms import ForgotPassword
 
 
 class ResetPasswordViews(PasswordResetView):
+    """RESET PASSWORD"""
     email_template_name = "authentication/password_reset_email.html"
     extra_email_context = None
     form_class = ForgotPassword
@@ -29,9 +31,11 @@ class ResetPasswordViews(PasswordResetView):
 
     @method_decorator(csrf_protect)
     def dispatch(self, *args, **kwargs):
+        """DISPATCH"""
         return super().dispatch(*args, **kwargs)
 
     def form_valid(self, form):
+        """FORM VALIDATION"""
         opts = {
             "use_https": self.request.is_secure(),
             "token_generator": self.token_generator,
@@ -46,6 +50,7 @@ class ResetPasswordViews(PasswordResetView):
 
 
 class PasswordResetConfirmView(PasswordContextMixin, FormView):
+    """PASSWORD RESET CONFIRMATION"""
     form_class = SetPasswordForm
     post_reset_login = False
     post_reset_login_backend = None
@@ -57,6 +62,7 @@ class PasswordResetConfirmView(PasswordContextMixin, FormView):
     @method_decorator(sensitive_post_parameters())
     @method_decorator(never_cache)
     def dispatch(self, *args, **kwargs):
+        """DISPATCH"""
         if 'uidb64' not in kwargs or 'token' not in kwargs:
             raise ImproperlyConfigured(
                 "The URL path must contain 'uidb64' and 'token' parameters."
@@ -77,6 +83,7 @@ class PasswordResetConfirmView(PasswordContextMixin, FormView):
                     return HttpResponseRedirect(redirect_url)
         return self.render_to_response(self.get_context_data())
     def get_user(self, uidb64):
+        """GETTING USER DETAILS"""
         try:
             uid = urlsafe_base64_decode(uidb64).decode()
             user = UserModel._default_manager.get(pk=uid)
@@ -84,16 +91,19 @@ class PasswordResetConfirmView(PasswordContextMixin, FormView):
             user = None
         return user
     def get_form_kwargs(self):
+        """GETTING KWARGS"""
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.user
         return kwargs
     def form_valid(self, form):
+        """FORM VALIDATION"""
         user = form.save()
         del self.request.session[INTERNAL_RESET_SESSION_TOKEN]
         if self.post_reset_login:
             auth_login(self.request, user, self.post_reset_login_backend)
         return super().form_valid(form)
     def get_context_data(self, **kwargs):
+        """GETTING CONTEXT DATA"""
         context = super().get_context_data(**kwargs)
         if self.validlink:
             context['validlink'] = True
@@ -107,15 +117,18 @@ class PasswordResetConfirmView(PasswordContextMixin, FormView):
 
 
 class PasswordResetCompleteView(PasswordContextMixin, TemplateView):
+    """PASSWORD RESET COMPELETE"""
     template_name = "authentication/password_reset_complete.html"
     title = ("Password reset complete")
 
     def get_context_data(self, **kwargs):
+        """GETTING CONTEXT DATA"""
         context = super().get_context_data(**kwargs)
         context["login_url"] = resolve_url(settings.LOGIN_URL)
-        return context 
-    
+        return context
+
 
 class PasswordChangeDoneView(PasswordContextMixin, TemplateView):
+    """PASSWORD CHANGE DONE"""
     template_name = "authentication/login_page.html"
     title = ("Password change successful")

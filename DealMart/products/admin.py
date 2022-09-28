@@ -1,3 +1,4 @@
+"""PRODUCTS APP ADMIN"""
 from django.contrib import admin
 from products.models import Products,Category,Inventory,SubCategory
 # Register your models here.

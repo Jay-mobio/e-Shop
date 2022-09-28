@@ -1,10 +1,10 @@
-from tkinter import N
+"""ORDER MODELS"""
 from django.db import models
 from customer.models import Cart
 from user_module.models import User
 # Create your models here.
 class Order(models.Model):
-
+    """ORDER MODLE"""
     STATUS = (
         ('pending','pending'),
         ('out for delivery','out for delivery'),
@@ -24,5 +24,5 @@ class Order(models.Model):
     updated_by = models.ForeignKey (User,on_delete=models.CASCADE,related_name="updated_order" ,null=True)
 
     def __str__(self):
+        """DISPLAY TRING"""
         return str(self.created_by)
-

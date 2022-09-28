@@ -1,3 +1,4 @@
+"""ORDER APP URLS"""
 from django.urls import path
 from order.views import checkout,order,orderhistory,current_orders,delivered_orders,view_order
 

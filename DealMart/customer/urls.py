@@ -1,7 +1,7 @@
+"""CUSTOMER APP URLS"""
 from customer.views import customer_profile,cart,view_product,update_cart
 from django.urls import path
 
-    
 app_name = 'customer'
 
 urlpatterns = [

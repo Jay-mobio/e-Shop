@@ -17,8 +17,7 @@ class OrderHistory(ListView):
         cart = Cart.objects.filter(created_by = request.user,is_active=True).only('id')
 
         for i in orders:
-            for j in i.cart.all():
-                total = j.product.price * j.quantity + total
+            for j in i.cart.all(): total = j.product.price * j.quantity + total
             i.total_amount = total
             total = 0
 

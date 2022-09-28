@@ -1,7 +1,8 @@
+"""PRODUCTS APP URLS"""
 from django.urls import path
-from products.views import products,dashboard,update_product,delete_product,subcategory,productdetail
 from django.conf import settings
 from django.conf.urls.static import static
+from products.views import products,dashboard,update_product,delete_product,subcategory,productdetail
 
 
 app_name = 'products'
