@@ -22,7 +22,7 @@
                         <a href={% url 'authentication:home' %} class="nav-item nav-link">Home</a>
                         {% if request.user.groups.all.0.name == 'Product Owner' %}
                             <a href="{% url 'products:dashboard' %}" class="nav-item nav-link">Dashboard</a>
-                            <a href="{% url 'order:current_order' %}" class="nav-item nav-link">Pending Orders</a>
+                            <a href="{% url 'order:current_order' %}" class="nav-item nav-link">Orders</a>
                             <a href="{% url 'products:add_product' %}" class="nav-item nav-link">Add Products</a>
                             <a href="{% url 'product_admin:inventory_list' %}" class="nav-item nav-link">Inventory</a>
                             <a href="{% url 'order:delivered_orders' %}" class="nav-item nav-link">Delivered Orders</a>
@@ -35,7 +35,7 @@
                         </a>
                         <a href="{% url 'customer:cart' %}" class="btn px-0 ml-3">
                             <i class="fas fa-shopping-cart text-primary"></i>
-                            <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">{{cart|length}}</span>
+                            <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">{{cart}}</span>
                         </a>
                     </div>
                     {% if request.user.groups.all.0.name == 'Product Owner' %}

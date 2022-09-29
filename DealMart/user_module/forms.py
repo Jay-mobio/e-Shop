@@ -5,37 +5,12 @@ from django.contrib.auth.forms import PasswordResetForm
 from django import forms
 from .models import User
 
-class UserRegister(UserCreationForm):
+class UserUpdate(UserCreationForm):
     """USER REGISTER FORM"""
     class Meta:
         """MODEL DEFINIGN"""
         model = User
         fields = ('first_name','last_name','email','phone','password1','password2')
-
-
-    def clean_first_name(self):
-        """FIRST NAME VALIDATION"""
-        first_name = self.cleaned_data['first_name']
-
-        if not first_name.isalpha():
-            raise ValidationError("Invalid First name!")
-        return first_name
-
-    def clean_last_name(self):
-        """LAST NAME VALIDATION"""
-        last_name = self.cleaned_data['last_name']
-
-        if not last_name.isalpha():
-            raise ValidationError("Invalid Last name!")
-        return last_name
-
-    def clean_phone(self):
-        """PHONE NUMBER VALIDATION"""
-        phone = self.cleaned_data['phone']
-
-        if len(phone) < 10 :
-            raise ValidationError('Phone number must have atleast 10 digits')
-        return phone
 
     def is_valid(self) -> bool:
         """FORM VALIDATION"""
@@ -101,4 +76,3 @@ class RegisterUser(UserCreationForm):
         if password1 == "":
             raise forms.ValidationError("Password required")
         return password1
-    

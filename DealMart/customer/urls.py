@@ -8,8 +8,9 @@ urlpatterns = [
     path("customer_profile/",customer_profile.CustomerProfileUpdate.as_view(),name="customer_profile"),
     path("customer_remove_profile_image/<int:pk>",customer_profile.CustomerRemoveProfileImage.as_view(),name="customer_remove_profile_pic"),
     path('product_view/<int:pk>/',view_product.ProductView.as_view(),name="product_view"),
+    path('add_to_cart/<int:pk>',cart.AddToCart.as_view(),name="add_to_cart"),
     path('cart/',cart.ListCart.as_view(),name="cart"),
     path('update_cart/<int:pk>/',update_cart.UpdateCart.as_view(),name="update_cart"),
-    path('remove_cart_item/<int:pk>',cart.RemoveCartProduct.as_view(),name="remove_item"),
+    path('remove_cart_item/<int:pk>',update_cart.RemoveCartProduct.as_view(),name="remove_item"),
 
 ]

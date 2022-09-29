@@ -77,15 +77,15 @@
                     </table>
                     <nav aria-label="Page navigation example" style="text-align:center ;">
                         <ul class="pagination">
-                            {% if orders.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?{% query_transform page=orders.previous_page_number %}">Previous</a></li>
+                            {% if order.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?{% query_transform page=order.previous_page_number %}">Previous</a></li>
                             {% endif %}
                             <li class="page-item disabled">
                                 <a class="page-link" href="/page{{page_number}}">{{page_number}}<span class="sr-only">(current)</span></a>
                             </li>   
-                            {% if orders.has_next %}
+                            {% if order.has_next %}
                             <li class="page-item">
-                            <a class="page-link" href="?{% query_transform page=orders.next_page_number %}">Next</a></li>
+                            <a class="page-link" href="?{% query_transform page=order.next_page_number %}">Next</a></li>
                             {% endif %}
                         </ul>
                     </nav>

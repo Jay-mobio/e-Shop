@@ -5,7 +5,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.views.generic import FormView,View
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from user_module.forms import UserRegister
+from user_module.forms import UserUpdate
 from user_module.models import User
 from product_admin.mixins import CheckProductOwnerGroup
 from customer.models import Cart
@@ -18,22 +18,34 @@ class ProfileUpdate(CheckProductOwnerGroup,FormView):
     """PROFILE UPDATE OPERATIONS"""
     title = ("Profile Update")
     template_name = "product_admin/profile.html"
-    form_class = UserRegister
+    form_class = UserUpdate
 
     def get(self,request):
         """GETTING DETAILS OF A USER"""
-        form = UserRegister(instance=request.user)
-        cart = Cart.objects.filter(created_by = request.user,is_active=True).only('id')
+        form = UserUpdate(instance=request.user)
+        cart = Cart.objects.filter(created_by = request.user,is_active=True).count()
         context = {'form':form,'cart':cart}
         return render(request,self.template_name,context)
 
     def post (self,request):
         """UPDATE OPERATION OF PROFILE"""
         user = request.user
-        user.first_name = request.POST.get('first_name')
-        user.last_name = request.POST.get('last_name')
+        first_name = user.first_name = request.POST.get('first_name')
+        last_name = user.last_name = request.POST.get('last_name')
         user.address = request.POST.get('address')
-        user.phone = request.POST.get('phone')
+        phone = user.phone = request.POST.get('phone')
+
+        if not first_name.isalpha():
+            messages.error(request,"Invalid First name!")
+            return redirect(request.path_info)
+        
+        if not last_name.isalpha():
+            messages.error("Invalid Last name!")
+            return redirect(request.path_info)
+
+        if len(phone) < 10 :
+            messages.error('Phone number must have atleast 10 digits')
+            return redirect(request.path_info)
 
         try:
             user.profile_pic = request.FILES['profile_pic']

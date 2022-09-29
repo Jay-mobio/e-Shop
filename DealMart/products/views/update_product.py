@@ -19,7 +19,7 @@ class UpdateForm(CheckProductOwnerGroup,UpdateView):
         """GETTING DETAILS OF PRODUCT TO BE UPDATED"""
         product = Products.objects.get(id=pk)
         form = AddProductForm(instance=product)
-        cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        cart = Cart.objects.filter(created_by = request.user,is_active=True).count()
         context = {'form':form, 'product':product,'cart':cart}
         return render(request,self.template_name,context)
 
@@ -28,13 +28,9 @@ class UpdateForm(CheckProductOwnerGroup,UpdateView):
         product = Products.objects.get(id=pk)
         product.name = request.POST.get('name')
         product.category_id = request.POST.get('category')
-        sub_category = request.POST.get('sub_category')
-
-        if sub_category == None:
-            pass
-        else:
+        sub_category = request.POST.get('sub_category',"")
+        if sub_category:
             product.sub_category_id = sub_category
-
         product.brand = request.POST.get('brand')
         product.price = request.POST.get('price')
 

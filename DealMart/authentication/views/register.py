@@ -1,3 +1,4 @@
+""""""
 from django.shortcuts import render,redirect
 from django.views.generic.edit import CreateView
 from django.contrib import messages
@@ -7,6 +8,7 @@ from authentication.views.otp import OTP
 from django.contrib.auth.models import Group
 
 class UserCreation(CreateView):
+    """USER CREATION CLASS"""
     title = ("Register Page")
     template_name: str = None
     form_class=None
@@ -31,6 +33,7 @@ class UserCreation(CreateView):
 
 
 class ProductAdminRegisterView(UserCreation):
+    """PRODUCTS ADMIN REGISTER OPERATION"""
     title = ("Register Page")
     template_name = 'authentication/product_admin_register.html'
     form_class = RegisterUser
@@ -39,6 +42,7 @@ class ProductAdminRegisterView(UserCreation):
 
 
 class CustomerRegisterView(UserCreation):
+    """CUSTOMER REGISTER OPERAION"""
     title = ("Register Page")
     template_name = 'authentication/register_page.html'
     form_class = RegisterUser

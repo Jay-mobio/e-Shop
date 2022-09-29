@@ -16,7 +16,7 @@
                                     </button>
                                 </div>
                             {% endfor %}
-                            <form method="POST">
+                            <form method="POST" action="{% url 'customer:add_to_cart' product.id %}">
                                 {% csrf_token %}
                                 <div class="control-group">
                                     Product Name:

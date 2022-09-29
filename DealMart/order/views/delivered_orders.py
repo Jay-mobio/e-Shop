@@ -14,7 +14,7 @@ class DeliveredOrder(CheckProductOwnerGroup,ListView):
     
     def get(self,request):
         orders = Order.objects.filter(status = 'delivered').order_by('-id').only('id','cart','total_amount','address','first_name','last_name','phone','status','created_at')
-        cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        cart = Cart.objects.filter(created_by = request.user,is_active=True).count()
         current_ordres = []
         total = 0
 

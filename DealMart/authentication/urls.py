@@ -1,3 +1,4 @@
+"""AUTHENTICATION APP URLS"""
 from django.urls import path
 from authentication.views import (
     change_password, login, logout, otp, password_reset,

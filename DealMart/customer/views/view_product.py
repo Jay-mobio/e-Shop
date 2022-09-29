@@ -16,7 +16,8 @@ class ProductView(DetailView):
     def get(self,request,pk):
         """GETTING PRODUCT DETAILS"""
         product = Products.objects.get(pk=pk)
-        cart = Cart.objects.filter(is_active=True,created_by = request.user).only('id')  
+        cart = Cart.objects.filter(is_active=True,created_by = request.user).count()
+        print(cart) 
         sub_categorys = SubCategory.objects.filter(category = product.category).only('id','name')
 
         context = {
@@ -26,25 +27,3 @@ class ProductView(DetailView):
         }
 
         return render(request,self.template_name,context)
-
-    def post(self,request,pk):
-        """ADDING PRODUCT TO CART"""
-        product = Products.objects.get(pk=pk)
-        quantity = int(request.POST.get('quantity'))
-        sub_category = request.POST.get('sub_category')
-
-        if Cart.objects.filter(product=product,is_active=True,created_by=request.user,size_id=sub_category).exists():
-            cart = Cart.objects.filter(product=product,is_active=True,created_by=request.user,size_id=sub_category)
-            quantityy = cart[0].quantity + quantity
-            product_total = quantityy * product.price
-            cart.update(product=product,is_active=True,created_by=request.user,quantity=quantityy,size_id=sub_category,product_total=product_total)
-            messages.success(request,"Quantity increased in cart")
-            return redirect(request.path_info)
-
-        product_total = quantity * product.price
-        cart = Cart.objects.create(product=product,created_by=request.user,quantity=quantity,product_total=product_total,size_id=sub_category)
-        cart.sub_category = sub_category
-        cart.save()
-
-        messages.success(request,"Product Has Been Added To Cart")
-        return redirect(request.path_info)

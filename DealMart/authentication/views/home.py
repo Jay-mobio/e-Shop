@@ -23,11 +23,10 @@ class HomeView(ListView):
         ordering = request.GET.get('ordering',"")
         products = Inventory.objects.filter(is_active=True).only('product_id','product__image',
         'product__name','product__price','product__brand')
-        cart = Cart.objects.filter(is_active=True,created_by = request.user).only('id')
+        cart = Cart.objects.filter(is_active=True,created_by = request.user).count()
         category = Category.objects.all().only('id','name')
 
-        if ordering or catid or search != None:
-            products = self.get_queryset(ordering,catid,search,products)
+        products = self.get_queryset(ordering,catid,search,products)
 
         paginator  = Paginator(products,self.paginate_by)
         page_number = request.GET.get('page',1)
@@ -48,17 +47,11 @@ class HomeView(ListView):
 
         if catid != "":
             products = products.filter(product__category = catid)
-        else:
-            pass
-
+            
         if ordering is not None:
             products = products.order_by(ordering)
-        else:
-            pass
 
         if search != "":
             products = products.filter(product__name__icontains = search) | products.filter(product__brand__icontains=search)
-        else:
-            pass
 
         return products

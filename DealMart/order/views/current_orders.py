@@ -13,7 +13,7 @@ from product_admin.mixins import CheckProductOwnerGroup
 class CurrentOrders(CheckProductOwnerGroup,ListView):
     """LIST OF RICEVED ORDERS"""
     template_name = "order/current_orders.html"
-    paginate_by = 20
+    paginate_by = 10
 
     def get(self,request):
         """GET DETAILS OF RECIEVED ORDERS BY PRODUCT ADMIN"""
@@ -23,27 +23,14 @@ class CurrentOrders(CheckProductOwnerGroup,ListView):
         .only('id','status','created_by',
         'created_by__first_name','created_by__last_name','created_by__profile_pic',
         'created_at','cart__product__price','cart__quantity')
-        cart = Cart.objects.filter(created_by = request.user,is_active=True).only('id')
+        cart = Cart.objects.filter(created_by = request.user,is_active=True).count()
         category = Category.objects.all().only('id','name')
         current_orders = []
-        total = 0
+        user = request.user
+        self.get_current_orders(orders,current_orders,user)
 
-        if ordering or search is not None:
-            orders = self.get_queryset(ordering,search,orders)
+        orders = self.get_queryset(ordering,search,orders)
 
-        for i in orders:
-            # total = [j.product.price * j.quantity + total for j in i.cart.all()
-            # if j.product.created_by == request.user]
-            for j in i.cart.all():
-
-                if j.product.created_by == request.user:
-                    total = j.product.price * j.quantity + total
-
-                i.total_amount = total
-                if i.total_amount > 0:
-                    current_orders.append(i.total_amount)
-
-                total = 0
 
         paginator  = Paginator(orders,self.paginate_by)
         page_number = request.GET.get('page',1)
@@ -73,6 +60,24 @@ class CurrentOrders(CheckProductOwnerGroup,ListView):
             pass
 
         return orders
+
+    def get_current_orders(self,orders,current_orders,user):
+        """GETTING CURRENT ORDERS FOR PAGINATION"""
+        total = 0
+        for i in orders:
+            # total = [j.product.price * j.quantity + total for j in i.cart.all()
+            # if j.product.created_by == request.user]
+            for j in i.cart.all():
+
+                if j.product.created_by == user:
+                    total = j.product.price * j.quantity + total
+
+                i.total_amount = total
+                if i.total_amount > 0:
+                    current_orders.append(i.total_amount)
+
+                total = 0
+        return current_orders
 
 class OrderStatusUpdate(View):
     """UPDATE ORDER STATUS"""

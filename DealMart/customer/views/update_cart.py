@@ -1,5 +1,5 @@
 """UPDATE CART PAGE"""
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView,DeleteView
 from django.shortcuts import redirect
 from django.contrib import messages
 from customer.models import Cart
@@ -7,10 +7,10 @@ from customer.models import Cart
 
 class UpdateCart(UpdateView):
     """UPDATE CART OPERATIONS"""
-    def get(self,request,pk):
+    def post(self,request,pk):
         """GETTING DETAILS OF PRODUCT TO BE UPDATED IN CART"""
-        sub_category = request.GET.get('sub_category')
-        quantity = int(request.GET.get('quantity'))
+        sub_category = request.POST.get('sub_category')
+        quantity = int(request.POST.get('quantity'))
         cart = Cart.objects.filter(id=pk,is_active=True).only('id','product_id','product__name','size','quantity')
 
         if quantity is None :
@@ -33,3 +33,11 @@ class UpdateCart(UpdateView):
         product_total = 0
         product_total = cart[0].product.price * quantity
         return product_total
+
+class RemoveCartProduct(DeleteView):
+    """REMOVE CART PRODUCT"""
+    def get(self,request,pk):
+        """GETTING DETAILS OF PRODUCT TO BE REMOVED"""
+        cart = Cart.objects.get(id=pk,is_active=True)
+        cart.delete()
+        return redirect('customer:cart')

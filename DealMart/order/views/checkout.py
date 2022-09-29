@@ -17,11 +17,12 @@ class Checkout(CheckCart,ListView):
         cart = Cart.objects.filter(created_by = request.user,is_active=True).only('product__name',
         'product__price','product_total','quantity')
         total =  self.get_total_amount(cart)
-        context = {'cart':cart,'total':total}
+        context = {'cartt':cart,'total':total}
         return render(request,self.template_name,context)
 
     def get_total_amount(self,cart):
         """GETTING TOTAL AMOUNT FOR ORDER """
-        total = 0
-        total_amount = [total + i.product.price * i.quantity for i in cart]
-        return total_amount[0]
+        total_amount = 0
+        for i in cart:
+            total_amount = total_amount + i.product.price * i.quantity
+        return total_amount

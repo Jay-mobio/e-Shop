@@ -18,14 +18,13 @@ class Dashboard(CheckProductOwnerGroup,ListView):
     def get(self,request):
         """GETTING LIST OF PRODUCTS"""
         products = Inventory.objects.filter(is_active=True)
-        cart = Cart.objects.filter(is_active=True,created_by = request.user)
+        cart = Cart.objects.filter(is_active=True,created_by = request.user).count()
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")
         catid = request.GET.get('categories',"")
         category = Category.objects.all().only('name')
 
-        if ordering or catid or search is not None:
-            products = self.get_queryset(ordering,catid,search,products)
+        products = self.get_queryset(ordering,catid,search,products)
 
         paginator  = Paginator(products,self.paginate_by)
         page_number = request.GET.get('page',1)
@@ -45,17 +44,11 @@ class Dashboard(CheckProductOwnerGroup,ListView):
 
         if catid != "":
             products = products.filter(product__category = catid)
-        else:
-            pass
 
         if ordering is not None:
             products = products.order_by(ordering)
-        else:
-            pass
 
         if search != "":
             products = products.filter(product__name__icontains = search) | products.filter(product__brand__icontains=search)
-        else:
-            pass
 
         return products

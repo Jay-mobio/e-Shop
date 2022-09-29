@@ -22,14 +22,13 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
         """ GETTING INVENTORY LIST """
         products = Inventory.objects.filter(created_by=request.user).only
         ('product__name','product__price','product_quantity','product__brand','product__image')
-        cart = Cart.objects.filter(created_by = request.user,is_active=True).only('id')
+        cart = Cart.objects.filter(created_by = request.user,is_active=True).count()
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")
         catid = request.GET.get('categories',"")
         category = Category.objects.all().only('name')
 
-        if ordering or catid or search is not None:
-            products = self.get_queryset(ordering,catid,search,products)
+        products = self.get_queryset(ordering,catid,search,products)
 
         paginator  = Paginator(products,self.paginate_by)
         page_number = request.GET.get('page',1)
@@ -52,18 +51,12 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
 
         if catid != "":
             products = products.filter(product__category = catid)
-        else:
-            pass
 
         if ordering is not None:
             products = products.order_by(ordering)
-        else:
-            pass
 
         if search != "":
             products = (products.filter(product__name__icontains = search) | products.filter(product__brand__icontains=search))
-        else:
-            pass
 
         return products
 

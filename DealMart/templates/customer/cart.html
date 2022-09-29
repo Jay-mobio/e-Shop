@@ -13,7 +13,7 @@
             </button>
         </div>
     {% endfor %}
-    {% if cart %}
+    {% if cartt %}
 
     <div class="container-fluid">
         <div class="row px-xl-5">
@@ -56,7 +56,8 @@
                                     </div>
                                     <div class="col-md-6 d-flex">
                                         <div class="modal-body p-5">
-                                            <form action="{% url 'customer:update_cart' i.id %}" class="code-form">
+                                            <form action="{% url 'customer:update_cart' i.id %}" method="POST" class="code-form">
+                                                {% csrf_token %}
                                                 <div class="text  py-5">
                                                     Name: {{i.product.name}}
                                                     <div style="margin-top:5px ;">

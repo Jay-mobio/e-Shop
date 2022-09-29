@@ -57,5 +57,4 @@ class OrderPlaced(TemplateView):
     template_name = "order/orderplaced.html"
     def get(self,request):
         """ORDER IS PALCED MESSAGE"""
-        cart = Cart.objects.filter(created_by = request.user,is_active=True).only('id')
-        return render(request,self.template_name,{'cart':cart})
+        return render(request,self.template_name)

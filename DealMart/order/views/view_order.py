@@ -1,8 +1,11 @@
 """ORDER UPDATE"""
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.views.generic.edit import UpdateView
 from django.shortcuts import render
 from order.models import Order
 
+@method_decorator(login_required, name='dispatch')
 class ViewOrder(UpdateView):
     """ORDER UPDATE AND GET OPERATIONS"""
     template_name = "order/view_order.html"
