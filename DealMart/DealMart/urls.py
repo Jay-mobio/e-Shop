@@ -32,3 +32,6 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+handler404 = 'authentication.views.404.error_404'
+handler403 = 'authentication.views.403.error_403'

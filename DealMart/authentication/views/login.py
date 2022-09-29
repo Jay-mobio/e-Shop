@@ -21,14 +21,14 @@ class LoginView(View):
         """GETTING LOGIN CREDENTIALS"""
         email = request.POST['email']
         password = request.POST['password']
-        if User.objects.filter(email=email).exists():
-            user = User.objects.get(email=email)
+        user = User.objects.get(email=email)
+        if user:
             if not user.is_active:
                 OTP.generateotp(self,request,user)
                 return render(request,"authentication/otp.html",{'usr':user})
 
-            user = authenticate(email = email, password = password)
-            if user:
+            authenticated_user = authenticate(email = email, password = password)
+            if authenticated_user:
                 login(request, user)
                 if user.groups.filter(name='Product Owner').exists():
                     return redirect('products:dashboard')

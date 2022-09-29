@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from email import message
 import os
 from pathlib import Path
 from DealMart.config import Config
@@ -29,7 +28,7 @@ SECRET_KEY = Config.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = Config.DEBUG_MODE
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
