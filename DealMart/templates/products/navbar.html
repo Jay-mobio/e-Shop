@@ -1,0 +1,54 @@
+
+
+<!-- Navbar Start -->
+<div class="container-fluid bg-dark mb-30">
+    <div class="row px-xl-5">
+        <div class="col-lg-3 d-none d-lg-block">
+            <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse" style="height: 65px; padding: 0 30px;">
+                <h6 class="text-dark m-0"></h6>
+            </a>
+        </div>
+        <div class="col-lg-9">
+            <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
+                <a href="" class="text-decoration-none d-block d-lg-none">
+                    <span class="h1 text-uppercase text-dark bg-light px-2">Multi</span>
+                    <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Shop</span>
+                </a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav mr-auto py-0">
+                        <a href={% url 'authentication:home' %} class="nav-item nav-link">Home</a>
+                        {% if request.user.groups.all.0.name == 'Product Owner' %}
+                            <a href="{% url 'products:dashboard' %}" class="nav-item nav-link">Dashboard</a>
+                            <a href="{% url 'order:current_order' %}" class="nav-item nav-link">Pending Orders</a>
+                            <a href="{% url 'products:add_product' %}" class="nav-item nav-link">Add Products</a>
+                            <a href="{% url 'product_admin:inventory_list' %}" class="nav-item nav-link">Inventory</a>
+                            <a href="{% url 'order:delivered_orders' %}" class="nav-item nav-link">Delivered Orders</a>
+                        {% endif %}
+                    </div>
+                    <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
+                        <a href="{% url 'order:orderhistory' %}" class="btn px-0">
+                            <i class="fas fa-history text-primary"></i>
+                            <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;"></span>
+                        </a>
+                        <a href="{% url 'customer:cart' %}" class="btn px-0 ml-3">
+                            <i class="fas fa-shopping-cart text-primary"></i>
+                            <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">{{cart|length}}</span>
+                        </a>
+                    </div>
+                    {% if request.user.groups.all.0.name == 'Product Owner' %}
+                        <div style="color:antiquewhite"><i><a href="{% url 'product_admin:profile' %}" style="margin-left: 6px"></i>{{user.first_name}}</div>
+                        <img src="{{request.user.profile_pic.url}}" class="avatar avatar-small circle" size="20" width="20" height="20" alt=""></a>
+                    {% else %}
+                        <div style="color:antiquewhite"><i><a href="{% url 'customer:customer_profile' %}" style="margin-left: 6px"></i>{{user.first_name}}</div>
+                        <img src="{{request.user.profile_pic.url}}" class="avatar avatar-small circle" size="20" width="20" height="20" alt=""></a>
+                    {% endif %}        
+                    <div><a href="{% url 'authentication:logout' %}" style="margin-left: 6px;">Logout</a></div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Navbar End -->

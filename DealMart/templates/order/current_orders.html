@@ -1,0 +1,109 @@
+{% extends 'products/product_header.html' %}
+{% load static %}
+{% block title  %}Current List{% endblock title %}
+{% block content %}
+        {% include 'products/toolbar.html'  %}
+        {% include 'products/navbar.html' %}
+        {% load product_sorting %}
+        {% for message in messages %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+        {% if orders %}
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <!-- Shop Sidebar Start -->
+                <div class="bg-light p-4 mb-30">
+                    <form action="" method="GET">
+                        <h5 class="section-title position-relative text-uppercase mb-3" style="text-align: center;"><span class="bg-secondary pr-3">Sort By</span></h5>
+                        <div class="col-lg-3 col-md-4">
+                            <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl();" id="sort" name="ordering" value="{{ordering}}">
+                                <option selected disabled>-------</option>
+                                <option value="">Reset</option>
+                                <option value="low_to_high">Price Low To High</option>
+                                <option value="high_to_low">Price High To Low</option>
+                                <option value="is_active">Available</option>
+                                <option value="is_false">Available</option>
+                            </select> 
+                        </form>
+                    </div>
+                    <!-- Filter Start -->
+                    <div class="bg-light p-4 mb-30">
+                        <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl4();" id="categroy" name="catid" name="categories">
+                            <option disabled selected>Select Category</option>
+                            <option value="">All</option>
+                            {% for categories in category %}
+                            <option value="{{categories.id}}">{{categories.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!-- Filter End -->
+                </div>
+                <!-- Shop Sidebar End -->
+                
+                <!-- Shop Product Start -->
+                <div class="col-lg-9 col-md-8">
+                    <table class="table table-sm">
+                        <tr>
+                            <th style="text-align: center;">No.</th>
+                            <th style="text-align: center;"></th>
+                            <th style="text-align: center;">Name</th>
+                            <th style="text-align: center;">Email</th>
+                            <th style="text-align: center;">Date</th>
+                            <th style="text-align: center;">Order Id</th>
+                            <th style="text-align: center;">Status</th>
+                            <th style="text-align: center;">View</th>
+                            
+                        </tr>
+                        {% for i in orders  %}
+                        {% if i.total_amount > 0 %}
+                            <tr>
+                                <td style="text-align: center;">{{forloop.counter}}</td>
+                                <td style="text-align: center;"><img src="{{i.created_by.profile_pic.url}}" width="20px" height="20px"></td>
+                                <td style="text-align: center;">{{i.created_by.first_name}} {{i.created_by.last_name}}</td>
+                                <td style="text-align: center;">{{i.created_by}}</td>
+                                <td style="text-align: center;">{{i.created_at}}</td>
+                                <td style="text-align: center;">{{i.id}}</td>
+                                <td style="text-align: center;">{{i.status}}</td>
+                                <td style="text-align: center;"><a href="{% url 'order:view_order' i.id %}" class="btn btn-success">View Order</a></td>
+                            </tr>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </table>
+                    <nav aria-label="Page navigation example" style="text-align:center ;">
+                        <ul class="pagination">
+                            {% if orders.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?{% query_transform page=orders.previous_page_number %}">Previous</a></li>
+                            {% endif %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="/page{{page_number}}">{{page_number}}<span class="sr-only">(current)</span></a>
+                            </li>   
+                            {% if orders.has_next %}
+                            <li class="page-item">
+                            <a class="page-link" href="?{% query_transform page=orders.next_page_number %}">Next</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p style="text-align: center;">No Products are available</p>
+        {% endif %}
+        <!-- Shop Product End -->
+
+        {% include 'products/footer.html' %}
+        {% block external_script %}
+        <script src="{% static 'js/sortingproduct.js' %}"></script>
+        <script src="{% static 'js/urlprams.js' %}"></script>
+        <script src="{% static 'js/searching.js' %}"></script>
+        <script src="{% static 'js/category_filter.js' %}"></script>
+        {% endblock external_script %}
+{% endblock %}
+
+
