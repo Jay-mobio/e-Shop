@@ -13,11 +13,11 @@ class ChangePasswordView(FormView):
     template_name = "authentication/change_password.html"
 
     def get(self, request):
-        """RENDERING TEMPLATE"""
+        """RENDERING TEMPLATE FOR CHANGING PASSWORD"""
         return render(request,self.template_name)
 
     def post(self,request):
-        """OPERATIONS FOR CHANGING PASSWORD"""
+        """FORM VALIDATION FOR CHANGING PASSWORD"""
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()

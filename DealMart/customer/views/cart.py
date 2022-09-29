@@ -1,4 +1,4 @@
-"""CART LIST"""
+"""CART LIST PAGE"""
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView,DeleteView
@@ -9,11 +9,11 @@ from customer.models import Cart
 
 @method_decorator(login_required, name='dispatch')
 class ListCart(ListView):
-    """CART OPEATIONS"""
+    """CART LIST"""
     template_name = "customer/cart.html"
 
     def get(self,request):
-        """GETTING CART PRODUCT LIST"""
+        """GETTING PRODUCTS IN CART"""
         cart = Cart.objects.filter(is_active=True,created_by = request.user).only('id','product_id','product__image','product__name','product__price','quantity','product_total','size')
         total = 0
         sub_categories = []
@@ -30,14 +30,14 @@ class ListCart(ListView):
         return render(request,self.template_name,context)
 
     def get_total(self,cart):
-        """GETTING TOTAL OF CART"""
+        """GETTING TOTAL OF CART PRODUCTS"""
         total = 0
         for i in cart:
             total = i.product.price * i.quantity + total
         return total
 
     def get_sub_categories(self,cart):
-        """GETTING QUERYSET FOR CART"""
+        """GETTING SIZE FOR CART PRODUCTS"""
         sub_categories = [SubCategory.objects.filter(category = i.product.category).only('id','name') for i in cart]
         return sub_categories
 

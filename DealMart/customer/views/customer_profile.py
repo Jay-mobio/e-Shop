@@ -1,4 +1,4 @@
-"""PROFILE UPDATE"""
+"""PROFILE UPDATE PAGE"""
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -13,7 +13,7 @@ from customer.models import Cart
 
 @method_decorator(login_required, name='dispatch')
 class CustomerProfileUpdate(CheckCustomerGroup,FormView):
-    """CUSTOMER PROFILE UPDATE"""
+    """CUSTOMER PROFILE UPDATE PAGE"""
     title = ("Profile Update")
     template_name = "customer/customer_profile.html"
     form_class = UserRegister
@@ -21,7 +21,7 @@ class CustomerProfileUpdate(CheckCustomerGroup,FormView):
 
 
     def get(self,request):
-        """GETTING USER DETAILS"""
+        """GETTING DETAILS OF LOGGED USER"""
         form = UserRegister(instance=request.user)
         cart = Cart.objects.filter(is_active=True,created_by = request.user).only('id')
         context = {
@@ -31,7 +31,7 @@ class CustomerProfileUpdate(CheckCustomerGroup,FormView):
         return render(request,self.template_name,context)
 
     def post (self,request):
-        """OPERATION FOR UPDATING PROFILE"""
+        """OPERATION FOR UPDATING PROFILE OF USER"""
         user = request.user
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')

@@ -1,6 +1,4 @@
-"""
-ORDER DETAILS
-"""
+"""ORDER DETAILS"""
 from django.views.generic import View
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -11,15 +9,11 @@ from customer.models import Cart
 
 @method_decorator(login_required, name='dispatch')
 class ProductOrder(View):
-    """
-    ORDER DETAIL VEIW
-    """
+    """ORDER DETAIL VEIW"""
     template_name = "products/product_detail.html"
 
     def get(self,request,pk):
-        """
-        GETTING ORDER DETAILS
-        """
+        """GETTING ORDER DETAILS"""
         product = Inventory.objects.get(pk=pk)
         cart = Cart.objects.filter(created_by = request.user,is_active=True).only('id')
         form = AddProductForm(instance=product)

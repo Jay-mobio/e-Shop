@@ -1,6 +1,4 @@
-"""
-CREATE ORDER VIEW
-"""
+"""CREATE ORDER VIEW"""
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView
@@ -13,13 +11,9 @@ from customer.models import Cart
 from order.models import Order
 
 class CreateOrder(CreateView):
-    """
-    OPERATION FOR CREATE ORDER
-    """
+    """OPERATION FOR CREATE ORDER"""
     def post(self, request):
-        """
-        CREATE ORDER OPERATION
-        """
+        """CREATE ORDER OPERATION"""
         cart = Cart.objects.filter(created_by = request.user,is_active=True).only
         ('id','product__price','quantity')
         first_name = request.POST.get('first_name')
@@ -40,17 +34,13 @@ class CreateOrder(CreateView):
         return redirect("order:order_placed")
 
     def get_total(self,cart):
-        """
-        GET TOTAL FOR ORDER
-        """
+        """GET TOTAL FOR ORDER"""
         total = 0
         for i in cart: total = i.product.price * i.quantity + total
         return total
 
     def send_mail(self,context,user):
-        """
-        SEND MAIL AFTER ORDER TO THE USER
-        """
+        """SEND MAIL AFTER ORDER TO THE USER"""
         message = get_template('order/order_email.html').render(context)
         msg = EmailMessage(
         'Order recieved',
@@ -63,13 +53,9 @@ class CreateOrder(CreateView):
 
 @method_decorator(login_required, name='dispatch')
 class OrderPlaced(TemplateView):
-    """
-    ORDER PLACED PAGE DISPLAY
-    """
+    """ORDER PLACED PAGE DISPLAY"""
     template_name = "order/orderplaced.html"
     def get(self,request):
-        """
-        ORDER IS DISPLAYED MESSAGE
-        """
+        """ORDER IS PALCED MESSAGE"""
         cart = Cart.objects.filter(created_by = request.user,is_active=True).only('id')
         return render(request,self.template_name,{'cart':cart})

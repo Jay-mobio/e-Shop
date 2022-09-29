@@ -24,5 +24,5 @@ class Order(models.Model):
     updated_by = models.ForeignKey (User,on_delete=models.CASCADE,related_name="updated_order" ,null=True)
 
     def __str__(self):
-        """DISPLAY TRING"""
+        """DISPLAY STRING"""
         return str(self.created_by)

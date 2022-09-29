@@ -1,4 +1,4 @@
-"""HOME PAGE DISPLAY"""
+"""HOME PAGE"""
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import render
@@ -17,7 +17,7 @@ class HomeView(ListView):
 
 
     def get(self,request):
-        """GETTING LIST OF HOME PAGE"""
+        """GETTING LIST OF PRODUCTS TO DISPLAY IN HOME PAGE"""
         catid = request.GET.get('categories',"")
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")
@@ -38,7 +38,7 @@ class HomeView(ListView):
         return render(request,self.template_name,context)
 
     def get_queryset(self,ordering,catid,search,products):
-        """GETTING QUERYSET"""
+        """GETTING QUERYSET FOR FILTERING PRODUCTS"""
         sort = {
             "low_to_high":'product__price',
             "high_to_low":'-product__price'

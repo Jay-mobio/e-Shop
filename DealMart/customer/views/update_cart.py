@@ -1,4 +1,4 @@
-"""UPDATE CART"""
+"""UPDATE CART PAGE"""
 from django.views.generic import UpdateView
 from django.shortcuts import redirect
 from django.contrib import messages
@@ -29,7 +29,7 @@ class UpdateCart(UpdateView):
         return redirect('customer:cart')
 
     def get_product_total(self,cart,quantity):
-        """GETTING TOTAL OF CART"""
+        """GETTING NEW TOTAL OF CART"""
         product_total = 0
         product_total = cart[0].product.price * quantity
         return product_total

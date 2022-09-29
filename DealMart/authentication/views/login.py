@@ -10,7 +10,7 @@ from authentication.views.otp import OTP
 
 
 class LoginView(View):
-    """LOGIN OPERATIONS"""
+    """LOGIN PAGE"""
     template_name = "authentication/login_page.html"
 
     def get(self,request):

@@ -1,4 +1,4 @@
-"""OTP GENERATIONS PAGE"""
+"""OTP GENERATION PAGE"""
 import random
 from django.core.mail import send_mail
 from django.views.generic.edit import CreateView
@@ -11,9 +11,9 @@ from user_module.models import User
 from authentication.models import UserOTP
 
 class OTP(CreateView):
-    """ OTP OPERATIONS """
+    """OTP OPERATIONS"""
     def post(self,request):
-        """COMPARISION OF OTP AND USER"""
+        """CONFIGURATION OF USER OTP"""
         get_otp = request.POST.get('otp')
         get_usr = request.POST.get('usr')
         usr = User.objects.get(email=get_usr)

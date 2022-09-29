@@ -3,7 +3,7 @@ from django.core.exceptions import PermissionDenied
 from customer.models import Cart
 
 class CheckCart:
-    """CART CHECKING"""
+    """CHECKING CART LENGTH"""
     def dispatch(self,request, *args, **kwargs):
         """DISATCH"""
         cart = Cart.objects.filter(created_by = request.user,is_active=True)

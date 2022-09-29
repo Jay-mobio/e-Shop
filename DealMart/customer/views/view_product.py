@@ -1,4 +1,4 @@
-"""VIEW PRODUCT"""
+"""VIEW PRODUCT PAGE"""
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import render,redirect
@@ -16,7 +16,7 @@ class ProductView(DetailView):
     def get(self,request,pk):
         """GETTING PRODUCT DETAILS"""
         product = Products.objects.get(pk=pk)
-        cart = Cart.objects.filter(is_active=True,created_by = request.user).only('id')
+        cart = Cart.objects.filter(is_active=True,created_by = request.user).only('id')  
         sub_categorys = SubCategory.objects.filter(category = product.category).only('id','name')
 
         context = {

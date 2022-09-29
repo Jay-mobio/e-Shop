@@ -1,6 +1,4 @@
-"""
-ORDER RECIEVED FOR PRODUCT ADMIN
-"""
+"""ORDER RECIEVED FOR PRODUCT ADMIN"""
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView,View
@@ -13,16 +11,12 @@ from product_admin.mixins import CheckProductOwnerGroup
 
 @method_decorator(login_required, name='dispatch')
 class CurrentOrders(CheckProductOwnerGroup,ListView):
-    """
-    LIST AND CHANGE OF RICEVED ORDERS
-    """
+    """LIST OF RICEVED ORDERS"""
     template_name = "order/current_orders.html"
     paginate_by = 20
 
     def get(self,request):
-        """
-        GET RECIEVED ORDERS
-        """
+        """GET DETAILS OF RECIEVED ORDERS BY PRODUCT ADMIN"""
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")
         orders = Order.objects.filter(status__in = ('pending','out for delivery')).order_by('-id')\
@@ -60,9 +54,7 @@ class CurrentOrders(CheckProductOwnerGroup,ListView):
         return render(request,self.template_name,context)
 
     def get_queryset(self,ordering,search,orders):
-        """
-        GET QUERYSET FOR FILTER AND ORDERING
-        """
+        """GET QUERYSET FOR FILTER AND ORDERING"""
         sort = {
             "low_to_high":'product__price',
             "high_to_low":'-product__price'
@@ -83,13 +75,9 @@ class CurrentOrders(CheckProductOwnerGroup,ListView):
         return orders
 
 class OrderStatusUpdate(View):
-    """
-    UPDATE ORDER STATUS
-    """
+    """UPDATE ORDER STATUS"""
     def get(self,request,pk):
-        """
-        GET ORDER STATUS AND UPDATE
-        """
+        """GETTING ORDER STATUS AND UPDATE"""
         order = Order.objects.get(id=pk)
         order.status = request.GET.get('status')
         order.save()

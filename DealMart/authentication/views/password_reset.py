@@ -1,4 +1,4 @@
-"""FORGET PASSWORD"""
+"""FORGET PASSWORD PAGE"""
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
@@ -35,7 +35,7 @@ class ResetPasswordViews(PasswordResetView):
         return super().dispatch(*args, **kwargs)
 
     def form_valid(self, form):
-        """FORM VALIDATION"""
+        """ RESET PASSWORD FORM VALIDATION"""
         opts = {
             "use_https": self.request.is_secure(),
             "token_generator": self.token_generator,

@@ -1,20 +1,14 @@
-"""
-ORDER UPDATE
-"""
+"""ORDER UPDATE"""
 from django.views.generic.edit import UpdateView
 from django.shortcuts import render
 from order.models import Order
 
 class ViewOrder(UpdateView):
-    """
-    ORDER UPDATE AND GET OPERATIONS
-    """
+    """ORDER UPDATE AND GET OPERATIONS"""
     template_name = "order/view_order.html"
 
     def get(self,request,pk):
-        """
-        GETTING ORDER DETAILS
-        """
+        """GETTING ORDER DETAILS"""
         order = Order.objects.get(id=pk)
         user = request.user
         total_amount = self.get_total(order,user)
@@ -25,9 +19,7 @@ class ViewOrder(UpdateView):
         return render(request,self.template_name,context)
 
     def get_total(self,order,user):
-        """
-        GETTING TOTAL OF ORDER
-        """
+        """GETTING TOTAL OF ORDER"""
         total = 0
         total_amount = 0
         for i in order.cart.all():
