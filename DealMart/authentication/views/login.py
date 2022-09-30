@@ -24,12 +24,12 @@ class LoginView(View):
         user = User.objects.get(email=email)
         if user:
             if not user.is_active:
-                OTP.generateotp(self,request,user)
+                OTP.generateotp(self,user)
                 return render(request,"authentication/otp.html",{'usr':user})
 
             authenticated_user = authenticate(email = email, password = password)
             if authenticated_user:
-                login(request, user)
+                login(request, authenticated_user)
                 if user.groups.filter(name='Product Owner').exists():
                     return redirect('products:dashboard')
                 return redirect('authentication:home')

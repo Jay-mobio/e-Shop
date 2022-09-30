@@ -3,7 +3,7 @@ var sub_category = document.querySelector('#id_sub_category');
 category.addEventListener('change', (e) => {
     var categoryId = category.value;
     fetch("/products/select_cat/" + categoryId + "/", {
-
+        
     })
         .then((res) => res.json())
         .then((context) => {

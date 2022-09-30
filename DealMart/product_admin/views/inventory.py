@@ -20,8 +20,8 @@ class InventoryList(CheckProductOwnerGroup,TemplateView):
 
     def get(self,request):
         """ GETTING INVENTORY LIST """
-        products = Inventory.objects.filter(created_by=request.user).only
-        ('product__name','product__price','product_quantity','product__brand','product__image')
+        products = Inventory.objects.filter(created_by=request.user).only('product__name','product__price',
+        'product_quantity','product__brand','product__image')
         cart = Cart.objects.filter(created_by = request.user,is_active=True).count()
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")
@@ -68,7 +68,7 @@ class UpdateInventory(CreateView):
     def get(self,request,pk):
         """ GETTING DETAILS OF PRODUCT """
         inventory = Inventory.objects.get(product=pk)
-        cart = Cart.objects.filter(created_by = request.user,is_active=True)
+        cart = Cart.objects.filter(created_by = request.user,is_active=True).count()
         form = AddInventoryForm(instance=inventory)
         context = {'form':form,'cart':cart,'inventory':inventory}
         return render(request,self.template_name,context)

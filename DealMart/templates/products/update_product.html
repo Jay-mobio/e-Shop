@@ -1,12 +1,11 @@
 {% extends 'products/product_header.html' %}
 {% load static %}
 {% block title  %}Update Product{% endblock title %}
+<!--Body Starts-->
 {% block content %}
-        {% comment %} {% include 'products/toolbar.html'  %} {% endcomment %}
-        {% include 'products/navbar.html' %}
-    
-    
-        <!-- Breadcrumb Start -->
+    {% include 'products/navbar.html' %}
+
+    <!-- Breadcrumb Start -->
         <div class="container-fluid">
             <div class="row px-xl-5">
                 <div class="col-12">
@@ -14,13 +13,12 @@
                         <a class="breadcrumb-item text-dark" href="#">Home</a>
                         <span class="breadcrumb-item active">Update Product</span>
                     </nav>
-                </div>
+                </div>                                                                                                                          
             </div>
         </div>
-        <!-- Breadcrumb End -->
-    
-    
-        <!-- Update Product -->
+    <!-- Breadcrumb End -->
+
+    <!-- Update Product -->
         <div class="container-fluid">
             <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Update Product</span></h2>
             <div class="row px-xl-5">
@@ -70,7 +68,7 @@
                             <div class="input-group mb-3">
                                 Image:
                                 <input type="file" class="form-control" id="id_image" accept="image/*" name="image" value="{{product.image}}" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
-                              </div>
+                                </div>
                             </div>
                             <div class="control-group">
                                 <textarea style="margin-top: 5px;" class="form-control" rows="6" placeholder="About product" name="discription"
@@ -94,14 +92,16 @@
                                     <img src="{{product.image.url}}" alt="" width="500px" height="450px" id="img">
                                 </form>
                             </div> 
-                        </div>                   
-                    </div>
+                        </div> 
+                    </div>                  
                 </div>
+            </div>
         </div>
-        <!-- Update Product End -->
-        {% include 'products/footer.html' %}
-        {% block external_script %}
-        <script src="{% static 'js/sub_category.js' %}"></script>
-        {% endblock external_script %}
+    <!-- Update Product End -->
+    {% include 'products/footer.html' %}
+    {% block external_script %}
+    <script src="{% static 'js/sub_category.js' %}"></script>
+    {% endblock external_script %}
 
 {% endblock %}
+<!--Body Ends-->

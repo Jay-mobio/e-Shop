@@ -21,78 +21,79 @@
     </style>
 </head>
 {% block title  %}Add Product{% endblock title %}
+<!--Body Ends-->
     {% block content %}
         {% include 'products/navbar.html' %}
 
         <!-- Breadcrumb Start -->
-        <div class="container-fluid">
-            <div class="row px-xl-5">
-                <div class="col-12">
-                    <nav class="breadcrumb bg-light mb-30">
-                        <a class="breadcrumb-item text-dark" href="{% url 'authentication:home' %}">Home</a>
-                        <span class="breadcrumb-item active">Add Product</span>
-                    </nav>
+            <div class="container-fluid">
+                <div class="row px-xl-5">
+                    <div class="col-12">
+                        <nav class="breadcrumb bg-light mb-30">
+                            <a class="breadcrumb-item text-dark" href="{% url 'authentication:home' %}">Home</a>
+                            <span class="breadcrumb-item active">Update Inventroy</span>
+                        </nav>
+                    </div>
                 </div>
             </div>
-        </div>
         <!-- Breadcrumb End -->
-    
-    
-        <!-- Add Product -->
-        <div class="container-fluid">
-            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Add Product</span></h2>
-            <div class="row px-xl-5">
-                <div class="col-lg-7 mb-5">
-                    <div class="bg-light p-30">
-                        <form action="" method="POST" enctype="multipart/form-data" id="addproduct">
-                            {% csrf_token %}
-                            {% for message in messages %}
-                                <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-                                    {{message}}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            {% endfor %}
 
-                            <div class="control-group">
-                                Product:   
-                                {{inventory.product.name}}
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                Product:   
-                                {{inventory.product.brand}}
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                Product:   
-                                {{inventory.product.discription}}
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                Product Qunatity:
-                                <input type="number" id="id_price" class="form-control" style="margin-top:5px;" placeholder="Quantity" name="product_quantity" value="{{inventory.product_quantity}}" required>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div>
-                                <button class="btn btn-primary py-2 px-4" type="submit">Add Quantity</button>
-                            </div>
-                        </form>
+        <!-- Add Product -->
+            <div class="container-fluid">
+                <h5 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Update Inventroy</span></h5>
+                <div class="row px-xl-5">
+                    <div class="col-lg-7 mb-5">
+                        <div class="bg-light p-30">
+                            <!--Update Inventory Form Starts-->
+                                <form action="" method="POST" enctype="multipart/form-data" id="addproduct">
+                                    {% csrf_token %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                                            {{message}}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    {% endfor %}
+                                    <div class="control-group">
+                                        Product:   
+                                        {{inventory.product.name}}
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="control-group">
+                                        Product:   
+                                        {{inventory.product.brand}}
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="control-group">
+                                        Product:   
+                                        {{inventory.product.discription}}
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="control-group">
+                                        Product Qunatity:
+                                        <input type="number" id="id_price" class="form-control" style="margin-top:5px;" placeholder="Quantity" name="product_quantity" value="{{inventory.product_quantity}}" required>
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-primary py-2 px-4" type="submit">Add Quantity</button>
+                                    </div>
+                                </form>
+                            <!--Update Inventory Form Ends-->
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-5 mb-5">
-                    <div class="bg-light p-30 mb-30">
-                        <img src="{{inventory.product.image.url}}" alt="" width="500px" height="450px">
+                    <div class="col-lg-5 mb-5">
+                        <div class="bg-light p-30 mb-30">
+                            <img src="{{inventory.product.image.url}}" alt="" width="500px" height="450px">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         <!-- Add Product End -->    
         {% include 'products/footer.html' %}
 
-
     {% endblock %}
+<!--Body Ends-->
 {% block external_script %}
 <script src="{% static 'js/sub_category.js' %}"></script>
 {% endblock external_script %}

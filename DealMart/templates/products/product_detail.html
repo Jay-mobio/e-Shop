@@ -2,64 +2,68 @@
 {% load static %}
 {% block title  %}Product etail{% endblock title %}
 {% block content %}
-        {% comment %} {% include 'products/toolbar.html'  %} {% endcomment %}
-        {% include 'products/navbar.html' %}
-            <div class="container-fluid">
-                <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Product Detail</span></h2>
-                <div class="row px-xl-5">
-                    <div class="col-lg-7 mb-5">
-                        <div class="contact-form bg-light p-30">
-                            <div id="success"></div>
-                            <form name="sentMessage" id="contactForm" novalidate="novalidate">
-                                <div class="control-group">
-                                    Product Name:
-                                    {{product.product.name}}
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    Category:
-                                    {{product.product.category}}
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    Sub Category :
-                                    {{product.product.sub_category}}
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    Brand:
-                                    {{product.product.brand}}
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    Quantity :
-                                    {{product.product.sub_category}}
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    Created By :
-                                    {{product.product.created_by}}
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    Discription:
-                                    {{product.product.discription}}
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div>
-                                    <a class="btn btn-primary py-2 px-4" href={% url 'products:dashboard' %}>Back</a>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 mb-5">
-                        <img src="{{product.product.image.url}}" alt="" width="500px" height="450px" id="img">
-                    </div>
+    {% include 'products/navbar.html' %}
+    <div class="container-fluid">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Product Detail</span></h2>
+        <div class="row px-xl-5">
+            <div class="col-lg-7 mb-5">
+                <div class="contact-form bg-light p-30">
+                    <div id="success"></div>
+                    <!--Product Detail Form Starts-->
+                        <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                            <div class="control-group">
+                                Product Name:
+                                {{product.product.name}}
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                Category:
+                                {{product.product.category}}
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                Sub Category :
+                                {{product.product.sub_category}}
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                Brand:
+                                {{product.product.brand}}
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                Quantity :
+                                {{product.product.sub_category}}
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                Created By :
+                                {{product.product.created_by}}
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                Discription:
+                                {{product.product.discription}}
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div>
+                                <a class="btn btn-primary py-2 px-4" href={% url 'products:dashboard' %}>Back</a>
+                            </div>
+                        </form>
+                    <!--Product Detail Form Ends-->
                 </div>
-            </div>    
-        {% include 'products/footer.html' %}
-        {% block external_script %}
-        <script src="{% static 'js/sub_category.js' %}"></script>
-        {% endblock external_script %}
-
+            </div>
+            <!--Product Image Starts-->
+                <div class="col-lg-5 mb-5">
+                    <img src="{{product.product.image.url}}" alt="" width="500px" height="450px" id="img">
+                </div>
+            <!--Product Image Ends-->
+        </div>
+    </div>    
+    {% include 'products/footer.html' %}
 {% endblock %}
+<!--External Scripts Starts-->
+    {% block external_script %}
+        <script src="{% static 'js/sub_category.js' %}"></script>
+    {% endblock external_script %}
+<!--External Scripts Ends-->

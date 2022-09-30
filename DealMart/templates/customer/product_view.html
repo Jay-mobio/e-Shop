@@ -1,76 +1,103 @@
 {% extends 'products/product_header.html' %}
 {% load static %}
 {% block title  %}Product Detail{% endblock title %}
+
+<!--Body Starts-->
+
 {% block content %}
-        {% include 'products/navbar.html' %}
-            <div class="container-fluid">
-                <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Product Detail</span></h2>
-                <div class="row px-xl-5">
-                    <div class="col-lg-7 mb-5">
-                        <div class="contact-form bg-light p-30">
-                            {% for message in messages %}
-                                <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-                                    {{message}}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            {% endfor %}
-                            <form method="POST" action="{% url 'customer:add_to_cart' product.id %}">
-                                {% csrf_token %}
-                                <div class="control-group">
-                                    Product Name:
-                                    {{product.name}}
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    Category:
-                                    {{product.product.category}}
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    Brand:
-                                    {{product.brand}}
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    Discription:
-                                    {{product.discription}}
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    Price:
-                                    &#x20b9;{{product.price}}
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    Size :
-                                    <select class="form-select" aria-label="Default select example" name="sub_category">
-                                        {% for i in sub_categorys %}
-                                        <option value="{{i.id}}">{{i}}</option>
-                                        {% endfor %}
-                                      </select>
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    <label for="quantity">Quantity :</label>
-                                    <input type="number" name = "quantity" min="1" max="999" required>
-                                </div>  
-                                    <div>
-                                    <a class="btn btn-primary py-2 px-4" href={% url 'authentication:home' %}>Back</a>
-                                    <button type="submit" class="btn btn-primary">Add To Cart</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 mb-5">
-                        <img src="{{product.image.url}}" alt="" width="500px" height="450px" id="img">
-                    </div>
+    {% include 'products/navbar.html' %}
+
+    <!-- Breadcrumb Start -->
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col-12">
+                    <nav class="breadcrumb bg-light mb-30">
+                        <a class="breadcrumb-item text-dark" href="{% url 'authentication:home' %}">Home</a>
+                        <span class="breadcrumb-item active">View Product</span>
+                    </nav>
                 </div>
-            </div>    
-        {% include 'products/footer.html' %}
-        {% block external_script %}
-        <script src="{% static 'js/sub_category.js' %}"></script>
-        {% endblock external_script %}
+            </div>
+        </div>
+    <!-- Breadcrumb End -->
+
+    <div class="container-fluid">
+        <h5 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Product Detail</span></h5>
+        <div class="row px-xl-5">
+            <div class="col-lg-7 mb-5">
+                <div class="contact-form bg-light p-30">
+                    {% for message in messages %}
+                        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                            {{message}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+
+                    <!--Add TO Cart Form Starts-->
+                    <form method="POST" action="{% url 'customer:add_to_cart' product.id %}">
+                        {% csrf_token %}
+                        <div class="control-group">
+                            Product Name:
+                            {{product.name}}
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            Category:
+                            {{product.product.category}}
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            Brand:
+                            {{product.brand}}
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            Discription:
+                            {{product.discription}}
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            Price:
+                            &#x20b9;{{product.price}}
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            Size :
+                            <select class="form-select" aria-label="Default select example" name="sub_category">
+                                {% for i in sub_categorys %}
+                                <option value="{{i.id}}">{{i}}</option>
+                                {% endfor %}
+                                </select>
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="quantity">Quantity :</label>
+                            <input type="number" name = "quantity" min="1" max="999" required>
+                        </div>  
+                            <div>
+                            <a class="btn btn-primary py-2 px-4" href={% url 'authentication:home' %}>Back</a>
+                            <button type="submit" class="btn btn-primary">Add To Cart</button>
+                        </div>
+                    </form>
+                    <!--Add To Cart Form Ends-->
+
+                </div>
+            </div>
+
+            <!--Product Image-->
+            <div class="col-lg-5 mb-5">
+                <img src="{{product.image.url}}" alt="" width="500px" height="450px" id="img">
+            </div>
+            <!--Product Image Ends-->
+        </div>
+    </div>
+
+    {% include 'products/footer.html' %}
+    {% block external_script %}
+    <script src="{% static 'js/sub_category.js' %}"></script>
+    {% endblock external_script %}
 
 {% endblock %}
+
+<!--Body Ends-->

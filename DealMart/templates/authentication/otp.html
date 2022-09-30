@@ -1,51 +1,51 @@
 {% extends "authentication/auth_header.html" %}
 {% load static %}
 {% block title %}Otp{% endblock title %}
-
+<!--Body Starts-->
   {% block content %}
   
-
-  <div class="d-lg-flex half" > 
+<div class="d-lg-flex half" > 
     <div class="bg order-1 order-md-2" style="background-image: url('{% static "images/bg_1.jpg" %}');"></div>
     <div class="contents order-2 order-md-1" style="background:#ffd700;">
-      <div class="container">
-        <div class="row align-items-center justify-content-center">
-          <div class="col-md-7 py-5">
-                {% for message in messages %}
-                <div class="alert alert-{{message.tags}} alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
-                    {{message}}
-                </div>
-                {% endfor %}
-                <br>
-            <p class="mb-4" style="color:black"><strong>Become a member of DealMart.</strong></p>
-                <form method="POST" action="{% url 'authentication:verify_otp' %}">
-                    {% csrf_token %}
-                    <fieldset class="form-group">
-                        <legend class="border-bottom display">
-                            <h3 class="float-left">Verify Your Email</h3>
-                        </legend>
-                        <input type="text" name="usr" value="{{usr.email}}" hidden>
-                        <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">OTP</span>
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-7 py-5">
+                    {% for message in messages %}
+                        <div class="alert alert-{{message.tags}} alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                                {{message}}
                         </div>
-                        <input type="number" class="form-control" placeholder="Enter Your OTP" aria-label="OTP" aria-describedby="basic-addon1" name = 'otp' min="100000" max="999999" required>
-                        </div>
-                    </fieldset>
-                        <div class="form-grounp">
-                        <button class="btn btn-dark" type="submit">Verify</button>
-                        <small class="float-right text-muted"><i>
+                    {% endfor %}
+                    <br>
+                    <p class="mb-4" style="color:black"><strong>Become a member of DealMart.</strong></p>
+                    <!--Otp Configuration Form Starts-->
+                        <form method="POST" action="{% url 'authentication:verify_otp' %}">
                             {% csrf_token %}
-                            <small class="float-right text-muted"><i><a href="#" class="text-dark" onclick="ReSendOTP('{{usr.email}}', 'resendOTPmess')"><i id="resendOTPmess">Resend</i> OTP</a></small>
-                            </form>
-                        </small>
-                        </div>
-                    </div>
-              </div>
-          </div>
-      </div>
-  </div>
+                            <fieldset class="form-group">
+                                <legend class="border-bottom display">
+                                    <h3 class="float-left">Verify Your Email</h3>
+                                </legend>
+                                <input type="text" name="usr" value="{{usr.email}}" hidden>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">OTP</span>
+                                    </div>
+                                    <input type="number" class="form-control" placeholder="Enter Your OTP" aria-label="OTP" aria-describedby="basic-addon1" name = 'otp' min="100000" max="999999" required>
+                                </div>
+                            </fieldset>
+                            <div class="form-grounp">
+                                <button class="btn btn-dark" type="submit">Verify</button>
+                                <small class="float-right text-muted"><i>
+                                    {% csrf_token %}
+                                    <small class="float-right text-muted"><i><a href="#" class="text-dark" onclick="ReSendOTP('{{usr.email}}', 'resendOTPmess')"><i id="resendOTPmess">Resend</i> OTP</a></small>
+                                </small>
+                            </div>
+                        </form>
+                    <!--Otp Configuration Form Endss-->
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-</body>
 {% endblock %}
+<!--Body Ends-->

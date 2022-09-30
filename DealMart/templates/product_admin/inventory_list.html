@@ -1,7 +1,8 @@
 {% extends 'products/product_header.html' %}
 {% load static %}
 {% block title  %}Inventory List{% endblock title %}
-{% block content %}
+<!--Body Starts-->
+    {% block content %}
         {% include 'products/toolbar.html'  %}
         {% include 'products/navbar.html' %}
         {% load product_sorting %}
@@ -14,111 +15,120 @@
             </div>
         {% endfor %}
         {% if products %}
-        <div class="container-fluid">
-            <div class="row px-xl-5">
+            <div class="container-fluid">
+
                 <!-- Shop Sidebar Start -->
-                <div class="bg-light p-4 mb-30">
-                    <form action="" method="GET">
-                        <h5 class="section-title position-relative text-uppercase mb-3" style="text-align: center;"><span class="bg-secondary pr-3">Sort By</span></h5>
-                        <div class="col-lg-3 col-md-4">
-                            <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl();" id="sort" name="ordering" value="{{ordering}}">
-                                <option selected disabled>-------</option>
-                                <option value="">Reset</option>
-                                <option value="low_to_high">Price Low To High</option>
-                                <option value="high_to_low">Price High To Low</option>
-                                <option value="is_active">Available</option>
-                                <option value="is_false">Unavailable</option>
-                            </select> 
-                        </form>
+                    <div class="row px-xl-5">
+                            <div class="bg-light p-4 mb-30">
+                                <h5 class="section-title position-relative text-uppercase mb-3" style="text-align: center;"><span class="bg-secondary pr-3">Sort By</span></h5>
+                                <div class="col-lg-3 col-md-4">
+                                <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl();" id="sort" name="ordering" value="{{ordering}}">
+                                    <option selected disabled>-------</option>
+                                    <option value="">Reset</option>
+                                    <option value="low_to_high">Price Low To High</option>
+                                    <option value="high_to_low">Price High To Low</option>
+                                    <option value="is_active">Available</option>
+                                    <option value="is_false">Unavailable</option>
+                                </select> 
+                            </div>
+                        <!-- Filter Start -->
+                            <div class="bg-light p-4 mb-30">
+                                <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl4();" id="categroy" name="catid" name="categories">
+                                    <option disabled selected>Select Category</option>
+                                    <option value="">All</option>
+                                    {% for categories in category %}
+                                    <option value="{{categories.id}}">{{categories.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        <!-- Filter End -->
                     </div>
-                    <!-- Filter Start -->
-                    <div class="bg-light p-4 mb-30">
-                        <select class="form-select" style="margin-bottom: 10px;"  onchange="location=finalurl4();" id="categroy" name="catid" name="categories">
-                            <option disabled selected>Select Category</option>
-                            <option value="">All</option>
-                            {% for categories in category %}
-                            <option value="{{categories.id}}">{{categories.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <!-- Filter End -->
-                </div>
                 <!-- Shop Sidebar End -->
-                
+                    
                 <!-- Shop Product Start -->
-                <div class="col-lg-9 col-md-8">
-                    <table class="table table-sm">
-                        <tr>
-                            <th>No.</th>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Brand</th>
-                            <th>Price</th>
-                            <th style="text-align:center" colspan="3">Action</th>
-                            <th></th>
-                            <th></th>
-                            
-                        </tr>
-                        {% for i in products  %}
-                            <tr>
-                                <td>{{forloop.counter}}</td>
-                                <td><img src="{{ i.product.image.url }}" style="height: 100px; width: 100px;"  class="card-img-top"></td>
-                                <span><td>{{i.product.name}}</td> </span>
-                                <span><td>{{i.product.brand}}</td> </span>
-                                <span><td>&#x20b9;{{i.product.price}}</td></span>
-                                <td><a href="{% url 'products:update_product_form' i.pk %}" class="btn btn-info">Update</a></td>
-                                <td><div><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#fm-modal-grid_{{forloop.counter}}">Delete</button></div></td>
-                                <td><a href="{% url 'products:product_detail' i.pk %}" class="btn btn-primary">Detail</a></td>
-                                <td><a href="{% url 'product_admin:inventory' i.pk %}" class="btn btn-success">View Inventory</a></td>
-                            </tr>
-                            <div class="modal fade" id="fm-modal-grid_{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledBy="fm-modal-grid" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button class="close" data-dismiss="modal" aria-label="Cerrar">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="container-fluid">
-                                                <div class="row">
-                                                    <div class="col-12 col-sm-6">   
-                                                        <p>Are you sure you want to delete {{i}}?</p>
+                    <div class="col-lg-9 col-md-8">
+                        <!--Inventory Table Starts-->
+                            <table class="table table-sm">
+                                <tr>
+                                    <th>No.</th>
+                                    <th></th>
+                                    <th>Name</th>
+                                    <th>Brand</th>
+                                    <th>Price</th>
+                                    <th style="text-align:center" colspan="3">Action</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                {% for i in products  %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td><img src="{{ i.product.image.url }}" style="height: 100px; width: 100px;"  class="card-img-top"></td>
+                                        <span><td>{{i.product.name}}</td> </span>
+                                        <span><td>{{i.product.brand}}</td> </span>
+                                        <span><td>&#x20b9;{{i.product.price}}</td></span>
+                                        <td><a href="{% url 'products:update_product_form' i.pk %}" class="btn btn-info">Update</a></td>
+                                        <td><div><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#fm-modal-grid_{{forloop.counter}}">Delete</button></div></td>
+                                        <td><a href="{% url 'products:product_detail' i.pk %}" class="btn btn-primary">Detail</a></td>
+                                        <td><a href="{% url 'product_admin:inventory' i.pk %}" class="btn btn-success">View Inventory</a></td>
+                                    </tr>
+                                    <!--Delete Modal Starts-->
+                                        <div class="modal fade" id="fm-modal-grid_{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledBy="fm-modal-grid" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button class="close" data-dismiss="modal" aria-label="Cerrar">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div class="col-12 col-sm-6">   
+                                                                    <p>Are you sure you want to delete {{i}}?</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="{% url 'products:delete_product' i.product.id %}" class="btn btn-danger">Delete</a>
+                                                        <button class="btn btn-primary" data-dismiss="modal">Cancel</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    <!--Delete Modal Ends-->
+                                {% endfor %}
+                            </table>
+                        <!--Inventroy Table Ends-->
 
-                                        <div class="modal-footer">
-                                            {% comment %} <a href="{% url 'products:delete_product' i.product.id %}" class="btn btn-danger">Delete</a> {% endcomment %}
-                                            <button class="btn btn-primary" data-dismiss="modal">Cancel</button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                        {% endfor %}
-                    </table>
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            {% if products.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?{% query_transform page=products.previous_page_number %}">Previous</a></li>
-                            {% endif %}
-                            <li class="page-item disabled">
-                                <a class="page-link" href="/page{{page_number}}">{{page_number}}<span class="sr-only">(current)</span></a>
-                            </li>
-                        {% if products.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?{% query_transform page=products.next_page_number %}">Next</a></li>
-                            {% endif %}
-                        </ul>
-                    </nav>
-                </div>
+                        <!--Page Number Starts-->
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    {% if products.has_previous %}
+                                        <li class="page-item"><a class="page-link" href="?{% query_transform page=products.previous_page_number %}">Previous</a></li>
+                                    {% endif %}
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="/page{{page_number}}">{{page_number}}<span class="sr-only">(current)</span></a>
+                                        </li>
+                                    {% if products.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?{% query_transform page=products.next_page_number %}">Next</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        <!--Page Number Ends-->
+                    </div>
+                <!-- Shop Product End -->
+                
             </div>
-        </div>
         {% else %}
-        <p style="text-align: center;">No Products are available</p>
+
+        <!--No Products Image Starts-->
+            <img src="{% static 'images/noproduct.png' %}" alt="" width="50%" style="margin-left: 23%;">
+        <!--No Products Image Ends-->
+
         {% endif %}
-        <!-- Shop Product End -->
 
         {% include 'products/footer.html' %}
         {% block external_script %}
@@ -127,6 +137,7 @@
         <script src="{% static 'js/searching.js' %}"></script>
         <script src="{% static 'js/category_filter.js' %}"></script>
         {% endblock external_script %}
-{% endblock %}
+    {% endblock %}
+<!--Body Ends-->
 
 
