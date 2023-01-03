@@ -17,7 +17,6 @@ class ProductView(DetailView):
         """GETTING PRODUCT DETAILS"""
         product = Products.objects.get(pk=pk)
         cart = Cart.objects.filter(is_active=True,created_by = request.user).count()
-        print(cart) 
         sub_categorys = SubCategory.objects.filter(category = product.category).only('id','name')
 
         context = {
