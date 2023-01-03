@@ -92,6 +92,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 
             ],
+            'libraries': {
+            'custom_tags':'order.template_tags.custom_tags'
+            }
         },
     },
 ]

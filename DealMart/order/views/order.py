@@ -9,6 +9,9 @@ from django.core.mail import EmailMessage
 from django.conf import settings
 from customer.models import Cart
 from order.models import Order
+from order.paytm import Checksum
+
+MERCHANT_KEY = 'kbzk1DSbJiV_O3p5'
 
 class CreateOrder(CreateView):
     """OPERATION FOR CREATE ORDER"""
@@ -26,12 +29,24 @@ class CreateOrder(CreateView):
         user = request.user
         order.total_amount = total
         order.save()
+        param_dict = {
+            'MID':'WorldP64425807474247',
+            'ORDER_ID':str(order.id),
+            'TXN_AMOUNT':str(total),
+            'CUST_ID':request.user.email,
+            'INDUSTRY_TYPE_ID':'Retail',
+            'WEBSITE':'WEBSTAGING',
+            'CHANNEL_ID':'WEB',
+            'CALLBACK_URL':'http://127.0.0.1:8000/order/handlerequest/',
+        }
 
-        context = {'cart':cart,'total':total}
-        self.send_mail(context,user)
-        cart.update(is_active=False)
+        param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(param_dict, MERCHANT_KEY)
 
-        return redirect("order:order_placed")
+        context = {'cart':cart,'total':total,"param_dict":param_dict}
+        # self.send_mail(context,user)
+        # cart.update(is_active=False)
+
+        return render(request,"order/payment.html",{"param_dict":param_dict})
 
     def get_total(self,cart):
         """GET TOTAL FOR ORDER"""
