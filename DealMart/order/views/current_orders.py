@@ -19,8 +19,7 @@ class CurrentOrders(CheckProductOwnerGroup,ListView):
         """GET DETAILS OF RECIEVED ORDERS BY PRODUCT ADMIN"""
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")
-        orders = Order.objects.filter(status__in = ('pending','out for delivery')).order_by('-id')\
-        .only('id','status','created_by',
+        orders = Order.objects.all().order_by('-id').only('id','status','created_by',
         'created_by__first_name','created_by__last_name','created_by__profile_pic',
         'created_at','cart__product__price','cart__quantity')
         cart = Cart.objects.filter(created_by = request.user,is_active=True).count()

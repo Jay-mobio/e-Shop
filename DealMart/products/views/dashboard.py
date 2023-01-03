@@ -17,7 +17,7 @@ class Dashboard(CheckProductOwnerGroup,ListView):
 
     def get(self,request):
         """GETTING LIST OF PRODUCTS"""
-        products = Inventory.objects.filter(is_active=True)
+        products = Inventory.objects.filter(is_active=True,created_by = request.user)
         cart = Cart.objects.filter(is_active=True,created_by = request.user).count()
         search = request.GET.get('search', "")
         ordering = request.GET.get('ordering',"")

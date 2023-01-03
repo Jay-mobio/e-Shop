@@ -14,7 +14,7 @@ class CreateOrder(CreateView):
     """OPERATION FOR CREATE ORDER"""
     def post(self, request):
         """CREATE ORDER OPERATION"""
-        cart = Cart.objects.filter(created_by = request.user,is_active=True).only
+        cart = Cart.objects.filter(created_by = request.user,is_active=True).only()
         ('id','product__price','quantity')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
@@ -22,13 +22,13 @@ class CreateOrder(CreateView):
         address = request.POST.get('address')
         order = Order.objects.create(created_by=request.user,first_name=first_name,
                 last_name=last_name,phone=phone,address=address)
-        total = self.get_total(cart,order)
+        total = self.get_total(cart)
         user = request.user
         order.total_amount = total
         order.save()
 
         context = {'cart':cart,'total':total}
-        self.send_mail(self,context,user)
+        self.send_mail(context,user)
         cart.update(is_active=False)
 
         return redirect("order:order_placed")
@@ -36,7 +36,8 @@ class CreateOrder(CreateView):
     def get_total(self,cart):
         """GET TOTAL FOR ORDER"""
         total = 0
-        for i in cart: total = i.product.price * i.quantity + total
+        for i in cart:
+            total = i.product.price * i.quantity + total
         return total
 
     def send_mail(self,context,user):

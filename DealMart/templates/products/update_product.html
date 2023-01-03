@@ -24,61 +24,63 @@
             <div class="row px-xl-5">
                 <div class="col-lg-7 mb-5">
                     <div class="bg-light p-30">
-                        <form action="" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {% if form.errors %}
-                                <div class="alert alert-warning alert-dismissible" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
-                                    {{ form.errors }}
+                        <!--Update Product Form Starts-->
+                            <form action="" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {% if form.errors %}
+                                    <div class="alert alert-warning alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+                                        {{ form.errors }}
+                                    </div>
+                                {% endif %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                                        {{message}}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                {% endfor %}
+                                <div class="control-group">
+                                    Name:
+                                    <input type="text" class="form-control" placeholder="Product Name" name='name' value="{{product.name}}"
+                                        required="required"/>
+                                    <p class="help-block text-danger"></p>
                                 </div>
-                            {% endif %}
-                            {% for message in messages %}
-                                <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-                                    {{message}}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                                <div class="control-group">
+                                    Category:
+                                    {{form.category}}
+                                    <p class="help-block text-danger"></p>
                                 </div>
-                            {% endfor %}
-                            <div class="control-group">
-                                Name:
-                                <input type="text" class="form-control" placeholder="Product Name" name='name' value="{{product.name}}"
-                                    required="required"/>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                                Category:
-                                {{form.category}}
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="control-group">
-                            <select id="id_sub_category" name="sub_category">Sub Category
-                                <select>
-                            <div class="control-group">
-                                Brand:
-                                <input type="text" class="form-control" placeholder="Product Name" name='brand' value="{{product.brand}}"
-                                    required="required"/>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                                Price:
-                                <input type="number" class="form-control" placeholder="price" name="price" value="{{product.price}}"
-                                    required="required"/>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div class="input-group mb-3">
-                                Image:
-                                <input type="file" class="form-control" id="id_image" accept="image/*" name="image" value="{{product.image}}" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
+                                <div class="control-group">
+                                    <select id="id_sub_category" name="sub_category">Sub Category
+                                    </select>
+                                <div class="control-group">
+                                    Brand:
+                                    <input type="text" class="form-control" placeholder="Product Name" name='brand' value="{{product.brand}}"
+                                        required="required"/>
+                                    <p class="help-block text-danger"></p>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <textarea style="margin-top: 5px;" class="form-control" rows="6" placeholder="About product" name="discription"
-                                    required="required">{{form.discription.value}}</textarea>
-                                <p class="help-block text-danger"></p>
-                            </div>
-                            <div>
-                                <button class="btn btn-primary py-2 px-4" type="submit">Update</button>
-                            </div>
-                        </form>
+                                    Price:
+                                    <input type="number" class="form-control" placeholder="price" name="price" value="{{product.price}}"
+                                        required="required"/>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="input-group mb-3">
+                                    Image:
+                                    <input type="file" class="form-control" id="id_image" accept="image/*" name="image" value="{{product.image}}" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <textarea style="margin-top: 5px;" class="form-control" rows="6" placeholder="About product" name="discription"
+                                        required="required">{{form.discription.value}}</textarea>
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div>
+                                    <button class="btn btn-primary py-2 px-4" type="submit">Update</button>
+                                </div>
+                            </form>
+                        <!--Update Product Form Ends-->
                         </div>
                         <div class="col-lg-5 mb-5">
                             <div class="bg-light p-30 mb-30">
