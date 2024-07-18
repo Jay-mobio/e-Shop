@@ -1,8 +1,11 @@
+"""USER MANAGER"""
 from django.contrib.auth.base_user import BaseUserManager
 
 class UserManager(BaseUserManager):
+    """USERR MANAGER"""
     use_in_migrations = True
     def create_user(self,email,password=None,**extra_fields):
+        """CREATE USER"""
         if not email:
             raise ValueError('Email is required')
         email = self.normalize_email(email)
@@ -12,6 +15,7 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self,email,password,**extra_fields):
+        """"CREATE SUPERUSER"""
         extra_fields.setdefault('is_staff',True)
         extra_fields.setdefault('is_superuser',True)
         extra_fields.setdefault('is_active',True)
